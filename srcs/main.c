@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/01/30 15:21:29 by damachad         ###   ########.fr       */
+/*   Created: 2024/01/30 15:22:00 by damachad          #+#    #+#             */
+/*   Updated: 2024/01/30 15:55:52 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../includes/cub3d.h"
 
-# include "mlx/mlx.h"
-# include "libft/libft.h"
-# include <math.h>
-# include <stdio.h>
-# include <string.h>
-
-// Macros
-# define SCREEN_WIDTH 640
-# define SCREEN_HEIGHT 480
-# define TEXWIDTH 64
-# define TEXHEIGHT 64
-
-#endif
+int main(int argc, char **argv)
+{
+    if (argc != 2)
+    {
+        printf("Error\nWrong number of arguments\n");
+        return (0);
+    }
+    (void)argv;
+    return (0);
+}

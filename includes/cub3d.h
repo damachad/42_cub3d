@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/01/30 15:47:15 by damachad         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:17:11 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,45 @@
 # include <math.h>
 # include <stdio.h>
 # include <string.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
+# include <stdbool.h>
 
 // Macros
 # define SCREEN_WIDTH 640
 # define SCREEN_HEIGHT 480
 # define TEXWIDTH 64
 # define TEXHEIGHT 64
+# define NB_SPRITES 4
+
+// Structs
+
+typedef struct s_map
+{
+	char			**bytes;
+	unsigned int	rows;
+}					t_map;
+
+typedef struct s_game
+{
+	void			*mlx;
+	void			*win;
+	t_map			*map;
+}					t_game;
+
+/*--------------------------map--------------------------*/
+t_map	*new_map(unsigned int rows);
+int		nr_lines(t_game *game, char *mapfile);
+void	load_map(t_game *game, char *mapfile);
+
+/*--------------------------checker--------------------------*/
+void	validate_map(t_game *game);
+
+/*-------------------------clean-------------------------*/
+void	error_msg(t_game *game, char *msg);
+int		quit_prog(t_game *game);
+void	destroy_game(t_game *game);
+void	destroy_map(t_map *map);
+void	destroy_sprites(t_game *game);
 
 #endif

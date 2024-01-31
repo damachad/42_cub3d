@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fde-carv <fde-carv@student.42porto.com>    +#+  +:+       +#+         #
+#    By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 10:57:36 by damachad          #+#    #+#              #
-#    Updated: 2023/11/23 17:43:54 by fde-carv         ###   ########.fr        #
+#    Updated: 2024/01/31 10:27:53 by damachad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ SRC_LIBFT = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isasci
       ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c \
       ft_strmapi.c ft_split.c  ft_lstnew.c ft_lstadd_front.c ft_lstsize.c \
 	  ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c ft_lstiter.c ft_lstclear.c \
-	  ft_lstmap.c ft_count_words.c ft_strlen_2d.c ft_atol.c ft_strcmp.c is_space.c
+	  ft_lstmap.c ft_count_words.c ft_strlen_2d.c ft_atol.c ft_strcmp.c is_space.c \
+	  free_matrix.c
 
 SRC_PRINTF = ft_convert.c ft_printf.c ft_put_add.c \
 			ft_putchar_2.c ft_putnbr_hex.c ft_putnbr_rec.c \

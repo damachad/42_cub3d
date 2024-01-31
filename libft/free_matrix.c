@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_matrix.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 15:22:00 by damachad          #+#    #+#             */
-/*   Updated: 2024/01/31 11:14:51 by damachad         ###   ########.fr       */
+/*   Created: 2024/01/31 10:25:51 by damachad          #+#    #+#             */
+/*   Updated: 2024/01/31 10:29:56 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+/* Frees allocated space for a char matrix */
+void	free_matrix(char **bytes)
 {
-	if (argc != 2)
-		error_msg(NULL, "Usage: ./cub3D <mapfile.cub>\n");
-	else if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4))
-		error_msg(NULL, "Invalid map file extension\n");
-	// else
-	// 	start_game(argv[1]);
-	return (0);
+	unsigned int	i;
+
+	i = 0;
+	if (!bytes)
+		return ;
+	while (bytes[i])
+		free(bytes[i++]);
+	free(bytes);
 }

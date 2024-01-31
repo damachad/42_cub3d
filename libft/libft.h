@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42.fr>          +#+  +:+       +#+        */
+/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 11:06:37 by damachad          #+#    #+#             */
-/*   Updated: 2023/11/23 15:56:04 by damachad         ###   ########.fr       */
+/*   Updated: 2024/01/31 10:27:28 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct s_list
 	struct s_list	*next;
 }				t_list;
 
-int		is_space(char c);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
@@ -94,6 +93,10 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+/*---------------------------EXTRA---------------------------------*/
 int		ft_count_words(char *str);
+void	free_matrix(char **bytes);
+int		is_space(char c);
 
 #endif

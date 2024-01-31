@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/01/31 13:52:44 by damachad         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:15:21 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 // Macros
 # define SCREEN_WIDTH 640
-# define SCREEN_HEIGHT 480
+# define SCREEN_HEIGHT 512
 # define TEXWIDTH 64
 # define TEXHEIGHT 64
 # define NB_SPRITES 4
@@ -54,6 +54,8 @@ typedef struct s_game
 {
 	void			*mlx;
 	void			*win;
+	double			time;
+	double			old_time;
 	t_map			*map;
 	t_sprite		*sprites;
 }					t_game;

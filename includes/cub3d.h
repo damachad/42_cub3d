@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/01/31 11:17:11 by damachad         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:52:44 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@
 # define TEXHEIGHT 64
 # define NB_SPRITES 4
 
+# define NO "textures/ice.png"
+# define SO "textures/lava.png"
+# define WE "textures/bricks.png"
+# define EA "textures/leaves.png"
+# define FLOOR "" // How to process input color ?
+# define CEILING "" // Check for valid range
+
 // Structs
 
 typedef struct s_map
@@ -37,14 +44,21 @@ typedef struct s_map
 	unsigned int	rows;
 }					t_map;
 
+typedef struct s_sprite{
+	void	*img;
+	int		width;
+	int		height;
+}			t_sprite;
+
 typedef struct s_game
 {
 	void			*mlx;
 	void			*win;
 	t_map			*map;
+	t_sprite		*sprites;
 }					t_game;
 
-/*--------------------------map--------------------------*/
+/*----------------------------map----------------------------*/
 t_map	*new_map(unsigned int rows);
 int		nr_lines(t_game *game, char *mapfile);
 void	load_map(t_game *game, char *mapfile);
@@ -52,7 +66,12 @@ void	load_map(t_game *game, char *mapfile);
 /*--------------------------checker--------------------------*/
 void	validate_map(t_game *game);
 
-/*-------------------------clean-------------------------*/
+/*---------------------------init----------------------------*/
+void	init_graphics(t_game *game);
+void	start_game(char	*mapfile);
+void	load_sprites(t_game *game);
+
+/*---------------------------clean---------------------------*/
 void	error_msg(t_game *game, char *msg);
 int		quit_prog(t_game *game);
 void	destroy_game(t_game *game);

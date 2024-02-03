@@ -2,6 +2,7 @@
 Building repo for cub3d
 
 ## TODOs:
+- Fill half the window with color of ceiling and the other with floor color, on begining of game. Draw walls on top;
 - Function to check if map is bordered;
 - Function to check if components are only "1,0, ,N,S,E,W" and that at only one (N,S,E,W) is present;
 - Decide how to treat spaces (remove them or treat as 0?), what about space outside borders? (define as -1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/01 15:46:47 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/05 20:42:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@
 # define FOV 60
 # define NB_SPRITES 4
 
+# define WHITE 0x00FFFFFF
+# define RED 0x00FF0000
+# define GREEN 0x0000FF00
+
 # define NO "textures/ice.png"
 # define SO "textures/lava.png"
 # define WE "textures/bricks.png"
@@ -41,6 +45,18 @@
 # define CEILING "" // Check for valid range
 
 // Structs
+
+//line drawing algorithm variables
+typedef struct s_bresenham
+{
+	int	x0;
+	int	y0;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+}		t_bresenham;
 
 typedef struct s_point
 {
@@ -60,6 +76,16 @@ typedef struct s_sprite{
 	int		height;
 }			t_sprite;
 
+typedef struct s_img {
+	void	*img;
+	char	*addr;
+	int		width;
+	int		height;
+	int		bpp;
+	int		line_length;
+	int		endian;
+}				t_img;
+
 typedef struct s_game
 {
 	void			*mlx;
@@ -69,7 +95,7 @@ typedef struct s_game
 	double			time;
 	double			old_time;
 	t_map			*map;
-	t_sprite		*sprites;
+	t_img			img;
 }					t_game;
 
 /*----------------------------map----------------------------*/

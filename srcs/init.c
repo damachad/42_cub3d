@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/01/31 13:54:27 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/05 21:17:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+//assuming that image size is the same as the window size
+// where does line_length come from? probably same place as endian...
+t_img	new_img(t_game *game)
+{
+	t_img	img;
+
+	img.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	if (img.img == NULL)
+		error_msg(game, "Failed to create image.");
+	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, \
+									&img.endian);
+	img.width = SCREEN_WIDTH;
+	img.height = SCREEN_HEIGHT;
+	return (img);
+}
 
 // NOTE: Functions from So_long, need to be adapted
 
@@ -51,8 +67,10 @@ void	start_game(char	*mapfile)
 	load_map(&game, mapfile);
 	validate_map(&game);
 	init_graphics(&game);
+	game.img = new_img(&game);
 	load_sprites(&game);
 	// render_map(&game);
+	mlx_put_image_to_window(game.mlx, game.win, game.img.img, 0, 0);
 	// mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);
 	mlx_hook(game.win, DestroyNotify, KeyPressMask, quit_prog, &game);
 	// mlx_loop_hook(game.mlx, render_frame, &game);

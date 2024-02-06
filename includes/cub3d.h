@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/05 20:42:32 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/06 16:45:48 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <stdbool.h>
 
 // Macros
-# define SCREEN_WIDTH 640
-# define SCREEN_HEIGHT 512
+# define SCREEN_WIDTH 960
+# define SCREEN_HEIGHT 768
 # define PLANE_W 320
 # define PLANE_H 200
 # define TEXWIDTH 64
@@ -34,8 +34,10 @@
 # define NB_SPRITES 4
 
 # define WHITE 0x00FFFFFF
+# define BLACK 0x00000000
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
+# define BLUE 0x000000FF
 
 # define NO "textures/ice.png"
 # define SO "textures/lava.png"
@@ -60,8 +62,8 @@ typedef struct s_bresenham
 
 typedef struct s_point
 {
-	unsigned int	x;
-	unsigned int	y;
+	int	x;
+	int	y;
 }					t_point;
 
 typedef struct s_map
@@ -96,6 +98,7 @@ typedef struct s_game
 	double			old_time;
 	t_map			*map;
 	t_img			img;
+	t_sprite		*sprites;
 }					t_game;
 
 /*----------------------------map----------------------------*/
@@ -116,6 +119,12 @@ void	error_msg(t_game *game, char *msg);
 int		quit_prog(t_game *game);
 void	destroy_game(t_game *game);
 void	destroy_map(t_map *map);
-void	destroy_sprites(t_game *game);
+
+/*--------------------------draw_line------------------------*/
+void	put_pixel(t_img *img, int x, int y, int color);
+void	draw_line(t_game *game, t_point *a, t_point *b);
+
+/*--------------------------background-----------------------*/
+void	draw_background(t_img *img);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/06 16:45:48 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:58:26 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,6 @@ void	draw_line(t_game *game, t_point *a, t_point *b);
 
 /*--------------------------background-----------------------*/
 void	draw_background(t_img *img);
+void	draw_wall(t_game *game);
 
 #endif

@@ -66,8 +66,8 @@ void	draw_line(t_game *game, t_point *a, t_point *b)
 		//unless the size is one and the same
 		if (param.x0 < SCREEN_WIDTH && param.x0 > 0
 			&& param.y0 < SCREEN_HEIGHT && param.y0 > 0)
-			//for now draw GREEN by default
-			put_pixel(&game->img, param.x0, param.y0, GREEN);
+			//for now draw RED by default
+			put_pixel(&game->img, param.x0, param.y0, RED);
 		if (param.x0 == b->x && param.y0 == b->y)
 			break ;
 		if (2 * param.err >= param.dy && param.x0 != b->x)

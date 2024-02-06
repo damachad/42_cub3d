@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:29:40 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/06 16:36:54 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:59:31 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,18 @@ void	draw_background(t_img *img)
 	{
 		y = -1;
 		while (++y < SCREEN_HEIGHT/2)
-			put_pixel(img, x, y, GREEN);
-		while (++y < SCREEN_HEIGHT)
 			put_pixel(img, x, y, BLUE);
+		while (++y < SCREEN_HEIGHT)
+			put_pixel(img, x, y, GREEN);
 	}
+}
+
+void	draw_wall(t_game *game)
+{
+	t_point a;
+
+	a.x = -1;
+	a.y = SCREEN_HEIGHT/2 + 64/2;
+	while (++(a.x) < SCREEN_WIDTH)
+		draw_line(game, &a, &(t_point){a.x, a.y - 64});
 }

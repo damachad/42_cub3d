@@ -6,79 +6,143 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/01 15:32:00 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:50:46 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+int map = {
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+};
+
+t_point	player = {3 * CUB_SIDE, 3 * CUB_SIDE};
+
+// Later adapt to get map from t_game
+bool	is_wall(int x, int y)
+{
+	if (map[x][y] && map[x][y] == 1)
+		return (true);
+	else
+		return (false);
+}
+
+/* Formula to get the distance */
+double	get_distance(t_point a, t_point p, double alpha)
+{
+	return (abs(p.x - a.x) / cos(alpha));
+}
+
+double	wall_dist_horizontal(t_game *game, t_point p, double alpha)
+{
+	t_point 	a;
+	int			ya;
+	int			xa;
+
 // ======Finding horizontal intersection ======
-// 1. Finding the coordinate of A.  
-//    If the ray is facing up      
-//      A.y = rounded_down(Py/64) * (64) - 1;
-//    If the ray is facing down
-//      A.y = rounded_down(Py/64) * (64) + 64;
+// 1. Finding the coordinates of A.  
+	if (alpha > 0 && alpha < PI)// If the ray is facing up
+	{
+		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE - 1;
+		// 2. Finding Ya
+		ya = -1 * CUB_SIDE;
+	}
+	else if (alpha > PI && alpha < PI_DOUBLE)// If the ray is facing down
+	{
+		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE + CUB_SIDE;
+		ya = CUB_SIDE;
+	}
+	else
+		a.y = p.y;
+	a.x = p.x + abs(p.y - a.y) / tan(alpha);// not sure about this formula
+	// 3. Finding Xa
+	xa = CUB_SIDE / tan(alpha);
+	// Check for wall collision on horizontal lines
+	while (a.x < SCREEN_WIDTH && a.x > 0 && a.y > 0 && a.y < SCREEN_HEIGHT)
+	{
+		if (is_wall(a.x / CUB_SIDE, a.y / CUB_SIDE))
+			return (get_distance(*p, a, alpha));
+		else
+		{
+			a.x += xa;
+			a.y += ya;
+		}
+	}
+}
 
+// Transform alpha so that when it is bigger than 2PI, resets to 0
+double	wall_dist_vertical(t_game *game, t_point p, double alpha)
+{
+	t_point 	b;
+	int			ya;
+	int			xa;
 
+// ======Finding vertical intersection ======
+// 1. Finding the coordinates of A.  
+	if (alpha > PI_HALF && alpha < PI_THREE_HALFS)// If the ray is facing left
+	{
+		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE - 1;
+		// 2. Finding Xa
+		xa = -1 * CUB_SIDE;
+	}
+	else if (alpha < PI || alpha < PI_THREE_HALFS)// If the ray is facing right
+	{
+		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE + CUB_SIDE;
+		ya = CUB_SIDE;
+	}
+	else
+		b.x = p.x;
+	b.y = p.y - abs(p.x - b.x) * tan(alpha);// not sure about this formula
+	// 3. Finding Ya
+	ya = CUB_SIDE * tan(alpha);
+	// Check for wall collision on horizontal lines
+	while (b.x < SCREEN_WIDTH && b.x > 0 && b.y > 0 && b.y < SCREEN_HEIGHT)
+	{
+		if (is_wall(b.x / CUB_SIDE, b.y / CUB_SIDE))
+			return (get_distance(*p, b, alpha));
+		else
+		{
+			b.x += xa;
+			b.y += ya;
+		}
+	}
+}
 
+double	shorter_distance(double horizontal, double vertical)
+{
+	if (horizontal > vertical)
+		return (vertical);
+	else
+		return (horizontal);
+}
 
-//    (In the picture, the ray is facing up, so we use
-//    the first formula.  
-//    A.y=rounded_down(224/64) * (64) - 1 = 191;
-//    Now at this point, we can find out the grid 
-//    coordinate of y.
-//    However, we must decide whether A is part of 
-//    the block above the line,
-//    or the block below the line.  
-//    Here, we chose to make A part of the block
-//    above the line, that is why we subtract 1 from A.y.
-//    So the grid coordinate of A.y is 191/64 = 2;
-
-//    A.x = Px + (Py-A.y)/tan(ALPHA);
-//    In the picture, (assume ALPHA is 60 degrees), 
-//    A.x=96 + (224-191)/tan(60) = about 115;
-//    The grid coordinate of A.x is 115/64 = 1;
-
-//    So A is at grid (1,2) and we can check 
-//    whether there is a wall on that grid.
-//    There is no wall on (1,2) so the ray will be 
-//    extended to C.
-
-// 2. Finding Ya
-//    If the ray is facing up      
-//      Ya=-64;
-//    If the ray is facing down
-//      Ya=64;
-
-// 3. Finding Xa
-//    Xa = 64/tan(60) = 36;
-
-// 4. We can get the coordinate of C as follows:
-//    C.x=A.x+Xa = 115+36 = 151;
-//    C.y=A.y+Ya = 191-64 = 127;
-//    Convert this into grid coordinate by 
-//    dividing each component with 64.  
-//    The result is 
-//    C.x = 151/64 = 2 (grid coordinate), 
-//    C.y = 127/64 = 1 (grid coordinate) 
-//    So the grid coordinate of C is (2, 1).  
-//    (C programmer's note: Remember we always round down, 
-//    this is especially true since
-//    you can use right shift by 8 to divide by 64).
-
-// 5. Grid (2,1) is checked.  
-//    Again, there is no wall, so the ray is extended 
-//    to D.  
-   
-// 6. We can get the coordinate of D as follows:
-//    D.x=C.x+Xa = 151+36 = 187;
-//    D.y=C.y+Ya = 127-64 = 63;
-//    Convert this into grid coordinate by 
-//    dividing each component with 64.  
-//    The result is 
-//    D.x = 187/64 = 2 (grid coordinate), 
-//    D.y = 63/64 = 0 (grid coordinate) 
-//    So the grid coordinate of D is (2, 0).  
-
-// 6. Grid (2,0) is checked.  
-//    There is a wall there, so the process stop.
+void	draw_wall(t_game *game)
+{
+	int		x;
+	double	alpha;
+	double	d_to_wall;
+	double	proj_wall_height;
+	double	d_to_proj_plane;
+	
+	alpha = START_ANGLE + FOV / 2;
+	x = -1;
+	d_to_wall = 0;
+	proj_wall_height = 0;
+	d_to_proj_plane = (PLANE_W / 2) / tan(FOV / 2);// later initialize this variable in t_game or define as macro
+	while (++x < SCREEN_WIDTH)
+	{
+		d_to_wall = shorter_distance(wall_dist_horizontal(game, player, alpha), wall_dist_vertical(game, player, alpha));
+		proj_wall_height = CUB_SIDE / d_to_wall * d_to_proj_plane;
+		draw_line(game, &(t_point){x, SCREEN_HEIGHT / 2 + proj_wall_height / 2}, &(t_point){x, SCREEN_HEIGHT / 2 - proj_wall_height / 2});
+		alpha -= 1/PLANE_W;
+	}
+}

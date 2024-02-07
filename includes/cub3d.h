@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/06 16:58:26 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:16:30 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,9 @@
 # define SCREEN_HEIGHT 768
 # define PLANE_W 320
 # define PLANE_H 200
-# define TEXWIDTH 64
-# define TEXHEIGHT 64
+# define CUB_SIDE 64
 # define PLAYER_H 32
-# define FOV 60
+# define FOV 1 // in radians
 # define NB_SPRITES 4
 
 # define WHITE 0x00FFFFFF
@@ -45,6 +44,12 @@
 # define EA "textures/leaves.png"
 # define FLOOR "" // How to process input color ?
 # define CEILING "" // Check for valid range
+# define START_ANGLE 0 // angle in radians
+
+# define PI 3.14159265358979323846
+# define PI_DOUBLE 6.28318530717958647692
+# define PI_HALF 1.57079632679489661923
+# define PI_THREE_HALFS 4.71238898038468985769
 
 // Structs
 

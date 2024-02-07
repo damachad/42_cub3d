@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/07 14:54:52 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/07 17:42:43 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define EA "textures/leaves.png"
 # define FLOOR "" // How to process input color ?
 # define CEILING "" // Check for valid range
-# define START_ANGLE 0 // angle in radians
+# define START_ANGLE 2 // angle in radians
 
 # define PI 3.14159265358979323846
 # define PI_DOUBLE 6.28318530717958647692
@@ -67,8 +67,8 @@ typedef struct s_bresenham
 
 typedef struct s_point
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 }					t_point;
 
 typedef struct s_map

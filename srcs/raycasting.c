@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wall_collision.c                                   :+:      :+:    :+:   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/07 13:50:46 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/07 15:00:49 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int map = {
+int map[10][10] = {
 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -42,7 +42,7 @@ double	get_distance(t_point a, t_point p, double alpha)
 	return (abs(p.x - a.x) / cos(alpha));
 }
 
-double	wall_dist_horizontal(t_game *game, t_point p, double alpha)
+double	wall_dist_horizontal(t_point p, double alpha)
 {
 	t_point 	a;
 	int			ya;
@@ -70,17 +70,18 @@ double	wall_dist_horizontal(t_game *game, t_point p, double alpha)
 	while (a.x < SCREEN_WIDTH && a.x > 0 && a.y > 0 && a.y < SCREEN_HEIGHT)
 	{
 		if (is_wall(a.x / CUB_SIDE, a.y / CUB_SIDE))
-			return (get_distance(*p, a, alpha));
+			return (get_distance(p, a, alpha));
 		else
 		{
 			a.x += xa;
 			a.y += ya;
 		}
 	}
+	return (0);
 }
 
 // Transform alpha so that when it is bigger than 2PI, resets to 0
-double	wall_dist_vertical(t_game *game, t_point p, double alpha)
+double	wall_dist_vertical(t_point p, double alpha)
 {
 	t_point 	b;
 	int			ya;
@@ -108,13 +109,14 @@ double	wall_dist_vertical(t_game *game, t_point p, double alpha)
 	while (b.x < SCREEN_WIDTH && b.x > 0 && b.y > 0 && b.y < SCREEN_HEIGHT)
 	{
 		if (is_wall(b.x / CUB_SIDE, b.y / CUB_SIDE))
-			return (get_distance(*p, b, alpha));
+			return (get_distance(p, b, alpha));
 		else
 		{
 			b.x += xa;
 			b.y += ya;
 		}
 	}
+	return (0);
 }
 
 double	shorter_distance(double horizontal, double vertical)
@@ -140,7 +142,7 @@ void	draw_wall(t_game *game)
 	d_to_proj_plane = (PLANE_W / 2) / tan(FOV / 2);// later initialize this variable in t_game or define as macro
 	while (++x < SCREEN_WIDTH)
 	{
-		d_to_wall = shorter_distance(wall_dist_horizontal(game, player, alpha), wall_dist_vertical(game, player, alpha));
+		d_to_wall = shorter_distance(wall_dist_horizontal(player, alpha), wall_dist_vertical(player, alpha));
 		proj_wall_height = CUB_SIDE / d_to_wall * d_to_proj_plane;
 		draw_line(game, &(t_point){x, SCREEN_HEIGHT / 2 + proj_wall_height / 2}, &(t_point){x, SCREEN_HEIGHT / 2 - proj_wall_height / 2});
 		alpha -= 1/PLANE_W;

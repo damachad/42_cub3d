@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:29:40 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/06 17:06:59 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:53:04 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	draw_background(t_img *img)
 	}
 }
 
-void	draw_wall(t_game *game)
+void	draw_wall_test(t_game *game)
 {
 	t_point a;
 

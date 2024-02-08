@@ -34,7 +34,7 @@ void	put_pixel(t_img *img, int x, int y, int color)
 
 /* Set the starting point and decide weather to increment or decrement
 * each axis, based on difference between starting and ending points*/
-static void	bresenham_define(t_bresenham *param, t_point *a, t_point *b)
+static void	bresenham_define(t_bresenham *param, t_point_int *a, t_point_int *b)
 {
 	param->dx = abs(b->x - a->x);
 	param->dy = -1 * abs(b->y - a->y);
@@ -54,7 +54,7 @@ static void	bresenham_define(t_bresenham *param, t_point *a, t_point *b)
 /* Check if the current point is within image boundaries
 * Check if we have reached the end point
 * Increment or decrement x and y coordinates based on error parameter*/
-void	draw_line(t_game *game, t_point *a, t_point *b)
+void	draw_line(t_game *game, t_point_int *a, t_point_int *b)
 {
 	t_bresenham	param;
 

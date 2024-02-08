@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/07 17:42:43 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/08 11:03:43 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ typedef struct s_point
 	double	y;
 }					t_point;
 
+typedef struct s_point_int
+{
+	int	x;
+	int	y;
+}					t_point_int;
+
 typedef struct s_map
 {
 	char			**bytes;
@@ -127,7 +133,7 @@ void	destroy_map(t_map *map);
 
 /*--------------------------draw_line------------------------*/
 void	put_pixel(t_img *img, int x, int y, int color);
-void	draw_line(t_game *game, t_point *a, t_point *b);
+void	draw_line(t_game *game, t_point_int *a, t_point_int *b);
 
 /*--------------------------background-----------------------*/
 void	draw_background(t_img *img);

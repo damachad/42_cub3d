@@ -24,6 +24,7 @@ void	put_pixel(t_img *img, int x, int y, int color)
 	}
 }
 
+
 ///in case t_point will contain color....
 /* int	get_color(t_dot *a, t_dot *z)
 {

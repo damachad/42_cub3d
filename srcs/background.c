@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:29:40 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/08 10:52:51 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/09 14:55:09 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	draw_background(t_img *img)
 	{
 		y = -1;
 		while (++y < SCREEN_HEIGHT/2)
-			put_pixel(img, x, y, BLUE);
+			put_pixel(img, x, y, BLUE_LIGHT);
 		while (++y < SCREEN_HEIGHT)
-			put_pixel(img, x, y, GREEN);
+			put_pixel(img, x, y, GREEN_ALT);
 	}
 }
 

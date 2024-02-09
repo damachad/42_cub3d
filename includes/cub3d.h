@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/08 11:03:43 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/09 15:17:01 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@
 // Macros
 # define SCREEN_WIDTH 960
 # define SCREEN_HEIGHT 768
-# define PLANE_W 320
-# define PLANE_H 200
 # define CUB_SIDE 64
-# define PLAYER_H 32
+# define PLAYER_H 32 // necessary?
 # define FOV 1 // in radians
 # define NB_SPRITES 4
 
@@ -37,6 +35,9 @@
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
+# define GREEN_ALT 0x0065B741
+# define BLUE_LIGHT 0x007BD3EA
+# define RED_BRICK 0x00D04848
 
 # define NO "textures/ice.png"
 # define SO "textures/lava.png"
@@ -44,7 +45,7 @@
 # define EA "textures/leaves.png"
 # define FLOOR "" // How to process input color ?
 # define CEILING "" // Check for valid range
-# define START_ANGLE 2 // angle in radians
+# define START_ANGLE 1 // angle in radians
 
 # define PI 3.14159265358979323846
 # define PI_DOUBLE 6.28318530717958647692

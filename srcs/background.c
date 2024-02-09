@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   background.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 15:22:00 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/06 16:26:40 by damachad         ###   ########.fr       */
+/*   Created: 2024/02/06 16:29:40 by damachad          #+#    #+#             */
+/*   Updated: 2024/02/08 10:52:51 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	main(int argc, char **argv)
+void	draw_background(t_img *img)
 {
-	if (argc != 2)
-		error_msg(NULL, "Usage: ./cub3D <mapfile.cub>\n");
-	else if (ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".cub", 4))
-		error_msg(NULL, "Invalid map file extension\n");
-	else
-		start_game(argv[1]);
-	return (0);
+	int x;
+	int y;
+
+	x = -1;
+	while (++x < SCREEN_WIDTH)
+	{
+		y = -1;
+		while (++y < SCREEN_HEIGHT/2)
+			put_pixel(img, x, y, BLUE);
+		while (++y < SCREEN_HEIGHT)
+			put_pixel(img, x, y, GREEN);
+	}
 }
+
+// void	draw_wall_test(t_game *game)
+// {
+// 	t_point a;
+
+// 	a.x = -1;
+// 	a.y = SCREEN_HEIGHT/2 + 64/2;
+// 	while (++(a.x) < SCREEN_WIDTH)
+// 		draw_line(game, &a, &(t_point){a.x, a.y - 64});
+// }

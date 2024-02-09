@@ -35,7 +35,7 @@ void	put_pixel(t_img *img, int x, int y, int color)
 
 /* Set the starting point and decide weather to increment or decrement
 * each axis, based on difference between starting and ending points*/
-static void	bresenham_define(t_bresenham *param, t_point *a, t_point *b)
+static void	bresenham_define(t_bresenham *param, t_point_int *a, t_point_int *b)
 {
 	param->dx = abs(b->x - a->x);
 	param->dy = -1 * abs(b->y - a->y);
@@ -55,7 +55,7 @@ static void	bresenham_define(t_bresenham *param, t_point *a, t_point *b)
 /* Check if the current point is within image boundaries
 * Check if we have reached the end point
 * Increment or decrement x and y coordinates based on error parameter*/
-void	draw_line(t_game *game, t_point *a, t_point *b)
+void	draw_line(t_game *game, t_point_int *a, t_point_int *b)
 {
 	t_bresenham	param;
 
@@ -67,8 +67,8 @@ void	draw_line(t_game *game, t_point *a, t_point *b)
 		//unless the size is one and the same
 		if (param.x0 < SCREEN_WIDTH && param.x0 > 0
 			&& param.y0 < SCREEN_HEIGHT && param.y0 > 0)
-			//for now draw GREEN by default
-			put_pixel(&game->img, param.x0, param.y0, GREEN);
+			//for now draw RED by default
+			put_pixel(&game->img, param.x0, param.y0, RED);
 		if (param.x0 == b->x && param.y0 == b->y)
 			break ;
 		if (2 * param.err >= param.dy && param.x0 != b->x)

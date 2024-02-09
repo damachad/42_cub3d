@@ -3,4 +3,5 @@ objs
 *.o
 .vscode
 *.cpp
-
+libft/libft.a
+cub3D

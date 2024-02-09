@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/05 21:17:11 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/08 10:46:33 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,15 @@ void	start_game(char	*mapfile)
 {
 	t_game	game;
 
+	(void)mapfile;
 	ft_bzero(&game, sizeof(t_game));
-	load_map(&game, mapfile);
-	validate_map(&game);
+	// load_map(&game, mapfile);
+	// validate_map(&game);
 	init_graphics(&game);
 	game.img = new_img(&game);
-	load_sprites(&game);
+	draw_background(&game.img);
+	draw_wall(&game);
+	//load_sprites(&game);
 	// render_map(&game);
 	mlx_put_image_to_window(game.mlx, game.win, game.img.img, 0, 0);
 	// mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);

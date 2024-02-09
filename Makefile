@@ -6,7 +6,7 @@
 #    By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/01/31 11:16:36 by damachad         ###   ########.fr        #
+#    Updated: 2024/02/08 10:45:59 by damachad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ MAP_DIR		= maps
 NAME 		= cub3D
 LIBFT		= libft/libft.a
 MLX			= mlx/libmlx.a
-FILES 		= main map init clean checker
+FILES 		= main map init clean checker draw_line background raycasting
 SRC 		= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
 OBJ 		= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
 

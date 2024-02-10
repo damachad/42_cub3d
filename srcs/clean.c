@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:21:32 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/06 21:18:23 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/10 18:24:26 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ int	quit_prog(t_game *game)
 }
 
 /* Destroy *img of every sprite and free *sprites */
-// void	destroy_sprites(t_game *game)
-// {
-// 	unsigned int	i;
+void	destroy_sprites(t_game *game)
+{
+	unsigned int	i;
 
-// 	i = 0;
-// 	while (i < NB_SPRITES)
-// 		mlx_destroy_image(game->mlx, game->sprites[i++].img);
-// 	free(game->sprites);
-// }
+	i = 0;
+	while (i < NB_SPRITES)
+		mlx_destroy_image(game->mlx, game->sprites[i++].img);
+	free(game->sprites);
+}
 
 void	destroy_map(t_map *map)
 {
@@ -55,8 +55,8 @@ void	destroy_game(t_game *game)
 {
 	if (!game)
 		return ;
-	// if (game->sprites)
-	// 	destroy_sprites(game);
+	if (game->sprites)
+		destroy_sprites(game);
 	if (game->map)
 		destroy_map(game->map);
 	if (game->img.img)

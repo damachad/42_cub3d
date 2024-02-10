@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/08 10:46:33 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/10 18:22:30 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	start_game(char	*mapfile)
 	game.img = new_img(&game);
 	draw_background(&game.img);
 	draw_wall(&game);
-	//load_sprites(&game);
+	load_sprites(&game);
 	// render_map(&game);
 	mlx_put_image_to_window(game.mlx, game.win, game.img.img, 0, 0);
 	// mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);

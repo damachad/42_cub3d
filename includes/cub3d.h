@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/09 15:17:01 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/10 18:21:45 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@
 # define BLUE_LIGHT 0x007BD3EA
 # define RED_BRICK 0x00D04848
 
-# define NO "textures/ice.png"
-# define SO "textures/lava.png"
-# define WE "textures/bricks.png"
-# define EA "textures/leaves.png"
+# define NO "textures/ice.xpm"
+# define SO "textures/lava.xpm"
+# define WE "textures/bricks.xpm"
+# define EA "textures/leaves.xpm"
 # define FLOOR "" // How to process input color ?
 # define CEILING "" // Check for valid range
-# define START_ANGLE 1 // angle in radians
+# define START_ANGLE 2 // angle in radians
 
 # define PI 3.14159265358979323846
 # define PI_DOUBLE 6.28318530717958647692

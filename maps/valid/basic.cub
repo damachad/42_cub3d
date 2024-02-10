@@ -1,0 +1,16 @@
+NO textures/bricks.png
+SO textures/ice.png
+WE textures/lava.png
+EA textures/leaves.png
+
+F 18,53,25
+C 153,204,255
+
+111111111111
+1         11
+1          1
+111111111111
+10S000000001
+111111111111
+11         1
+111111111111

@@ -7,7 +7,8 @@ Parser:
 - Function to check if components are only "1,0, ,N,S,E,W" and that at only one (N,S,E,W) is present;
 - Decide how to treat spaces (remove them or treat as 0?), what about space outside borders? (define as -1);
 - How to get nr_lines from map, how to get the map from the file that has other info;
-- Checker for other elements besides the map (textures and colors);
+- Checker for other elements besides the map (textures and colors);   
+
 Graphics:
 - How to get strip from a mlx image and draw it? Textured walls;
 - Fix buggy walls and smooth walls when looking forward parallel to a wall;

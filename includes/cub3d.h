@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,7 +7,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 14:53:36 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/10 18:21:45 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/09 15:17:01 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +31,23 @@
 # define FOV 1 // in radians
 # define NB_SPRITES 4
 
-# define WHITE 0x00FFFFFF
-# define BLACK 0x00000000
-# define RED 0x00FF0000
-# define GREEN 0x0000FF00
-# define BLUE 0x000000FF
-# define GREEN_ALT 0x0065B741
-# define BLUE_LIGHT 0x007BD3EA
-# define RED_BRICK 0x00D04848
+# define HEX_COLOR 0xFFFFFFFF
+# define WHITE 0xFFFFFF
+# define BLACK 0x000000
+# define RED 0xFF0000
+# define GREEN 0x00FF00
+# define BLUE 0x0000FF
+# define GREEN_ALT 0x65B741
+# define BLUE_LIGHT 0x7BD3EA
+# define RED_BRICK 0xD04848
 
-# define NO "textures/ice.xpm"
-# define SO "textures/lava.xpm"
-# define WE "textures/bricks.xpm"
-# define EA "textures/leaves.xpm"
+# define NO "textures/ice.png"
+# define SO "textures/lava.png"
+# define WE "textures/bricks.png"
+# define EA "textures/leaves.png"
 # define FLOOR "" // How to process input color ?
 # define CEILING "" // Check for valid range
-# define START_ANGLE 2 // angle in radians
+# define START_ANGLE 1 // angle in radians
 
 # define PI 3.14159265358979323846
 # define PI_DOUBLE 6.28318530717958647692
@@ -53,6 +55,13 @@
 # define PI_THREE_HALFS 4.71238898038468985769
 
 // Structs
+
+/* typedef enum s_dir{
+	NO,
+	SO,
+	WE,
+	EA
+}			t_dir; */
 
 //line drawing algorithm variables
 typedef struct s_bresenham
@@ -100,6 +109,16 @@ typedef struct s_img {
 	int		endian;
 }				t_img;
 
+typedef struct s_input
+{
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	int		floor[3];
+	int		ceiling[3];
+}				t_input;
+
 typedef struct s_game
 {
 	void			*mlx;
@@ -111,6 +130,7 @@ typedef struct s_game
 	t_map			*map;
 	t_img			img;
 	t_sprite		*sprites;
+	t_input			*input;
 }					t_game;
 
 /*----------------------------map----------------------------*/
@@ -142,5 +162,11 @@ void	draw_wall_test(t_game *game);
 
 /*--------------------------raycasting-----------------------*/
 void	draw_wall(t_game *game);
+
+/*----------------------------parser-------------------------*/
+/* void	parse_file(t_game *game, char *file); */
+
+/*----------------------------utils--------------------------*/
+void	*safe_malloc(int bytes);
 
 #endif

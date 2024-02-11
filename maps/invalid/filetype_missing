@@ -1,0 +1,21 @@
+NO textures/directions/north.xpm
+SO textures/directions/south.xpm
+WE textures/directions/west.xpm
+EA textures/directions/east.xpm
+
+F 20,20,20
+C 200,200,200
+
+11111
+10001
+10S01
+10001
+10001
+10001
+11001
+10001
+10001
+10001
+10001
+10001
+11111

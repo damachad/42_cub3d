@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/12 17:23:47 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:18:20 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,8 +206,6 @@ int	draw_wall(t_game *g)
 	d_to_proj_plane = (SCREEN_WIDTH / 2) / tan((float)FOV / 2);// later initialize this variable in t_game or define as macro
 	draw_background(&(g->img));
 	draw_minimap(g);
-	printf("p_pos.x: %f\n", g->p_pos.x);
-	printf("p_pos.y: %f\n", g->p_pos.y);
 	while (++x < SCREEN_WIDTH)
 	{
 		d_to_wall = shorter_distance(wall_dist_horizontal(g->p_pos, alpha), wall_dist_vertical(g->p_pos, alpha));

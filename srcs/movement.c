@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/12 17:23:08 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:29:35 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	handle_keypress(int keysym, t_game *g)
 	{
 		g->p_pos.x += g->p_dir.x;
 		g->p_pos.y += g->p_dir.y;
-		// printf("p_pos.x: %f\n", g->p_pos.x);
-		// printf("p_pos.y: %f\n", g->p_pos.y);
+		printf("p_pos.x: %f\n", g->p_pos.x);
+		printf("p_pos.y: %f\n", g->p_pos.y);
 	}
 	else if (keysym == XK_a)
 	{
@@ -32,7 +32,7 @@ int	handle_keypress(int keysym, t_game *g)
 		if (g->p_angle < 0)
 		{
 			g->p_angle += PI_DOUBLE;
-			g->p_dir = (t_point){cos(a) * 5, sin(a) * 5};
+			g->p_dir = (t_point){cos(a) * 5, sin(a) * -5};
 		}
 	}
 	else if (keysym == XK_s)
@@ -46,9 +46,11 @@ int	handle_keypress(int keysym, t_game *g)
 		if (g->p_angle >= PI_DOUBLE)
 		{
 			g->p_angle -= PI_DOUBLE;
-			g->p_dir = (t_point){cos(a) * 5, sin(a) * 5};
+			g->p_dir = (t_point){cos(a) * 5, sin(a) * -5};
 		}
 	}
+	else
+		return (0);
 	draw_wall(g);
 	return (keysym);
 }
@@ -95,4 +97,8 @@ void	draw_minimap(t_game *g)// replace with map dimensions
 	}
 	draw_square(&g->img, (int)g->p_pos.x * MINIMAP_SCALE + offset - 3.5, \
 	(int)g->p_pos.y * MINIMAP_SCALE + offset - 3.5, CUB_SIDE / 3, RED);
+	draw_line(g, &(t_point_int){(int)g->p_pos.x * MINIMAP_SCALE + offset, \
+	(int)g->p_pos.y * MINIMAP_SCALE + offset}, \
+	&(t_point_int){(int)(g->p_pos.x + g->p_dir.x) * 0.4 + offset, \
+	(int)(g->p_pos.y + g->p_dir.y) * 0.4 + offset});
 }

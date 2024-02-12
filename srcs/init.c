@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/10 18:22:30 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:05:59 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,15 @@ void	load_sprites(t_game *game)
 	WE, &(game->sprites[3].width), &(game->sprites[3].height));
 }
 
+void	init_player(t_game *g)// later get values from mapfile
+{
+	g->p_angle = START_ANGLE;
+	g->p_pos = (t_point){(float)3 * CUB_SIDE + CUB_SIDE/2, (float)3 * CUB_SIDE + CUB_SIDE/2};
+	g->p_dir = (t_point){cos(g->p_angle) * 5, sin(g->p_angle) * 5};
+}
+
 /* Initialize 't_game' struct, load and check map,
-   initialize graphics, load sprites, render map,
+   initialize graphics, load sprites,
    and start game loop */
 void	start_game(char	*mapfile)
 {
@@ -68,14 +75,15 @@ void	start_game(char	*mapfile)
 	// load_map(&game, mapfile);
 	// validate_map(&game);
 	init_graphics(&game);
+	init_player(&game);
 	game.img = new_img(&game);
 	draw_background(&game.img);
-	draw_wall(&game);
 	load_sprites(&game);
-	// render_map(&game);
+	draw_wall(&game);
+	draw_minimap(&game);
 	mlx_put_image_to_window(game.mlx, game.win, game.img.img, 0, 0);
-	// mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);
+	mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);
 	mlx_hook(game.win, DestroyNotify, KeyPressMask, quit_prog, &game);
-	// mlx_loop_hook(game.mlx, render_frame, &game);
+	//mlx_loop_hook(game.mlx, draw_wall, &game);
 	mlx_loop(game.mlx);
 }

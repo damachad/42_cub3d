@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/12 18:29:35 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/12 18:34:23 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	handle_keypress(int keysym, t_game *g)
 	}
 	else if (keysym == XK_a)
 	{
-		g->p_angle -= 0.1;
-		if (g->p_angle < 0)
+		g->p_angle += 0.1;
+		if (g->p_angle >= PI_DOUBLE)
 		{
-			g->p_angle += PI_DOUBLE;
+			g->p_angle -= PI_DOUBLE;
 			g->p_dir = (t_point){cos(a) * 5, sin(a) * -5};
 		}
 	}
@@ -42,10 +42,10 @@ int	handle_keypress(int keysym, t_game *g)
 	}
 	else if (keysym == XK_d)
 	{
-		g->p_angle += 0.1;
-		if (g->p_angle >= PI_DOUBLE)
+		g->p_angle -= 0.1;
+		if (g->p_angle < 0)
 		{
-			g->p_angle -= PI_DOUBLE;
+			g->p_angle += PI_DOUBLE;
 			g->p_dir = (t_point){cos(a) * 5, sin(a) * -5};
 		}
 	}

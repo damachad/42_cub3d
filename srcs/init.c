@@ -41,7 +41,7 @@ void	init_graphics(t_game *game)
 		error_msg(game, "mlx_new_window() failed\n");
 }
 
-void	load_sprites(t_game *game)
+/* void	load_sprites(t_game *game)
 {
 	game->sprites = ft_calloc(4, sizeof(t_sprite));
 	if (!game->sprites)
@@ -54,24 +54,26 @@ void	load_sprites(t_game *game)
 	EA, &(game->sprites[2].width), &(game->sprites[2].height));
 	game->sprites[3].img = mlx_xpm_file_to_image(game->mlx, \
 	WE, &(game->sprites[3].width), &(game->sprites[3].height));
-}
+} */
 
 /* Initialize 't_game' struct, load and check map,
    initialize graphics, load sprites, render map,
    and start game loop */
-void	start_game(char	*mapfile)
+void	start_game(char	*file)
 {
 	t_game	game;
 
-	(void)mapfile;
+	(void)file;
 	ft_bzero(&game, sizeof(t_game));
+	game.input = ft_calloc(1, sizeof(t_input));
+	parse_file(&game, file);
 	// load_map(&game, mapfile);
 	// validate_map(&game);
 	init_graphics(&game);
 	game.img = new_img(&game);
 	draw_background(&game.img);
 	draw_wall(&game);
-	load_sprites(&game);
+	//load_sprites(&game);
 	// render_map(&game);
 	mlx_put_image_to_window(game.mlx, game.win, game.img.img, 0, 0);
 	// mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);

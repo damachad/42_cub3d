@@ -46,7 +46,7 @@ NAME 		= cub3D
 LIBFT		= libft/libft.a
 MLX			= mlx/libmlx.a
 FILES 		= main map init clean checker draw_line background raycasting \
-			utils
+			utils parser
 SRC 		= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
 OBJ 		= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
 

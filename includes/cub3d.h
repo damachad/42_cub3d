@@ -41,10 +41,10 @@
 # define BLUE_LIGHT 0x7BD3EA
 # define RED_BRICK 0xD04848
 
-# define NO "textures/ice.png"
+/* # define NO "textures/ice.png"
 # define SO "textures/lava.png"
 # define WE "textures/bricks.png"
-# define EA "textures/leaves.png"
+# define EA "textures/leaves.png" */
 # define FLOOR "" // How to process input color ?
 # define CEILING "" // Check for valid range
 # define START_ANGLE 1 // angle in radians
@@ -56,12 +56,12 @@
 
 // Structs
 
-/* typedef enum s_dir{
+typedef enum s_dir{
 	NO,
 	SO,
 	WE,
 	EA
-}			t_dir; */
+}			t_dir;
 
 //line drawing algorithm variables
 typedef struct s_bresenham
@@ -164,7 +164,7 @@ void	draw_wall_test(t_game *game);
 void	draw_wall(t_game *game);
 
 /*----------------------------parser-------------------------*/
-/* void	parse_file(t_game *game, char *file); */
+void	parse_file(t_game *game, char *file);
 
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);

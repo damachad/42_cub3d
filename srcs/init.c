@@ -67,11 +67,12 @@ void	start_game(char	*file)
 	ft_bzero(&game, sizeof(t_game));
 	game.input = ft_calloc(1, sizeof(t_input));
 	parse_file(&game, file);
+	//print_input(game.input);
 	// load_map(&game, mapfile);
 	// validate_map(&game);
 	init_graphics(&game);
 	game.img = new_img(&game);
-	draw_background(&game.img);
+	draw_background(&game);
 	draw_wall(&game);
 	//load_sprites(&game);
 	// render_map(&game);

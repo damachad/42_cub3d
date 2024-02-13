@@ -2,3 +2,6 @@ NO textures/bricks.png
 SO textures/ice.png
 WE textures/lava.png
 EA textures/leaves.png
+
+F 101,183,65
+C 123,211,234

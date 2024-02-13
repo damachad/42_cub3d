@@ -12,7 +12,55 @@
 
 #include "../includes/cub3d.h"
 
+int get_color_hex(int r, int g, int b)
+{
+	return (r << 16) | (g << 8) | b;
+}
 
+void parse_color_components(char *line, int *i, int *color)
+{
+	int j;
+
+	j = 0;
+	while (j < 3) 
+	{
+		while (line[*i] != '\0' && is_space(line[*i])) {
+			(*i)++;
+		}
+		while (line[*i] != '\0' && line[*i] >= '0' && line[*i] <= '9') {
+			color[j] = color[j] * 10 + (line[*i] - '0');
+			(*i)++;
+		}
+		while (line[*i] != '\0' && (is_space(line[*i]) || line[*i] == ',')) {
+			(*i)++;
+		}
+		j++;
+	}
+} 
+
+void parse_color(t_game *game, char *line, t_color_type color_type)
+{
+    int i;
+    int color[3];
+	int color_hex;
+
+	i = 1;
+	color[0] = 0;
+	color[1] = 0;
+	color[2] = 0;
+	while (line[i] != '\0' && (line[i] == ',' || is_space(line[i]))) {
+        i++;
+    }
+	parse_color_components(line, &i, color);
+
+    color_hex = get_color_hex(color[0], color[1], color[2]);
+
+    if (color_type == FLOOR) {
+        game->input->floor_color = color_hex;
+    } else if (color_type == CEILING) {
+        game->input->ceiling_color = color_hex;
+    }
+}
 
 void	parse_texture(t_game *game, char *line, t_dir dir)
 {
@@ -45,13 +93,13 @@ void parse_line(t_game *game, char *line)
 		parse_texture(game, line, WE);
 	else if (line[0] == 'E' && line[1] == 'A')
 		parse_texture(game, line, EA);
-/* 	else if (line[0] == 'F')
+ 	else if (line[0] == 'F')
 		parse_color(game, line, FLOOR);
 	else if (line[0] == 'C')
 		parse_color(game, line, CEILING);
-	else if (line[0] == '1' || line[0] == '\0' || is_space(line[0]))
+	/* else if (line[0] == '1' || line[0] == '\0' || is_space(line[0]))
 		parse_map(game, line); */
-	else if (line[0] != '\0' || !is_space(line[0]))
+	else if (line[0] != '\0' && !is_space(line[0]))
 		error_msg(game, "Invalid line in map file.\n");
 }
 

@@ -44,9 +44,9 @@
 /* # define NO "textures/ice.png"
 # define SO "textures/lava.png"
 # define WE "textures/bricks.png"
-# define EA "textures/leaves.png" */
+# define EA "textures/leaves.png" 
 # define FLOOR "" // How to process input color ?
-# define CEILING "" // Check for valid range
+# define CEILING "" // Check for valid range */
 # define START_ANGLE 1 // angle in radians
 
 # define PI 3.14159265358979323846
@@ -62,6 +62,11 @@ typedef enum s_dir{
 	WE,
 	EA
 }			t_dir;
+
+typedef enum s_color_type{
+	FLOOR,
+	CEILING
+}			t_color_type;
 
 //line drawing algorithm variables
 typedef struct s_bresenham
@@ -115,6 +120,8 @@ typedef struct s_input
 	char	*so;
 	char	*we;
 	char	*ea;
+	int		floor_color;
+	int		ceiling_color;
 	int		floor[3];
 	int		ceiling[3];
 }				t_input;
@@ -157,7 +164,7 @@ void	put_pixel(t_img *img, int x, int y, int color);
 void	draw_line(t_game *game, t_point_int *a, t_point_int *b);
 
 /*--------------------------background-----------------------*/
-void	draw_background(t_img *img);
+void	draw_background(t_game *game);
 void	draw_wall_test(t_game *game);
 
 /*--------------------------raycasting-----------------------*/
@@ -168,5 +175,8 @@ void	parse_file(t_game *game, char *file);
 
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);
+
+/* -----------------------debug print----------------------- */
+void print_input(t_input *input);
 
 #endif

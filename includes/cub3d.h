@@ -149,6 +149,7 @@ void	validate_map(t_game *game);
 void	init_graphics(t_game *game);
 void	start_game(char	*mapfile);
 void	load_sprites(t_game *game);
+t_img	new_img(t_game *game);
 
 /*---------------------------clean---------------------------*/
 void	error_msg(t_game *game, char *msg);

@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:21:32 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/10 18:24:26 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:31:37 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	destroy_game(t_game *game)
 		destroy_sprites(game);
 	if (game->map)
 		destroy_map(game->map);
-	if (game->img.img)
-		mlx_destroy_image(game->mlx, game->img.img);
+	// if (game->img.img)
+	// 	mlx_destroy_image(game->mlx, game->img.img);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)

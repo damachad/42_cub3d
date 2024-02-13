@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/12 18:28:10 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/13 14:31:14 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ void	start_game(char	*mapfile)
 	draw_background(&game.img);
 	load_sprites(&game);
 	draw_wall(&game);
-	draw_minimap(&game);
-	mlx_put_image_to_window(game.mlx, game.win, game.img.img, 0, 0);
 	mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);
 	mlx_hook(game.win, DestroyNotify, KeyPressMask, quit_prog, &game);
 	//mlx_loop_hook(game.mlx, draw_wall, &game);

@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/13 16:04:48 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:40:21 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@ int map[10][10] = {
 // Later adapt to get map from t_game
 bool	is_wall(int x, int y)
 {
-	if (map[x][y] && map[x][y] == 1)// Probably a repetition, how to check if the position is valid?
+	if (x <10 && y < 10 && map[x][y] == 1)// Probably a repetition, how to check if the position is valid?
+	{
+		// printf("Wall at: %d, %d\n", x, y);
 		return (true);
+	}
 	else
 		return (false);
 }
@@ -64,6 +67,8 @@ float	get_xa(float alpha)
 	float	xa;
 
 	xa = 0;
+	if (alpha == 0 || alpha == PI)
+		return (CUB_SIDE);
 	xa = CUB_SIDE / tan(alpha);
 	if (alpha > PI && alpha < PI_DOUBLE)
 		xa *= -1;
@@ -77,6 +82,8 @@ float	get_ya(float alpha)
 	float	ya;
 
 	ya = 0;
+	if (alpha == PI_HALF || alpha == PI_THREE_HALFS)
+		return (CUB_SIDE);
 	ya = CUB_SIDE * tan(alpha);
 	if (alpha > PI_THREE_HALFS || alpha < PI_HALF)
 		ya *= -1;
@@ -92,22 +99,21 @@ float	wall_dist_horizontal(t_point p, float alpha)
 	if (alpha > 0 && alpha < PI)// If the ray is facing up
 	{
 		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE - 1;
-		a.x = p.x + fabs(p.y - a.y) / tan(alpha);
+		a.x = p.x + (p.y - a.y) / tan(alpha);
 		offset.y = -1 * CUB_SIDE;
 	}
 	else if (alpha > PI && alpha < PI_DOUBLE)// If the ray is facing down
 	{
 		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE + CUB_SIDE;
-		a.x = p.x + fabs(p.y - a.y) / tan(alpha);
+		a.x = p.x + (p.y - a.y) / tan(alpha);
 		// a.x = p.x + (p.y - a.y) * (-1 / tan(alpha));
 		offset.y = CUB_SIDE;
 	}
-	else
+	else if (alpha == PI || alpha == 0)
 	{
 		a.y = p.y;
 		a.x = p.x;
 	}
-	// a.x = p.x + fabs(p.y - a.y) / tan(alpha);// not sure about this formula
 	offset.x = get_xa(alpha);
 	// offset.x = -1 * offset.y * (-1 / tan(alpha));
 	// Check for wall collision on horizontal lines
@@ -167,13 +173,13 @@ float	wall_dist_vertical(t_point p, float alpha)
 	if (alpha > PI_HALF && alpha < PI_THREE_HALFS)// If the ray is facing left
 	{
 		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE - 0.0001;
-		b.y = p.y - fabs(p.x - b.x) * tan(alpha);
+		b.y = p.y + (p.x - b.x) * tan(alpha);
 		offset.x = -1 * CUB_SIDE;
 	}
 	else if (alpha < PI_HALF || alpha > PI_THREE_HALFS)// If the ray is facing right
 	{
 		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE + CUB_SIDE;
-		b.y = p.y - fabs(p.x - b.x) * tan(alpha);
+		b.y = p.y + (p.x - b.x) * tan(alpha);
 		offset.x = CUB_SIDE;
 	}
 	else if (alpha == PI_HALF || alpha == PI_THREE_HALFS)
@@ -181,7 +187,6 @@ float	wall_dist_vertical(t_point p, float alpha)
 		b.x = p.x;
 		b.y = p.y;
 	}
-	// b.y = p.y - fabs(p.x - b.x) * tan(alpha);// not sure about this formula
 	offset.y = get_ya(alpha);
 	// offset.y = -1 * offset.x * (-1 * tan(alpha));
 	// Check for wall collision on horizontal lines
@@ -203,6 +208,8 @@ If one method failed to find wall, return the distance obtained
 by the other */
 float	shorter_distance(float horizontal, float vertical)
 {
+	// printf("horizontal: %f\n", horizontal);
+	// printf("vertical: %f\n", vertical);
 	if (horizontal == -1 && vertical == -1)
 		return (-1);
 	else if (horizontal == -1 && vertical > 0)

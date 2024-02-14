@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/14 10:43:30 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:49:56 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ int	handle_keypress(int keysym, t_game *g)
 	}
 	else
 		return (0);
-	// printf("g->p_pos.x: %f\n", g->p_pos.x);
-	// printf("g->p_pos.y: %f\n", g->p_pos.y);
 	draw_wall(g);
 	return (keysym);
 }
@@ -101,8 +99,9 @@ void	draw_minimap(t_game *g)// replace with map dimensions
 	}
 	draw_square(&g->img, (int)g->p_pos.x * MINIMAP_SCALE + offset - 3.5, \
 	(int)g->p_pos.y * MINIMAP_SCALE + offset - 3.5, CUB_SIDE / 3, RED);
+	// Draw player direction (HELP, how to apply rotation and maintain length of line)
 	draw_line(g, &(t_point_int){(int)g->p_pos.x * MINIMAP_SCALE + offset, \
 	(int)g->p_pos.y * MINIMAP_SCALE + offset}, \
-	&(t_point_int){(int)(g->p_pos.x + g->p_dir.x) * 0.4 + offset, \
-	(int)(g->p_pos.y + g->p_dir.y) * 0.4 + offset});
+	&(t_point_int){(int)(g->p_pos.x + g->p_dir.x * 7) * MINIMAP_SCALE, \
+	(int)(g->p_pos.y + g->p_dir.y * 7) * MINIMAP_SCALE});
 }

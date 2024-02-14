@@ -167,6 +167,7 @@ void	draw_background(t_img *img);
 
 /*--------------------------raycasting-----------------------*/
 int		draw_wall(t_game *game);
+bool	is_wall(int x, int y);
 
 /*----------------------------parser-------------------------*/
 /* void	parse_file(t_game *game, char *file); */

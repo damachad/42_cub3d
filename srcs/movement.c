@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/13 16:04:37 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/14 10:43:30 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,19 @@
 int	handle_keypress(int keysym, t_game *g)
 {
 	float	a;
+	int		offset;
 
 	a = g->p_angle;
+	offset = 4;
 	if (keysym == XK_Escape)
 		quit_prog(g);
 	else if (keysym == XK_w)
 	{
-		g->p_pos.x += g->p_dir.x;
-		g->p_pos.y += g->p_dir.y;
+		if (!is_wall((g->p_pos.x + g->p_dir.x * offset) / CUB_SIDE, (g->p_pos.y + g->p_dir.y * offset) / CUB_SIDE))
+		{
+			g->p_pos.x += g->p_dir.x;
+			g->p_pos.y += g->p_dir.y;
+		}
 	}
 	else if (keysym == XK_a)
 	{
@@ -33,8 +38,11 @@ int	handle_keypress(int keysym, t_game *g)
 	}
 	else if (keysym == XK_s)
 	{
-		g->p_pos.x -= g->p_dir.x;
-		g->p_pos.y -= g->p_dir.y;
+		if (!is_wall((g->p_pos.x - g->p_dir.x * offset) / CUB_SIDE, (g->p_pos.y - g->p_dir.y * offset) / CUB_SIDE))
+		{
+			g->p_pos.x -= g->p_dir.x;
+			g->p_pos.y -= g->p_dir.y;
+		}
 	}
 	else if (keysym == XK_d)
 	{

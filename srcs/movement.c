@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/14 13:49:56 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:25:05 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,11 @@ void	draw_minimap(t_game *g)// replace with map dimensions
 		while (++j < 10)
 		{
 			if (map[i][j] == 1)
-				draw_square(&g->img, (i * CUB_SIDE * MINIMAP_SCALE) + offset, \
-				(j * CUB_SIDE * MINIMAP_SCALE) + offset, CUB_SIDE, WHITE);
+				draw_square(&g->img, (j * CUB_SIDE * MINIMAP_SCALE) + offset, \
+				(i * CUB_SIDE * MINIMAP_SCALE) + offset, CUB_SIDE, WHITE);
 			else
-				draw_square(&g->img, (i * CUB_SIDE * MINIMAP_SCALE) + offset, \
-				(j * CUB_SIDE * MINIMAP_SCALE) + offset, CUB_SIDE, BLACK);
+				draw_square(&g->img, (j * CUB_SIDE * MINIMAP_SCALE) + offset, \
+				(i * CUB_SIDE * MINIMAP_SCALE) + offset, CUB_SIDE, BLACK);
 		}
 	}
 	draw_square(&g->img, (int)g->p_pos.x * MINIMAP_SCALE + offset - 3.5, \

@@ -11,10 +11,11 @@ Parser:
 
 Graphics:
 - How to get strip from a mlx image and draw it? Textured walls;
-- Smooth walls when looking forward parallel to a wall and fix somecurved perspectives;
+- Smooth walls when looking forward parallel to a wall and fix somecurved perspectives (upper wall);
 - Fix direction line on minimap (how to make it rotate with the player, maintaining its length);
 - Smoth movement (KeyUp vs KeyDown);
 - Slide paralel to wall when trying to go past it;
+
 
 ## Links:
 - [Raycasting and DDA](https://lodev.org/cgtutor/raycasting.html) (contains 2 files with implementations in c++)

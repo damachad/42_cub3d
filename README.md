@@ -10,12 +10,11 @@ Parser:
 - Checker for other elements besides the map (textures and colors);   
 
 Graphics:
-- How to get strip from a mlx image and draw it? Textured walls;
-- Smooth walls when looking forward parallel to a wall and fix somecurved perspectives (upper wall);
-- Fix direction line on minimap (how to make it rotate with the player, maintaining its length);
 - Smoth movement (KeyUp vs KeyDown);
+- How to get strip from a mlx image and draw it? Textured walls;
+- Fix direction line on minimap (how to make it rotate with the player, maintaining its length);
 - Slide paralel to wall when trying to go past it;
-
+- Fisheye correction not working perfectly;
 
 ## Links:
 - [Raycasting and DDA](https://lodev.org/cgtutor/raycasting.html) (contains 2 files with implementations in c++)

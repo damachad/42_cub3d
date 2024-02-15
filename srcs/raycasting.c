@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/15 10:19:47 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:31:52 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int map[10][10] = {
 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	{1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -30,7 +30,7 @@ bool	is_wall(int x, int y)
 {
 	if (x < 10 && y < 10 && map[y][x] == 1)// How to check if the position is valid?
 	{
-		// printf("Wall at: %d, %d\n", x, y);
+		// printf("IS WALL: Wall at: %d, %d\n", x, y);
 		return (true);
 	}
 	else
@@ -98,7 +98,7 @@ float	wall_dist_horizontal(t_point p, float alpha)
 	offset.y = 0;
 	if (alpha > 0 && alpha < PI)// If the ray is facing up
 	{
-		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE - 1;
+		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE - 0.0001;
 		a.x = p.x + (p.y - a.y) / tan(alpha);
 		offset.y = -1 * CUB_SIDE;
 	}
@@ -222,6 +222,18 @@ float	shorter_distance(float horizontal, float vertical)
 		return (horizontal);
 }
 
+double	fisheye_correction(double pa, double ra)
+{
+	double	ca;
+	
+	ca = pa - ra;
+	if (ca < 0)
+		ca += PI_DOUBLE;
+	else if (ca > PI_DOUBLE)
+		ca -= PI_DOUBLE;
+	return (cos(ca));
+}
+
 int	draw_wall(t_game *g)
 {
 	int		x;
@@ -251,7 +263,8 @@ int	draw_wall(t_game *g)
 			ft_putstr_fd("Error calculating wall distance\n", 2);
 			break;
 		}
-		d_to_wall *= cos(fabs(g->p_angle - alpha));// fisheye-correction
+		d_to_wall *= fisheye_correction(g->p_angle, alpha);// Not working perfectly
+		// d_to_wall *= cos(fabs(g->p_angle - alpha));// fisheye-correction
 		// printf("d_to_wall: %f\n", d_to_wall);
 		proj_wall_height = (CUB_SIDE / d_to_wall * d_to_proj_plane);
 		draw_line(g, &(t_point_int){x, SCREEN_HEIGHT / 2 + proj_wall_height / 2}, &(t_point_int){x, SCREEN_HEIGHT / 2 - proj_wall_height / 2});

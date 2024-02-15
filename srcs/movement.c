@@ -6,24 +6,43 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/15 11:56:47 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:23:48 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+void	wall_sliding(t_game *g)
+{
+	if (g->wall_side == 0)
+	{
+		if ((g->p_angle < PI_HALF || g->p_angle > PI_THREE_HALFS) && 
+		!is_wall((g->p_pos.x + SPEED + WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
+			g->p_pos.x += SPEED;
+		else if (g->p_angle > PI_HALF && g->p_angle < PI_THREE_HALFS && 
+		!is_wall((g->p_pos.x - SPEED - WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
+			g->p_pos.x -= SPEED;
+	}
+	else if (g->wall_side == 1)
+	{
+		if (g->p_angle < PI && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y - SPEED - WALL_BUFF) / CUB_SIDE))
+			g->p_pos.y -= SPEED;
+		else if (g->p_angle > PI && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y + SPEED + WALL_BUFF) / CUB_SIDE))
+			g->p_pos.y += SPEED;
+	}
+}
+
 int	render_movement(t_game *g)
 {
-	int		offset;
-
-	offset = 4;
 	if (g->keys.w)
 	{
-		if (!is_wall((g->p_pos.x + g->p_dir.x * offset) / CUB_SIDE, (g->p_pos.y + g->p_dir.y * offset) / CUB_SIDE))
+		if (!is_wall((g->p_pos.x + g->p_dir.x * WALL_BUFF) / CUB_SIDE, (g->p_pos.y + g->p_dir.y * WALL_BUFF) / CUB_SIDE))
 		{
 			g->p_pos.x += g->p_dir.x;
 			g->p_pos.y += g->p_dir.y;
 		}
+		else
+			wall_sliding(g);
 	}
 	else if (g->keys.a)
 	{
@@ -34,7 +53,7 @@ int	render_movement(t_game *g)
 	}
 	else if (g->keys.s)
 	{
-		if (!is_wall((g->p_pos.x - g->p_dir.x * offset) / CUB_SIDE, (g->p_pos.y - g->p_dir.y * offset) / CUB_SIDE))
+		if (!is_wall((g->p_pos.x - g->p_dir.x * WALL_BUFF) / CUB_SIDE, (g->p_pos.y - g->p_dir.y * WALL_BUFF) / CUB_SIDE))
 		{
 			g->p_pos.x -= g->p_dir.x;
 			g->p_pos.y -= g->p_dir.y;
@@ -62,9 +81,6 @@ int	handle_keypress(int keysym, t_game *g)
 		g->keys.s = 1;
 	else if (keysym == XK_d)
 		g->keys.d = 1;
-	else
-		return (0);
-	draw_wall(g);
 	return (keysym);
 }
 

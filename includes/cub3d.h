@@ -49,8 +49,9 @@
 # define CEILING "" // Check for valid range
 # define START_ANGLE 1 // angle in radians
 # define MINIMAP_SCALE 0.3
-# define SPEED 4
-# define ROT_SPEED 0.05
+# define SPEED 2
+# define ROT_SPEED 0.04
+# define WALL_BUFF 5
 
 # define PI 3.1415926535
 # define PI_DOUBLE 6.2831853071
@@ -144,6 +145,7 @@ typedef struct s_game
 	t_sprite		*sprites;
 	t_input			*input;
 	t_keys			keys;
+	int				wall_side;
 }					t_game;
 
 extern int	map[10][10];

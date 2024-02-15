@@ -12,7 +12,6 @@ Parser:
 Graphics:
 - How to get strip from a mlx image and draw it? Textured walls;
 - Fix direction line on minimap (how to make it rotate with the player, maintaining its length);
-- Slide paralel to wall when trying to go past it;
 - Fisheye correction not working perfectly;
 
 ## Links:

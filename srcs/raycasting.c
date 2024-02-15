@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/15 11:31:52 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:15:42 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,16 +203,31 @@ float	wall_dist_vertical(t_point p, float alpha)
 	return (-1);
 }
 
+void	set_wall_side(t_game *g, float horizontal, float vertical)
+{
+	if (horizontal == -1 && vertical > 0)
+		g->wall_side = 1; // vertical
+	else if (vertical == -1 && horizontal > 0)
+		g->wall_side = 0; // horizontal
+	else if (horizontal > vertical)
+		g->wall_side = 1;
+	else
+		g->wall_side = 0;
+	// printf("wall_side: %d\n", g->wall_side);
+}
+
 /* Returns shorter distance
 If one method failed to find wall, return the distance obtained 
 by the other */
-float	shorter_distance(float horizontal, float vertical)
+float	shorter_distance(t_game *g, float horizontal, float vertical, bool p_ray)
 {
 	// printf("horizontal: %f\n", horizontal);
 	// printf("vertical: %f\n", vertical);
 	if (horizontal == -1 && vertical == -1)
 		return (-1);
-	else if (horizontal == -1 && vertical > 0)
+	else if (p_ray)
+		set_wall_side(g, horizontal, vertical);
+	if (horizontal == -1 && vertical > 0)
 		return (vertical);
 	else if (vertical == -1 && horizontal > 0)
 		return (horizontal);
@@ -255,7 +270,8 @@ int	draw_wall(t_game *g)
 	draw_minimap(g);
 	while (++x < SCREEN_WIDTH)
 	{
-		d_to_wall = shorter_distance(wall_dist_horizontal(g->p_pos, alpha), wall_dist_vertical(g->p_pos, alpha));
+		d_to_wall = shorter_distance(g, wall_dist_horizontal(g->p_pos, alpha), wall_dist_vertical(g->p_pos, alpha), \
+		(fabs(alpha - g->p_angle) < (float)1/SCREEN_WIDTH));
 		// printf("Iteration: %d\n", x);
 		// printf("alpha: %f\n", alpha);
 		if (d_to_wall == -1)

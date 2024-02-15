@@ -6,22 +6,18 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/15 10:25:05 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:56:47 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	handle_keypress(int keysym, t_game *g)
+int	render_movement(t_game *g)
 {
-	float	a;
 	int		offset;
 
-	a = g->p_angle;
 	offset = 4;
-	if (keysym == XK_Escape)
-		quit_prog(g);
-	else if (keysym == XK_w)
+	if (g->keys.w)
 	{
 		if (!is_wall((g->p_pos.x + g->p_dir.x * offset) / CUB_SIDE, (g->p_pos.y + g->p_dir.y * offset) / CUB_SIDE))
 		{
@@ -29,14 +25,14 @@ int	handle_keypress(int keysym, t_game *g)
 			g->p_pos.y += g->p_dir.y;
 		}
 	}
-	else if (keysym == XK_a)
+	else if (g->keys.a)
 	{
-		g->p_angle += 0.1;
+		g->p_angle += ROT_SPEED;
 		if (g->p_angle >= PI_DOUBLE)
 			g->p_angle -= PI_DOUBLE;
-		g->p_dir = (t_point){cos(a) * 5, sin(a) * -5};
+		g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
 	}
-	else if (keysym == XK_s)
+	else if (g->keys.s)
 	{
 		if (!is_wall((g->p_pos.x - g->p_dir.x * offset) / CUB_SIDE, (g->p_pos.y - g->p_dir.y * offset) / CUB_SIDE))
 		{
@@ -44,16 +40,44 @@ int	handle_keypress(int keysym, t_game *g)
 			g->p_pos.y -= g->p_dir.y;
 		}
 	}
-	else if (keysym == XK_d)
+	else if (g->keys.d)
 	{
-		g->p_angle -= 0.1;
+		g->p_angle -= ROT_SPEED;
 		if (g->p_angle < 0)
 			g->p_angle += PI_DOUBLE;
-		g->p_dir = (t_point){cos(a) * 5, sin(a) * -5};
+		g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
 	}
+	draw_wall(g);
+	return (0);
+}
+int	handle_keypress(int keysym, t_game *g)
+{
+	if (keysym == XK_Escape)
+		quit_prog(g);
+	else if (keysym == XK_w)
+		g->keys.w = 1;
+	else if (keysym == XK_a)
+		g->keys.a = 1;
+	else if (keysym == XK_s)
+		g->keys.s = 1;
+	else if (keysym == XK_d)
+		g->keys.d = 1;
 	else
 		return (0);
 	draw_wall(g);
+	return (keysym);
+}
+
+int	handle_keyrelease(int keysym, t_game *g)
+{
+	if (keysym == XK_w)
+		g->keys.w = 0;
+	else if (keysym == XK_a)
+		g->keys.a = 0;
+	else if (keysym == XK_s)
+		g->keys.s = 0;
+	else if (keysym == XK_d)
+		g->keys.d = 0;
 	return (keysym);
 }
 

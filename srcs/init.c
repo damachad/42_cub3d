@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/14 13:30:15 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/15 11:55:07 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	init_player(t_game *g)// later get values from mapfile
 {
 	g->p_angle = START_ANGLE;
 	g->p_pos = (t_point){(float)3 * CUB_SIDE + CUB_SIDE/2, (float)3 * CUB_SIDE + CUB_SIDE/2};
-	g->p_dir = (t_point){cos(g->p_angle) * 5, sin(g->p_angle) * -5};
+	g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
 	// printf("p_pos.x: %f\n", g->p_pos.x);
 	// printf("p_pos.y: %f\n", g->p_pos.y);
 	// printf("p_dir.x: %f\n", g->p_dir.x);
@@ -85,7 +85,8 @@ void	start_game(char	*mapfile)
 	load_sprites(&game);
 	draw_wall(&game);
 	mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);
+	mlx_hook(game.win, KeyRelease, KeyReleaseMask, handle_keyrelease, &game);
 	mlx_hook(game.win, DestroyNotify, KeyPressMask, quit_prog, &game);
-	//mlx_loop_hook(game.mlx, draw_wall, &game);
+	mlx_loop_hook(game.mlx, render_movement, &game);
 	mlx_loop(game.mlx);
 }

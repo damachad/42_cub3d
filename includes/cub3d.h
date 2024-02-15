@@ -49,6 +49,8 @@
 # define CEILING "" // Check for valid range
 # define START_ANGLE 1 // angle in radians
 # define MINIMAP_SCALE 0.3
+# define SPEED 4
+# define ROT_SPEED 0.05
 
 # define PI 3.1415926535
 # define PI_DOUBLE 6.2831853071
@@ -87,6 +89,14 @@ typedef struct s_point_int
 	int	x;
 	int	y;
 }					t_point_int;
+
+typedef struct s_keys
+{
+	bool	w;
+	bool	a;
+	bool	s;
+	bool	d;
+}			t_keys;
 
 typedef struct s_map
 {
@@ -133,6 +143,7 @@ typedef struct s_game
 	t_img			img;
 	t_sprite		*sprites;
 	t_input			*input;
+	t_keys			keys;
 }					t_game;
 
 extern int	map[10][10];
@@ -177,6 +188,8 @@ void	*safe_malloc(int bytes);
 
 /*---------------------------movement------------------------*/
 int		handle_keypress(int keysym, t_game *g);
+int		handle_keyrelease(int keysym, t_game *g);
+int		render_movement(t_game *g);
 void	draw_minimap(t_game *g);
 
 #endif

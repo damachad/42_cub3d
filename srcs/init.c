@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/15 15:59:21 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/16 11:44:48 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	init_player(t_game *g)// later get values from mapfile
 	g->p_pos = (t_point){(float)3 * CUB_SIDE + CUB_SIDE/2, (float)3 * CUB_SIDE + CUB_SIDE/2};
 	g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
 	g->wall_side = -1;
+	g->back_wall = -1;
 	// printf("p_pos.x: %f\n", g->p_pos.x);
 	// printf("p_pos.y: %f\n", g->p_pos.y);
 	// printf("p_dir.x: %f\n", g->p_dir.x);

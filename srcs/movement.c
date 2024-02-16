@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/15 16:23:48 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/16 11:42:52 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,26 @@ void	wall_sliding(t_game *g)
 			g->p_pos.y -= SPEED;
 		else if (g->p_angle > PI && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y + SPEED + WALL_BUFF) / CUB_SIDE))
 			g->p_pos.y += SPEED;
+	}
+}
+
+void	wall_sliding_back(t_game *g)
+{
+	if (g->back_wall == 0)
+	{
+		if ((g->p_angle < PI_HALF || g->p_angle > PI_THREE_HALFS) && 
+		!is_wall((g->p_pos.x - SPEED - WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
+			g->p_pos.x -= SPEED;
+		else if (g->p_angle > PI_HALF && g->p_angle < PI_THREE_HALFS && 
+		!is_wall((g->p_pos.x + SPEED + WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
+			g->p_pos.x += SPEED;
+	}
+	else if (g->back_wall == 1)
+	{
+		if (g->p_angle < PI && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y + SPEED + WALL_BUFF) / CUB_SIDE))
+			g->p_pos.y += SPEED;
+		else if (g->p_angle > PI && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y - SPEED - WALL_BUFF) / CUB_SIDE))
+			g->p_pos.y -= SPEED;
 	}
 }
 
@@ -58,6 +78,8 @@ int	render_movement(t_game *g)
 			g->p_pos.x -= g->p_dir.x;
 			g->p_pos.y -= g->p_dir.y;
 		}
+		else
+			wall_sliding_back(g);
 	}
 	else if (g->keys.d)
 	{

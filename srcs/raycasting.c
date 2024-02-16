@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/15 16:15:42 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/16 11:44:14 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,22 @@ float	shorter_distance(t_game *g, float horizontal, float vertical, bool p_ray)
 		return (horizontal);
 }
 
+void	set_back_wall(t_game *g, float horizontal, float vertical)
+{
+	// printf("horizontal: %f\n", horizontal);
+	// printf("vertical: %f\n", vertical);
+	if (horizontal == -1 && vertical == -1)
+		return;
+	if (horizontal == -1 && vertical > 0)
+		g->back_wall = 1; // vertical
+	else if (vertical == -1 && horizontal > 0)
+		g->back_wall = 0; // horizontal
+	else if (horizontal > vertical)
+		g->back_wall = 1;
+	else
+		g->back_wall = 0;
+}
+
 double	fisheye_correction(double pa, double ra)
 {
 	double	ca;
@@ -256,6 +272,7 @@ int	draw_wall(t_game *g)
 	float	d_to_wall;
 	float	proj_wall_height;
 	float	d_to_proj_plane;
+	float	back_angle;
 	
 	alpha = g->p_angle + ((float)FOV / 2);
 	// printf("g->p_angle: %f\n", g->p_angle);
@@ -272,6 +289,13 @@ int	draw_wall(t_game *g)
 	{
 		d_to_wall = shorter_distance(g, wall_dist_horizontal(g->p_pos, alpha), wall_dist_vertical(g->p_pos, alpha), \
 		(fabs(alpha - g->p_angle) < (float)1/SCREEN_WIDTH));
+		if (fabs(alpha - g->p_angle) < (float)1/SCREEN_WIDTH)
+		{
+			back_angle = g->p_angle - PI;
+			if (back_angle < 0)
+				back_angle += PI_DOUBLE;
+			set_back_wall(g, wall_dist_horizontal(g->p_pos, back_angle), wall_dist_vertical(g->p_pos, back_angle));
+		}
 		// printf("Iteration: %d\n", x);
 		// printf("alpha: %f\n", alpha);
 		if (d_to_wall == -1)

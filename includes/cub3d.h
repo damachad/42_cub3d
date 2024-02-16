@@ -146,6 +146,7 @@ typedef struct s_game
 	t_input			*input;
 	t_keys			keys;
 	int				wall_side;
+	int				back_wall;
 }					t_game;
 
 extern int	map[10][10];

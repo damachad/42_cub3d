@@ -6,48 +6,50 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/16 11:42:52 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/16 12:07:45 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+/* Makes player move parallel to wall when trying to move (fowards) past it */
 void	wall_sliding(t_game *g)
 {
 	if (g->wall_side == 0)
 	{
-		if ((g->p_angle < PI_HALF || g->p_angle > PI_THREE_HALFS) && 
+		if ((g->p_angle < PI_HALF - SLIDE_BUFF || g->p_angle > PI_THREE_HALFS + SLIDE_BUFF) && 
 		!is_wall((g->p_pos.x + SPEED + WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
 			g->p_pos.x += SPEED;
-		else if (g->p_angle > PI_HALF && g->p_angle < PI_THREE_HALFS && 
+		else if (g->p_angle > PI_HALF + SLIDE_BUFF && g->p_angle < PI_THREE_HALFS - SLIDE_BUFF && 
 		!is_wall((g->p_pos.x - SPEED - WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
 			g->p_pos.x -= SPEED;
 	}
 	else if (g->wall_side == 1)
 	{
-		if (g->p_angle < PI && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y - SPEED - WALL_BUFF) / CUB_SIDE))
+		if (g->p_angle < PI - SLIDE_BUFF && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y - SPEED - WALL_BUFF) / CUB_SIDE))
 			g->p_pos.y -= SPEED;
-		else if (g->p_angle > PI && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y + SPEED + WALL_BUFF) / CUB_SIDE))
+		else if (g->p_angle > PI + SLIDE_BUFF && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y + SPEED + WALL_BUFF) / CUB_SIDE))
 			g->p_pos.y += SPEED;
 	}
 }
 
+/* Makes player move parallel to wall when trying to move (backwards) past it */
 void	wall_sliding_back(t_game *g)
 {
 	if (g->back_wall == 0)
 	{
-		if ((g->p_angle < PI_HALF || g->p_angle > PI_THREE_HALFS) && 
+		if ((g->p_angle < PI_HALF - SLIDE_BUFF || g->p_angle > PI_THREE_HALFS + SLIDE_BUFF) && 
 		!is_wall((g->p_pos.x - SPEED - WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
 			g->p_pos.x -= SPEED;
-		else if (g->p_angle > PI_HALF && g->p_angle < PI_THREE_HALFS && 
+		else if (g->p_angle > PI_HALF + SLIDE_BUFF && g->p_angle < PI_THREE_HALFS - SLIDE_BUFF && 
 		!is_wall((g->p_pos.x + SPEED + WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
 			g->p_pos.x += SPEED;
 	}
 	else if (g->back_wall == 1)
 	{
-		if (g->p_angle < PI && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y + SPEED + WALL_BUFF) / CUB_SIDE))
+		if (g->p_angle < PI - SLIDE_BUFF && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y + SPEED + WALL_BUFF) / CUB_SIDE))
 			g->p_pos.y += SPEED;
-		else if (g->p_angle > PI && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y - SPEED - WALL_BUFF) / CUB_SIDE))
+		else if (g->p_angle > PI + SLIDE_BUFF && !is_wall(g->p_pos.x / CUB_SIDE, (g->p_pos.y - SPEED - WALL_BUFF) / CUB_SIDE))
 			g->p_pos.y -= SPEED;
 	}
 }

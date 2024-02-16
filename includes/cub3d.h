@@ -52,6 +52,7 @@
 # define SPEED 2
 # define ROT_SPEED 0.04
 # define WALL_BUFF 5
+# define SLIDE_BUFF 0.17
 
 # define PI 3.1415926535
 # define PI_DOUBLE 6.2831853071
@@ -138,8 +139,6 @@ typedef struct s_game
 	float			p_angle;
 	t_point			p_pos;
 	t_point			p_dir;
-	float			time;
-	float			old_time;
 	t_map			*map;
 	t_img			img;
 	t_sprite		*sprites;

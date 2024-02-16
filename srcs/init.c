@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/16 11:44:48 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/16 11:56:45 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ t_img	new_img(t_game *game)
 	img.height = SCREEN_HEIGHT;
 	return (img);
 }
-
-// NOTE: Functions from So_long, need to be adapted
 
 /* Initialize graphics using mlx_init() and mlx_new_window() */
 void	init_graphics(t_game *game)
@@ -63,10 +61,6 @@ void	init_player(t_game *g)// later get values from mapfile
 	g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
 	g->wall_side = -1;
 	g->back_wall = -1;
-	// printf("p_pos.x: %f\n", g->p_pos.x);
-	// printf("p_pos.y: %f\n", g->p_pos.y);
-	// printf("p_dir.x: %f\n", g->p_dir.x);
-	// printf("p_dir.y: %f\n", g->p_dir.y);
 }
 
 /* Initialize 't_game' struct, load and check map,

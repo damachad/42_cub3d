@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/16 11:44:14 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/16 11:53:14 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,7 @@ int map[10][10] = {
 bool	is_wall(int x, int y)
 {
 	if (x < 10 && y < 10 && map[y][x] == 1)// How to check if the position is valid?
-	{
-		// printf("IS WALL: Wall at: %d, %d\n", x, y);
 		return (true);
-	}
 	else
 		return (false);
 }
@@ -130,39 +127,6 @@ float	wall_dist_horizontal(t_point p, float alpha)
 	return (-1);
 }
 
-// float	wall_dist_horizontal(t_point p, float alpha)
-// {
-// 	t_point 	a;
-// 	t_point		offset;
-// 	int			dof;
-	
-// 	offset.y = 0;
-// 	offset.x = 0;
-// 	dof = 0;
-// 	if (alpha < PI)// If the ray is facing up
-// 	{
-// 		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE - 0.0001;
-// 		offset.y = -1 * CUB_SIDE;
-// 	}
-// 	else if (alpha > PI)// If the ray is facing down
-// 	{
-// 		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE + CUB_SIDE;
-// 		offset.y = CUB_SIDE;
-// 	}
-// 	else if (alpha == PI || alpha == 0)
-// 	{
-// 		a.y = p.y;
-// 		a.x = p.x;
-// 	}
-// 	a.x = p.x + (p.y - a.y) * (-1 / tan(alpha));
-// 	offset.x = -1 * offset.y * (-1 / tan(alpha));
-// 	while (dof < 10)
-// 	{
-		
-// 	}
-// 	return (-1);
-// }
-
 // Transform alpha so that when it is bigger than 2PI, resets to 0
 float	wall_dist_vertical(t_point p, float alpha)
 {
@@ -203,6 +167,7 @@ float	wall_dist_vertical(t_point p, float alpha)
 	return (-1);
 }
 
+/* Sets if player is facing a N/S or W/E wall */
 void	set_wall_side(t_game *g, float horizontal, float vertical)
 {
 	if (horizontal == -1 && vertical > 0)
@@ -213,7 +178,6 @@ void	set_wall_side(t_game *g, float horizontal, float vertical)
 		g->wall_side = 1;
 	else
 		g->wall_side = 0;
-	// printf("wall_side: %d\n", g->wall_side);
 }
 
 /* Returns shorter distance
@@ -221,8 +185,6 @@ If one method failed to find wall, return the distance obtained
 by the other */
 float	shorter_distance(t_game *g, float horizontal, float vertical, bool p_ray)
 {
-	// printf("horizontal: %f\n", horizontal);
-	// printf("vertical: %f\n", vertical);
 	if (horizontal == -1 && vertical == -1)
 		return (-1);
 	else if (p_ray)
@@ -237,10 +199,9 @@ float	shorter_distance(t_game *g, float horizontal, float vertical, bool p_ray)
 		return (horizontal);
 }
 
+/* Sets if player's back is facing a N/S or W/E wall */
 void	set_back_wall(t_game *g, float horizontal, float vertical)
 {
-	// printf("horizontal: %f\n", horizontal);
-	// printf("vertical: %f\n", vertical);
 	if (horizontal == -1 && vertical == -1)
 		return;
 	if (horizontal == -1 && vertical > 0)
@@ -253,9 +214,9 @@ void	set_back_wall(t_game *g, float horizontal, float vertical)
 		g->back_wall = 0;
 }
 
-double	fisheye_correction(double pa, double ra)
+float	fisheye_correction(float pa, float ra)
 {
-	double	ca;
+	float	ca;
 	
 	ca = pa - ra;
 	if (ca < 0)
@@ -275,7 +236,6 @@ int	draw_wall(t_game *g)
 	float	back_angle;
 	
 	alpha = g->p_angle + ((float)FOV / 2);
-	// printf("g->p_angle: %f\n", g->p_angle);
 	if (alpha >= PI_DOUBLE)
 		alpha -= PI_DOUBLE;
 	x = -1;
@@ -296,8 +256,6 @@ int	draw_wall(t_game *g)
 				back_angle += PI_DOUBLE;
 			set_back_wall(g, wall_dist_horizontal(g->p_pos, back_angle), wall_dist_vertical(g->p_pos, back_angle));
 		}
-		// printf("Iteration: %d\n", x);
-		// printf("alpha: %f\n", alpha);
 		if (d_to_wall == -1)
 		{
 			ft_putstr_fd("Error calculating wall distance\n", 2);
@@ -305,7 +263,6 @@ int	draw_wall(t_game *g)
 		}
 		d_to_wall *= fisheye_correction(g->p_angle, alpha);// Not working perfectly
 		// d_to_wall *= cos(fabs(g->p_angle - alpha));// fisheye-correction
-		// printf("d_to_wall: %f\n", d_to_wall);
 		proj_wall_height = (CUB_SIDE / d_to_wall * d_to_proj_plane);
 		draw_line(g, &(t_point_int){x, SCREEN_HEIGHT / 2 + proj_wall_height / 2}, &(t_point_int){x, SCREEN_HEIGHT / 2 - proj_wall_height / 2});
 		alpha -= (float)1/SCREEN_WIDTH;

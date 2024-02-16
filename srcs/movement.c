@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/16 12:07:45 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:25:53 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,5 +167,5 @@ void	draw_minimap(t_game *g)// replace with map dimensions
 	draw_line(g, &(t_point_int){(int)g->p_pos.x * MINIMAP_SCALE + offset, \
 	(int)g->p_pos.y * MINIMAP_SCALE + offset}, \
 	&(t_point_int){(int)(g->p_pos.x + g->p_dir.x * 7) * MINIMAP_SCALE, \
-	(int)(g->p_pos.y + g->p_dir.y * 7) * MINIMAP_SCALE});
+	(int)(g->p_pos.y + g->p_dir.y * 7) * MINIMAP_SCALE}, RED);
 }

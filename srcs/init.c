@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/16 11:56:45 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:31:59 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	init_player(t_game *g)// later get values from mapfile
 	g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
 	g->wall_side = -1;
 	g->back_wall = -1;
+	g->draw_offset_x = -1;
+	g->draw_offset_y = -1;
 }
 
 /* Initialize 't_game' struct, load and check map,

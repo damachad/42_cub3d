@@ -10,7 +10,7 @@ Parser:
 - Checker for other elements besides the map (textures and colors);   
 
 Graphics:
-- How to get strip from a mlx image and draw it? Textured walls;
+- Textured walls (how to get information from textures and incorporate with draw_line to draw specific color in pixel?);
 - Fix direction line on minimap (how to make it rotate with the player, maintaining its length);
 - Fisheye correction not working perfectly;
 

@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/16 11:53:14 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:48:01 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ float	get_ya(float alpha)
 	return (ya);
 }
 
-float	wall_dist_horizontal(t_point p, float alpha)
+float	wall_dist_horizontal(t_game *g, t_point p, float alpha)
 {
 	t_point 	a;
 	t_point		offset;
@@ -117,7 +117,10 @@ float	wall_dist_horizontal(t_point p, float alpha)
 	while (a.x < SCREEN_WIDTH && a.x > 0 && a.y > 0 && a.y < SCREEN_HEIGHT)// should be while in map range
 	{
 		if (is_wall(a.x / CUB_SIDE, a.y / CUB_SIDE))
+		{
+			g->draw_offset_x = (int)a.x % CUB_SIDE;
 			return (get_distance(a, p, alpha));
+		}
 		else
 		{
 			a.x += offset.x;
@@ -128,7 +131,7 @@ float	wall_dist_horizontal(t_point p, float alpha)
 }
 
 // Transform alpha so that when it is bigger than 2PI, resets to 0
-float	wall_dist_vertical(t_point p, float alpha)
+float	wall_dist_vertical(t_game *g, t_point p, float alpha)
 {
 	t_point 	b;
 	t_point		offset;
@@ -157,7 +160,10 @@ float	wall_dist_vertical(t_point p, float alpha)
 	while (b.x < SCREEN_WIDTH && b.x > 0 && b.y > 0 && b.y < SCREEN_HEIGHT)
 	{
 		if (is_wall(b.x / CUB_SIDE, b.y / CUB_SIDE))
+		{
+			g->draw_offset_y = (int)b.y % CUB_SIDE;
 			return (get_distance(b, p, alpha));
+		}
 		else
 		{
 			b.x += offset.x;
@@ -180,7 +186,7 @@ void	set_wall_side(t_game *g, float horizontal, float vertical)
 		g->wall_side = 0;
 }
 
-/* Returns shorter distance
+/* Returns shorter distance and chooses bitmap offset for wall texture
 If one method failed to find wall, return the distance obtained 
 by the other */
 float	shorter_distance(t_game *g, float horizontal, float vertical, bool p_ray)
@@ -190,13 +196,25 @@ float	shorter_distance(t_game *g, float horizontal, float vertical, bool p_ray)
 	else if (p_ray)
 		set_wall_side(g, horizontal, vertical);
 	if (horizontal == -1 && vertical > 0)
+	{
+		g->draw_offset_x = -1;
 		return (vertical);
+	}
 	else if (vertical == -1 && horizontal > 0)
+	{
+		g->draw_offset_y = -1;
 		return (horizontal);
+	}
 	else if (horizontal > vertical)
+	{
+		g->draw_offset_x = -1;
 		return (vertical);
+	}
 	else
+	{
+		g->draw_offset_y = -1;
 		return (horizontal);
+	}
 }
 
 /* Sets if player's back is facing a N/S or W/E wall */
@@ -247,14 +265,14 @@ int	draw_wall(t_game *g)
 	draw_minimap(g);
 	while (++x < SCREEN_WIDTH)
 	{
-		d_to_wall = shorter_distance(g, wall_dist_horizontal(g->p_pos, alpha), wall_dist_vertical(g->p_pos, alpha), \
+		d_to_wall = shorter_distance(g, wall_dist_horizontal(g, g->p_pos, alpha), wall_dist_vertical(g, g->p_pos, alpha), \
 		(fabs(alpha - g->p_angle) < (float)1/SCREEN_WIDTH));
 		if (fabs(alpha - g->p_angle) < (float)1/SCREEN_WIDTH)
 		{
 			back_angle = g->p_angle - PI;
 			if (back_angle < 0)
 				back_angle += PI_DOUBLE;
-			set_back_wall(g, wall_dist_horizontal(g->p_pos, back_angle), wall_dist_vertical(g->p_pos, back_angle));
+			set_back_wall(g, wall_dist_horizontal(g, g->p_pos, back_angle), wall_dist_vertical(g, g->p_pos, back_angle));
 		}
 		if (d_to_wall == -1)
 		{
@@ -264,7 +282,8 @@ int	draw_wall(t_game *g)
 		d_to_wall *= fisheye_correction(g->p_angle, alpha);// Not working perfectly
 		// d_to_wall *= cos(fabs(g->p_angle - alpha));// fisheye-correction
 		proj_wall_height = (CUB_SIDE / d_to_wall * d_to_proj_plane);
-		draw_line(g, &(t_point_int){x, SCREEN_HEIGHT / 2 + proj_wall_height / 2}, &(t_point_int){x, SCREEN_HEIGHT / 2 - proj_wall_height / 2});
+		draw_line(g, &(t_point_int){x, SCREEN_HEIGHT / 2 + proj_wall_height / 2}, \
+		&(t_point_int){x, SCREEN_HEIGHT / 2 - proj_wall_height / 2}, RED_BRICK);
 		alpha -= (float)1/SCREEN_WIDTH;
 		if (alpha < 0)
 			alpha += PI_DOUBLE;

@@ -55,7 +55,7 @@ static void	bresenham_define(t_bresenham *param, t_point_int *a, t_point_int *b)
 /* Check if the current point is within image boundaries
 * Check if we have reached the end point
 * Increment or decrement x and y coordinates based on error parameter*/
-void	draw_line(t_game *game, t_point_int *a, t_point_int *b)
+void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color)
 {
 	t_bresenham	param;
 
@@ -68,7 +68,7 @@ void	draw_line(t_game *game, t_point_int *a, t_point_int *b)
 		if (param.x0 < SCREEN_WIDTH && param.x0 > 0
 			&& param.y0 < SCREEN_HEIGHT && param.y0 > 0)
 			//for now draw RED by default
-			put_pixel(&game->img, param.x0, param.y0, RED_BRICK);
+			put_pixel(&game->img, param.x0, param.y0, color); // How to get color to apply in pixel from texture?
 		if (param.x0 == b->x && param.y0 == b->y)
 			break ;
 		if (2 * param.err >= param.dy && param.x0 != b->x)

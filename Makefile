@@ -6,7 +6,7 @@
 #    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/02/10 20:16:35 by marvin           ###   ########.fr        #
+#    Updated: 2024/02/16 20:38:36 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ NAME 		= cub3D
 LIBFT		= libft/libft.a
 MLX			= mlx/libmlx.a
 FILES 		= main map init clean checker draw_line background raycasting \
-			utils parser debug_print
+			utils movement parser debug_print
 SRC 		= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
 OBJ 		= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
 

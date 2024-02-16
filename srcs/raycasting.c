@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/09 15:16:51 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:48:01 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,213 +19,277 @@ int map[10][10] = {
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
 	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+	{1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
 	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 };
-
-t_point	player = {(double)3 * CUB_SIDE + CUB_SIDE/2, (double)3 * CUB_SIDE + CUB_SIDE/2};
 
 // Later adapt to get map from t_game
 bool	is_wall(int x, int y)
 {
-	if (map[x][y] && map[x][y] == 1)// Probably a repetition, how to check if the position is valid?
+	if (x < 10 && y < 10 && map[y][x] == 1)// How to check if the position is valid?
 		return (true);
 	else
 		return (false);
 }
 
 /* Formula to get the distance */
-double	get_distance(t_point a, t_point p, double alpha)
-{
-	double	distance;
+// float	get_distance(t_point a, t_point p, float alpha)
+// {
+// 	float	distance;
 
-	distance = 0;
-	if (alpha > 0 && alpha < PI)
-		distance = fabs(p.x - a.x) / fabs(cos(alpha));
-	else if (alpha > PI && alpha < PI_DOUBLE)
-		distance = fabs(p.x - a.x) / fabs(cos(alpha - PI));
-	else if (alpha == PI_HALF || alpha == PI_THREE_HALFS)
-		distance = fabs(p.y - a.y);
-	else if (alpha == PI || alpha == 0)
-		distance = fabs(p.x - a.x);
-	// printf("distance: %f\n", distance);
-	return (distance);
+// 	distance = 0;
+// 	if (alpha > 0 && alpha < PI)
+// 		distance = fabs(p.x - a.x) / fabs(cos(alpha));
+// 	else if (alpha > PI && alpha < PI_DOUBLE)
+// 		distance = fabs(p.x - a.x) / fabs(cos(alpha - PI));
+// 	else if (alpha == PI_HALF || alpha == PI_THREE_HALFS)
+// 		distance = fabs(p.y - a.y);
+// 	else if (alpha == PI || alpha == 0)
+// 		distance = fabs(p.x - a.x);
+// 	return (distance);
+// }
+
+float	get_distance(t_point a, t_point p, float alpha)
+{
+	(void)alpha;
+	return (sqrt(pow(a.x - p.x, 2) + pow(a.y - p.y, 2)));
 }
 
 /* Calculates the distance between horizontal intersections in the grid,
 aplies a correction in sign depending on the angle */
-double	get_xa(double alpha)
+float	get_xa(float alpha)
 {
-	double	xa;
+	float	xa;
 
 	xa = 0;
+	if (alpha == 0 || alpha == PI)
+		return (CUB_SIDE);
 	xa = CUB_SIDE / tan(alpha);
 	if (alpha > PI && alpha < PI_DOUBLE)
 		xa *= -1;
-	// printf("xa: %f\n", xa);
 	return (xa);
 }
 
 /* Calculates the distance between vertical intersections in the grid,
 aplies a correction in sign depending on the angle */
-double	get_ya(double alpha)
+float	get_ya(float alpha)
 {
-	double	ya;
+	float	ya;
 
 	ya = 0;
+	if (alpha == PI_HALF || alpha == PI_THREE_HALFS)
+		return (CUB_SIDE);
 	ya = CUB_SIDE * tan(alpha);
 	if (alpha > PI_THREE_HALFS || alpha < PI_HALF)
 		ya *= -1;
-	// printf("get ya: %f\n", ya);
 	return (ya);
 }
 
-double	wall_dist_horizontal(t_point p, double alpha)
+float	wall_dist_horizontal(t_game *g, t_point p, float alpha)
 {
 	t_point 	a;
-	double		ya;
-	double		xa;
-
-// ======Finding horizontal intersection ======
-// 1. Finding the coordinates of A.  
+	t_point		offset;
+ 
+	offset.y = 0;
 	if (alpha > 0 && alpha < PI)// If the ray is facing up
 	{
-		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE - 1;
-		// 2. Finding Ya
-		ya = -1 * CUB_SIDE;
+		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE - 0.0001;
+		a.x = p.x + (p.y - a.y) / tan(alpha);
+		offset.y = -1 * CUB_SIDE;
 	}
 	else if (alpha > PI && alpha < PI_DOUBLE)// If the ray is facing down
 	{
-		// transform alpha so angle is acute
 		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE + CUB_SIDE;
-		ya = CUB_SIDE;
+		a.x = p.x + (p.y - a.y) / tan(alpha);
+		// a.x = p.x + (p.y - a.y) * (-1 / tan(alpha));
+		offset.y = CUB_SIDE;
 	}
-	else
+	else if (alpha == PI || alpha == 0)
+	{
 		a.y = p.y;
-	a.x = p.x + fabs(p.y - a.y) / tan(alpha);// not sure about this formula
-	// 3. Finding Xa
-	xa = get_xa(alpha);
-	// printf("a.y: %f\n", a.y);
-	// printf("a.x: %f\n", a.x);
-	// printf("xa: %f\n", xa);
-	// printf("ya: %f\n", ya);
+		a.x = p.x;
+	}
+	offset.x = get_xa(alpha);
+	// offset.x = -1 * offset.y * (-1 / tan(alpha));
 	// Check for wall collision on horizontal lines
 	while (a.x < SCREEN_WIDTH && a.x > 0 && a.y > 0 && a.y < SCREEN_HEIGHT)// should be while in map range
 	{
-		// printf("horizontal a.x: %f\n", a.x / CUB_SIDE);
-		// printf("horizontal a.y: %f\n", a.y / CUB_SIDE);
 		if (is_wall(a.x / CUB_SIDE, a.y / CUB_SIDE))
+		{
+			g->draw_offset_x = (int)a.x % CUB_SIDE;
 			return (get_distance(a, p, alpha));
+		}
 		else
 		{
-			a.x += xa;
-			a.y += ya;
+			a.x += offset.x;
+			a.y += offset.y;
 		}
 	}
 	return (-1);
 }
 
 // Transform alpha so that when it is bigger than 2PI, resets to 0
-double	wall_dist_vertical(t_point p, double alpha)
+float	wall_dist_vertical(t_game *g, t_point p, float alpha)
 {
 	t_point 	b;
-	double		ya;
-	double		xa;
+	t_point		offset;
 
-// ======Finding vertical intersection ======
-// 1. Finding the coordinates of B.  
+	offset.x = 0;
 	if (alpha > PI_HALF && alpha < PI_THREE_HALFS)// If the ray is facing left
 	{
-		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE - 1;
-		// 2. Finding Xa
-		xa = -1 * CUB_SIDE;
+		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE - 0.0001;
+		b.y = p.y + (p.x - b.x) * tan(alpha);
+		offset.x = -1 * CUB_SIDE;
 	}
 	else if (alpha < PI_HALF || alpha > PI_THREE_HALFS)// If the ray is facing right
 	{
 		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE + CUB_SIDE;
-		xa = CUB_SIDE;
+		b.y = p.y + (p.x - b.x) * tan(alpha);
+		offset.x = CUB_SIDE;
 	}
-	else
+	else if (alpha == PI_HALF || alpha == PI_THREE_HALFS)
+	{
 		b.x = p.x;
-	b.y = p.y - fabs(p.x - b.x) * tan(alpha);// not sure about this formula
-	// 3. Finding Ya
-	ya = get_ya(alpha);
-	// printf("xa: %f\n", xa);
-	// printf("ya: %f\n", ya);
-	// printf("b.y: %f\n", b.y);
-	// printf("b.x: %f\n", b.x);
+		b.y = p.y;
+	}
+	offset.y = get_ya(alpha);
+	// offset.y = -1 * offset.x * (-1 * tan(alpha));
 	// Check for wall collision on horizontal lines
 	while (b.x < SCREEN_WIDTH && b.x > 0 && b.y > 0 && b.y < SCREEN_HEIGHT)
 	{
-		// printf("vertical b.x: %f\n", b.x / CUB_SIDE);
-		// printf("vertical b.y: %f\n", b.y / CUB_SIDE);
 		if (is_wall(b.x / CUB_SIDE, b.y / CUB_SIDE))
+		{
+			g->draw_offset_y = (int)b.y % CUB_SIDE;
 			return (get_distance(b, p, alpha));
+		}
 		else
 		{
-			b.x += xa;
-			b.y += ya;
+			b.x += offset.x;
+			b.y += offset.y;
 		}
 	}
 	return (-1);
 }
 
-/* Returns shorter distance
-If one method failed to find wall, return the distance obtained 
-by the other */
-double	shorter_distance(double horizontal, double vertical)
+/* Sets if player is facing a N/S or W/E wall */
+void	set_wall_side(t_game *g, float horizontal, float vertical)
 {
-	// printf("horizontal: %f\n", horizontal);
-	// printf("vertical: %f\n", vertical);
-	if (horizontal == -1 && vertical == -1)
-		return (-1);
-	else if (horizontal == -1 && vertical > 0)
-		return (vertical);
+	if (horizontal == -1 && vertical > 0)
+		g->wall_side = 1; // vertical
 	else if (vertical == -1 && horizontal > 0)
-		return (horizontal);
+		g->wall_side = 0; // horizontal
 	else if (horizontal > vertical)
-		return (vertical);
+		g->wall_side = 1;
 	else
-		return (horizontal);
+		g->wall_side = 0;
 }
 
-void	draw_wall(t_game *game)
+/* Returns shorter distance and chooses bitmap offset for wall texture
+If one method failed to find wall, return the distance obtained 
+by the other */
+float	shorter_distance(t_game *g, float horizontal, float vertical, bool p_ray)
+{
+	if (horizontal == -1 && vertical == -1)
+		return (-1);
+	else if (p_ray)
+		set_wall_side(g, horizontal, vertical);
+	if (horizontal == -1 && vertical > 0)
+	{
+		g->draw_offset_x = -1;
+		return (vertical);
+	}
+	else if (vertical == -1 && horizontal > 0)
+	{
+		g->draw_offset_y = -1;
+		return (horizontal);
+	}
+	else if (horizontal > vertical)
+	{
+		g->draw_offset_x = -1;
+		return (vertical);
+	}
+	else
+	{
+		g->draw_offset_y = -1;
+		return (horizontal);
+	}
+}
+
+/* Sets if player's back is facing a N/S or W/E wall */
+void	set_back_wall(t_game *g, float horizontal, float vertical)
+{
+	if (horizontal == -1 && vertical == -1)
+		return;
+	if (horizontal == -1 && vertical > 0)
+		g->back_wall = 1; // vertical
+	else if (vertical == -1 && horizontal > 0)
+		g->back_wall = 0; // horizontal
+	else if (horizontal > vertical)
+		g->back_wall = 1;
+	else
+		g->back_wall = 0;
+}
+
+float	fisheye_correction(float pa, float ra)
+{
+	float	ca;
+	
+	ca = pa - ra;
+	if (ca < 0)
+		ca += PI_DOUBLE;
+	else if (ca > PI_DOUBLE)
+		ca -= PI_DOUBLE;
+	return (cos(ca));
+}
+
+int	draw_wall(t_game *g)
 {
 	int		x;
-	double	alpha;
-	double	beta;
-	double	d_to_wall;
-	double	proj_wall_height;
-	double	d_to_proj_plane;
+	float	alpha;
+	float	d_to_wall;
+	float	proj_wall_height;
+	float	d_to_proj_plane;
+	float	back_angle;
 	
-	alpha = (double)START_ANGLE + ((double)FOV / 2);
-	beta = (double)START_ANGLE;
+	alpha = g->p_angle + ((float)FOV / 2);
 	if (alpha >= PI_DOUBLE)
 		alpha -= PI_DOUBLE;
 	x = -1;
 	d_to_wall = 0;
 	proj_wall_height = 0;
-	(void)game;
-	d_to_proj_plane = (SCREEN_WIDTH / 2) / tan((double)FOV / 2);// later initialize this variable in t_game or define as macro
-	(void)x;
+	d_to_proj_plane = (SCREEN_WIDTH / 2) / tan((float)FOV / 2);// later initialize this variable in t_game or define as macro
+	g->img = new_img(g);
+	draw_background(&(g->img));
+	draw_minimap(g);
 	while (++x < SCREEN_WIDTH)
 	{
-		d_to_wall = shorter_distance(wall_dist_horizontal(player, alpha), wall_dist_vertical(player, alpha));
-		// printf("Iteration: %d\n", x);
-		// printf("alpha: %f\n", alpha);
+		d_to_wall = shorter_distance(g, wall_dist_horizontal(g, g->p_pos, alpha), wall_dist_vertical(g, g->p_pos, alpha), \
+		(fabs(alpha - g->p_angle) < (float)1/SCREEN_WIDTH));
+		if (fabs(alpha - g->p_angle) < (float)1/SCREEN_WIDTH)
+		{
+			back_angle = g->p_angle - PI;
+			if (back_angle < 0)
+				back_angle += PI_DOUBLE;
+			set_back_wall(g, wall_dist_horizontal(g, g->p_pos, back_angle), wall_dist_vertical(g, g->p_pos, back_angle));
+		}
 		if (d_to_wall == -1)
 		{
 			ft_putstr_fd("Error calculating wall distance\n", 2);
 			break;
 		}
-		d_to_wall *= cos(fabs(beta - alpha));// fisheye-correction
-		// printf("d_to_wall: %f\n", d_to_wall);
+		d_to_wall *= fisheye_correction(g->p_angle, alpha);// Not working perfectly
+		// d_to_wall *= cos(fabs(g->p_angle - alpha));// fisheye-correction
 		proj_wall_height = (CUB_SIDE / d_to_wall * d_to_proj_plane);
-		draw_line(game, &(t_point_int){x, SCREEN_HEIGHT / 2 + proj_wall_height / 2}, &(t_point_int){x, SCREEN_HEIGHT / 2 - proj_wall_height / 2});
-		alpha -= (double)1/SCREEN_WIDTH;
+		draw_line(g, &(t_point_int){x, SCREEN_HEIGHT / 2 + proj_wall_height / 2}, \
+		&(t_point_int){x, SCREEN_HEIGHT / 2 - proj_wall_height / 2}, RED_BRICK);
+		alpha -= (float)1/SCREEN_WIDTH;
 		if (alpha < 0)
 			alpha += PI_DOUBLE;
 	}
+	draw_minimap(g);
+	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
+	mlx_destroy_image(g->mlx, g->img.img);
+	return(0);
 }

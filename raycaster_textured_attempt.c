@@ -38,9 +38,9 @@ int	buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
 int	main(int /*argc*/, char */*argv*/[])
 {
 	// get this data from .cub file
-	double posX = 22.0, posY = 11.5;  //x and y start position
-	double dirX = -1.0, dirY = 0.0; //initial direction vector
-	double planeX = 0.0, planeY = 0.66; //the 2d raycaster version of camera plane
+	float posX = 22.0, posY = 11.5;  //x and y start position
+	float dirX = -1.0, dirY = 0.0; //initial direction vector
+	float planeX = 0.0, planeY = 0.66; //the 2d raycaster version of camera plane
 
 	//start the main loop
 	int x = 0;
@@ -50,22 +50,22 @@ int	main(int /*argc*/, char */*argv*/[])
 		while (++x < w)
 		{
 			//calculate ray position and direction
-			double cameraX = 2 * x / (double)w - 1; //x-coordinate in camera space
-			double rayDirX = dirX + planeX*cameraX;
-			double rayDirY = dirY + planeY*cameraX;
+			float cameraX = 2 * x / (float)w - 1; //x-coordinate in camera space
+			float rayDirX = dirX + planeX*cameraX;
+			float rayDirY = dirY + planeY*cameraX;
 
 			//which box of the map we're in
 			int mapX = int(posX);
 			int mapY = int(posY);
 
 			//length of ray from current position to next x or y-side
-			double sideDistX;
-			double sideDistY;
+			float sideDistX;
+			float sideDistY;
 
 			//length of ray from one x or y-side to next x or y-side
-			double deltaDistX = (rayDirX == 0) ? 1e30 : std::abs(1 / rayDirX); // replace with similar C function
-			double deltaDistY = (rayDirY == 0) ? 1e30 : std::abs(1 / rayDirY); // replace with similar C function
-			double perpWallDist;
+			float deltaDistX = (rayDirX == 0) ? 1e30 : std::abs(1 / rayDirX); // replace with similar C function
+			float deltaDistY = (rayDirY == 0) ? 1e30 : std::abs(1 / rayDirY); // replace with similar C function
+			float perpWallDist;
 
 			//what direction to step in x or y-direction (either +1 or -1)
 			int stepX;
@@ -141,21 +141,21 @@ int	main(int /*argc*/, char */*argv*/[])
 			int texNum = worldMap[mapX][mapY] - 1; //1 subtracted from it so that texture 0 can be used!
 
 			//calculate value of wallX
-			double wallX; //where exactly the wall was hit
+			float wallX; //where exactly the wall was hit
 			if(side == 0) wallX = posY + perpWallDist * rayDirY;
 			else          wallX = posX + perpWallDist * rayDirX;
 			wallX -= floor((wallX));
 
 			//x coordinate on the texture
-			int texX = int(wallX * double(texWidth));
+			int texX = int(wallX * float(texWidth));
 			if(side == 0 && rayDirX > 0) texX = texWidth - texX - 1;
 			if(side == 1 && rayDirY < 0) texX = texWidth - texX - 1;
 
 			// TODO: an integer-only bresenham or DDA like algorithm could make the texture coordinate stepping faster
 			// How much to increase the texture coordinate per screen pixel
-			double step = 1.0 * texHeight / lineHeight;
+			float step = 1.0 * texHeight / lineHeight;
 			// Starting texture coordinate
-			double texPos = (drawStart - pitch - h / 2 + lineHeight / 2) * step;
+			float texPos = (drawStart - pitch - h / 2 + lineHeight / 2) * step;
 			for(int y = drawStart; y < drawEnd; y++)
 			{
 			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
@@ -173,13 +173,13 @@ int	main(int /*argc*/, char */*argv*/[])
 		//timing for input and FPS counter
 		oldTime = time;
 		time = getTicks();
-		double frameTime = (time - oldTime) / 1000.0; //frametime is the time this frame has taken, in seconds
+		float frameTime = (time - oldTime) / 1000.0; //frametime is the time this frame has taken, in seconds
 		print(1.0 / frameTime); //FPS counter
 		redraw(); // replace with mlx function
 
 		//speed modifiers
-		double moveSpeed = frameTime * 5.0; //the constant value is in squares/second
-		double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
+		float moveSpeed = frameTime * 5.0; //the constant value is in squares/second
+		float rotSpeed = frameTime * 3.0; //the constant value is in radians/second
 	
 		// Hook keys with functions
 
@@ -200,10 +200,10 @@ int	main(int /*argc*/, char */*argv*/[])
 		if(keyDown(SDLK_RIGHT))
 		{
 			//both camera direction and camera plane must be rotated
-			double oldDirX = dirX;
+			float oldDirX = dirX;
 			dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
 			dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
-			double oldPlaneX = planeX;
+			float oldPlaneX = planeX;
 			planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
 			planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
 		}
@@ -211,10 +211,10 @@ int	main(int /*argc*/, char */*argv*/[])
 		if(keyDown(SDLK_LEFT))
 		{
 			//both camera direction and camera plane must be rotated
-			double oldDirX = dirX;
+			float oldDirX = dirX;
 			dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
 			dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
-			double oldPlaneX = planeX;
+			float oldPlaneX = planeX;
 			planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
 			planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
 		}

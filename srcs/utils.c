@@ -12,6 +12,8 @@
 
 #include "../includes/cub3d.h"
 
+
+// Given that when malloc fails it returns NULL, is this not the same as a normal malloc?
 void	*safe_malloc(int bytes)
 {
 	void	*result;

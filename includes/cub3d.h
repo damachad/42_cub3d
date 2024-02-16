@@ -45,23 +45,32 @@
 # define SO "textures/lava.png"
 # define WE "textures/bricks.png"
 # define EA "textures/leaves.png" 
+# define NO "textures/ice.xpm"
+# define SO "textures/lava.xpm"
+# define WE "textures/bricks.xpm"
+# define EA "textures/leaves.xpm"
 # define FLOOR "" // How to process input color ?
 # define CEILING "" // Check for valid range */
 # define START_ANGLE 1 // angle in radians
+# define MINIMAP_SCALE 0.3
+# define SPEED 2
+# define ROT_SPEED 0.04
+# define WALL_BUFF 5
+# define SLIDE_BUFF 0.17
 
-# define PI 3.14159265358979323846
-# define PI_DOUBLE 6.28318530717958647692
-# define PI_HALF 1.57079632679489661923
-# define PI_THREE_HALFS 4.71238898038468985769
+# define PI 3.1415926535
+# define PI_DOUBLE 6.2831853071
+# define PI_HALF 1.5707963267
+# define PI_THREE_HALFS 4.7123889803
 
 // Structs
 
-typedef enum s_dir{
+/* typedef enum s_dir{
 	NO,
 	SO,
 	WE,
 	EA
-}			t_dir;
+}			t_dir; */
 
 typedef enum s_color_type{
 	FLOOR,
@@ -82,8 +91,8 @@ typedef struct s_bresenham
 
 typedef struct s_point
 {
-	double	x;
-	double	y;
+	float	x;
+	float	y;
 }					t_point;
 
 typedef struct s_point_int
@@ -91,6 +100,14 @@ typedef struct s_point_int
 	int	x;
 	int	y;
 }					t_point_int;
+
+typedef struct s_keys
+{
+	bool	w;
+	bool	a;
+	bool	s;
+	bool	d;
+}			t_keys;
 
 typedef struct s_map
 {
@@ -130,15 +147,21 @@ typedef struct s_game
 {
 	void			*mlx;
 	void			*win;
-	unsigned int	player_a;
-	t_point			player_curr;
-	double			time;
-	double			old_time;
+	float			p_angle;
+	t_point			p_pos;
+	t_point			p_dir;
 	t_map			*map;
 	t_img			img;
 	t_sprite		*sprites;
 	t_input			*input;
+	t_keys			keys;
+	int				wall_side;
+	int				back_wall;
+	float			draw_offset_x;
+	float			draw_offset_y;
 }					t_game;
+
+extern int	map[10][10];
 
 /*----------------------------map----------------------------*/
 t_map	*new_map(unsigned int rows);
@@ -152,6 +175,7 @@ void	validate_map(t_game *game);
 void	init_graphics(t_game *game);
 void	start_game(char	*mapfile);
 void	load_sprites(t_game *game);
+t_img	new_img(t_game *game);
 
 /*---------------------------clean---------------------------*/
 void	error_msg(t_game *game, char *msg);
@@ -161,20 +185,27 @@ void	destroy_map(t_map *map);
 
 /*--------------------------draw_line------------------------*/
 void	put_pixel(t_img *img, int x, int y, int color);
-void	draw_line(t_game *game, t_point_int *a, t_point_int *b);
+void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color);
 
 /*--------------------------background-----------------------*/
-void	draw_background(t_game *game);
-void	draw_wall_test(t_game *game);
+void	draw_background(t_img *img);
+// void	draw_wall_test(t_game *game);
 
 /*--------------------------raycasting-----------------------*/
-void	draw_wall(t_game *game);
+int		draw_wall(t_game *game);
+bool	is_wall(int x, int y);
 
 /*----------------------------parser-------------------------*/
 void	parse_file(t_game *game, char *file);
 
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);
+
+/*---------------------------movement------------------------*/
+int		handle_keypress(int keysym, t_game *g);
+int		handle_keyrelease(int keysym, t_game *g);
+int		render_movement(t_game *g);
+void	draw_minimap(t_game *g);
 
 /* -----------------------debug print----------------------- */
 void print_input(t_input *input);

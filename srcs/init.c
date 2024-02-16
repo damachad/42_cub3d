@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/10 18:22:30 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/16 20:36:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ t_img	new_img(t_game *game)
 	img.height = SCREEN_HEIGHT;
 	return (img);
 }
-
-// NOTE: Functions from So_long, need to be adapted
 
 /* Initialize graphics using mlx_init() and mlx_new_window() */
 void	init_graphics(t_game *game)
@@ -54,10 +52,21 @@ void	init_graphics(t_game *game)
 	EA, &(game->sprites[2].width), &(game->sprites[2].height));
 	game->sprites[3].img = mlx_xpm_file_to_image(game->mlx, \
 	WE, &(game->sprites[3].width), &(game->sprites[3].height));
-} */
+}
+
+void	init_player(t_game *g)// later get values from mapfile
+{
+	g->p_angle = START_ANGLE;
+	g->p_pos = (t_point){(float)3 * CUB_SIDE + CUB_SIDE/2, (float)3 * CUB_SIDE + CUB_SIDE/2};
+	g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
+	g->wall_side = -1;
+	g->back_wall = -1;
+	g->draw_offset_x = -1;
+	g->draw_offset_y = -1;
+}
 
 /* Initialize 't_game' struct, load and check map,
-   initialize graphics, load sprites, render map,
+   initialize graphics, load sprites,
    and start game loop */
 void	start_game(char	*file)
 {
@@ -70,15 +79,15 @@ void	start_game(char	*file)
 	//print_input(game.input);
 	// load_map(&game, mapfile);
 	// validate_map(&game);
-	init_graphics(&game);
+		init_graphics(&game);
+	init_player(&game);
 	game.img = new_img(&game);
-	draw_background(&game);
+	draw_background(&game.img);
+	load_sprites(&game);
 	draw_wall(&game);
-	//load_sprites(&game);
-	// render_map(&game);
-	mlx_put_image_to_window(game.mlx, game.win, game.img.img, 0, 0);
-	// mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);
+	mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);
+	mlx_hook(game.win, KeyRelease, KeyReleaseMask, handle_keyrelease, &game);
 	mlx_hook(game.win, DestroyNotify, KeyPressMask, quit_prog, &game);
-	// mlx_loop_hook(game.mlx, render_frame, &game);
+	mlx_loop_hook(game.mlx, render_movement, &game);
 	mlx_loop(game.mlx);
 }

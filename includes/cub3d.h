@@ -65,12 +65,12 @@
 
 // Structs
 
-/* typedef enum s_dir{
+typedef enum s_dir{
 	NO,
 	SO,
 	WE,
 	EA
-}			t_dir; */
+}			t_dir;
 
 typedef enum s_color_type{
 	FLOOR,
@@ -139,8 +139,6 @@ typedef struct s_input
 	char	*ea;
 	int		floor_color;
 	int		ceiling_color;
-	int		floor[3];
-	int		ceiling[3];
 }				t_input;
 
 typedef struct s_game
@@ -188,7 +186,7 @@ void	put_pixel(t_img *img, int x, int y, int color);
 void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color);
 
 /*--------------------------background-----------------------*/
-void	draw_background(t_img *img);
+void	draw_background(t_game *game);
 // void	draw_wall_test(t_game *game);
 
 /*--------------------------raycasting-----------------------*/
@@ -197,6 +195,8 @@ bool	is_wall(int x, int y);
 
 /*----------------------------parser-------------------------*/
 void	parse_file(t_game *game, char *file);
+void	parse_color(t_game *game, char *line, t_color_type color_type);
+void	parse_texture(t_game *game, char *line, t_dir dir);
 
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);
@@ -208,6 +208,6 @@ int		render_movement(t_game *g);
 void	draw_minimap(t_game *g);
 
 /* -----------------------debug print----------------------- */
-void print_input(t_input *input);
+void	print_input(t_input *input);
 
 #endif

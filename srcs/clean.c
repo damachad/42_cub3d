@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:21:32 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/16 20:39:23 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/17 09:14:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	destroy_game(t_game *game)
 {
 	if (!game)
 		return ;
+	if (game->input)
+		free(game->input);
 	if (game->sprites)
 		destroy_sprites(game);
 	if (game->map)

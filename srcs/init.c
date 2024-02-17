@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/16 20:36:49 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/17 09:22:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_graphics(t_game *game)
 	EA, &(game->sprites[2].width), &(game->sprites[2].height));
 	game->sprites[3].img = mlx_xpm_file_to_image(game->mlx, \
 	WE, &(game->sprites[3].width), &(game->sprites[3].height));
-}
+} */
 
 void	init_player(t_game *g)// later get values from mapfile
 {
@@ -65,6 +65,17 @@ void	init_player(t_game *g)// later get values from mapfile
 	g->draw_offset_y = -1;
 }
 
+/* set colors to -1 as a flag that they haven't been parsed yet */
+void init_input(t_input *input)
+{
+	input->no = NULL;
+	input->so = NULL;
+	input->we = NULL;
+	input->ea = NULL;
+	input->floor_color = -1;
+	input->ceiling_color = -1;
+}
+
 /* Initialize 't_game' struct, load and check map,
    initialize graphics, load sprites,
    and start game loop */
@@ -74,16 +85,17 @@ void	start_game(char	*file)
 
 	(void)file;
 	ft_bzero(&game, sizeof(t_game));
-	game.input = ft_calloc(1, sizeof(t_input));
+	game.input = safe_malloc(sizeof(t_input));
+	init_input(game.input);
 	parse_file(&game, file);
-	//print_input(game.input);
+	print_input(game.input);
 	// load_map(&game, mapfile);
 	// validate_map(&game);
-		init_graphics(&game);
+	init_graphics(&game);
 	init_player(&game);
 	game.img = new_img(&game);
-	draw_background(&game.img);
-	load_sprites(&game);
+	draw_background(&game);
+	// load_sprites(&game);
 	draw_wall(&game);
 	mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);
 	mlx_hook(game.win, KeyRelease, KeyReleaseMask, handle_keyrelease, &game);

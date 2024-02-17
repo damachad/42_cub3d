@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:16:28 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/13 11:50:20 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/17 10:26:04 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ char	*ft_get_line(char *text)
 		line[i] = text[i];
 		i++;
 	}
-/* 	if (text[i] == '\n')
-		line[i++] = '\n'; */
+	if (text[i] == '\n')
+		line[i++] = '\n'; 
 	line[i] = '\0';
 	return (line);
 }

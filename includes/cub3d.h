@@ -109,12 +109,6 @@ typedef struct s_keys
 	bool	d;
 }			t_keys;
 
-typedef struct s_map
-{
-	char			**bytes;
-	unsigned int	rows;
-}					t_map;
-
 typedef struct s_sprite{
 	void	*img;
 	int		width;
@@ -148,7 +142,9 @@ typedef struct s_game
 	float			p_angle;
 	t_point			p_pos;
 	t_point			p_dir;
-	t_map			*map;
+	char			**map;
+	int				map_cols;
+	int				map_rows;
 	t_img			img;
 	t_sprite		*sprites;
 	t_input			*input;
@@ -162,7 +158,7 @@ typedef struct s_game
 extern int	map[10][10];
 
 /*----------------------------map----------------------------*/
-t_map	*new_map(unsigned int rows);
+/* t_map	*new_map(unsigned int rows); */
 int		nr_lines(t_game *game, char *mapfile);
 void	load_map(t_game *game, char *mapfile);
 
@@ -179,7 +175,7 @@ t_img	new_img(t_game *game);
 void	error_msg(t_game *game, char *msg);
 int		quit_prog(t_game *game);
 void	destroy_game(t_game *game);
-void	destroy_map(t_map *map);
+/* void	destroy_map(t_map *map); */
 
 /*--------------------------draw_line------------------------*/
 void	put_pixel(t_img *img, int x, int y, int color);
@@ -197,6 +193,7 @@ bool	is_wall(int x, int y);
 void	parse_file(t_game *game, char *file);
 void	parse_color(t_game *game, char *line, t_color_type color_type);
 void	parse_texture(t_game *game, char *line, t_dir dir);
+void	parse_map(t_game *game, char *line, int row);
 
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);
@@ -209,5 +206,6 @@ void	draw_minimap(t_game *g);
 
 /* -----------------------debug print----------------------- */
 void	print_input(t_input *input);
+void	print_map(t_game *game);
 
 #endif

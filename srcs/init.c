@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/17 09:22:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/17 13:21:06 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	start_game(char	*file)
 	init_input(game.input);
 	parse_file(&game, file);
 	print_input(game.input);
+	print_map(&game);
 	// load_map(&game, mapfile);
 	// validate_map(&game);
 	init_graphics(&game);

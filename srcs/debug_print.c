@@ -22,3 +22,23 @@ void print_input(t_input *input)
     printf("Floor: [%x]\n", input->floor_color);
     printf("Ceiling: [%x]\n", input->ceiling_color);
 }
+
+void print_map(t_game *game) 
+{
+    int i;
+    int j;
+
+    printf("Map:\n");
+    i = 0;
+    while (i < game->map_rows) 
+    {
+        j = 0;
+        while (j < game->map_cols) 
+        {
+            printf("%c", game->map[i][j]);
+            j++;
+        }
+        printf("\n");
+        i++;
+    }
+}

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:46:15 by damachad          #+#    #+#             */
-/*   Updated: 2024/01/31 11:14:12 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/17 13:18:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+ #include "../includes/cub3d.h"
 
 // NOTE: Functions from So_long, need to be adapted
 
@@ -85,4 +85,4 @@ void	load_map(t_game *game, char *mapfile)
 		free(line);
 	}
 	close(fd);
-}
+} 

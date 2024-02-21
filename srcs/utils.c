@@ -24,5 +24,4 @@ void	*safe_malloc(int bytes)
 		return(NULL);
 	}
 	return (result);
-		
 }

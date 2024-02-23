@@ -41,10 +41,10 @@
 # define BLUE_LIGHT 0x7BD3EA
 # define RED_BRICK 0xD04848
 
-# define NO "textures/ice.xpm"
-# define SO "textures/lava.xpm"
-# define WE "textures/bricks.xpm"
-# define EA "textures/leaves.xpm"
+# define NO "textures/directions/N1.xpm"
+# define SO "textures/directions/S1.xpm"
+# define EA "textures/directions/E1.xpm"
+# define WE "textures/directions/W1.xpm"
 # define FLOOR "" // How to process input color ?
 # define CEILING "" // Check for valid range
 # define START_ANGLE 1 // angle in radians
@@ -61,12 +61,12 @@
 
 // Structs
 
-/* typedef enum s_dir{
-	NO,
-	SO,
-	WE,
-	EA
-}			t_dir; */
+typedef enum s_dir{
+	N,
+	S,
+	E,
+	W
+}			t_dir;
 
 //line drawing algorithm variables
 typedef struct s_bresenham
@@ -106,11 +106,11 @@ typedef struct s_map
 	unsigned int	rows;
 }					t_map;
 
-typedef struct s_sprite{
-	void	*img;
-	int		width;
-	int		height;
-}			t_sprite;
+// typedef struct s_sprite{
+// 	void	*img;
+// 	int		width;
+// 	int		height;
+// }			t_sprite;
 
 typedef struct s_img {
 	void	*img;
@@ -141,13 +141,15 @@ typedef struct s_game
 	t_point			p_dir;
 	t_map			*map;
 	t_img			img;
-	t_sprite		*sprites;
+	t_img			*sprites;
 	t_input			*input;
 	t_keys			keys;
 	int				wall_side;
 	int				back_wall;
+	float			alpha;
 	float			draw_offset_x;
 	float			draw_offset_y;
+	t_img			*right_texture;
 }					t_game;
 
 extern int	map[10][10];
@@ -176,8 +178,9 @@ void	destroy_map(t_map *map);
 void	put_pixel(t_img *img, int x, int y, int color);
 void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color);
 
-/*--------------------------background-----------------------*/
+/*---------------------------textures------------------------*/
 void	draw_background(t_img *img);
+void	draw_collumn(t_game *g, int x, float y_btm, float wall_h);
 // void	draw_wall_test(t_game *game);
 
 /*--------------------------raycasting-----------------------*/
@@ -189,6 +192,8 @@ bool	is_wall(int x, int y);
 
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);
+bool	facing_north(float angle);
+bool	facing_left(float angle);
 
 /*---------------------------movement------------------------*/
 int		handle_keypress(int keysym, t_game *g);

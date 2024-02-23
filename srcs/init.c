@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/16 13:31:59 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:10:54 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,27 @@ void	init_graphics(t_game *game)
 		error_msg(game, "mlx_new_window() failed\n");
 }
 
-void	load_sprites(t_game *game)
+void	load_sprites(t_game *g)
 {
-	game->sprites = ft_calloc(4, sizeof(t_sprite));
-	if (!game->sprites)
-		error_msg(game, "Could not allocate memory for sprites.\n");
-	game->sprites[0].img = mlx_xpm_file_to_image(game->mlx, \
-	NO, &(game->sprites[0].width), &(game->sprites[0].height));
-	game->sprites[1].img = mlx_xpm_file_to_image(game->mlx, \
-	SO, &(game->sprites[1].width), &(game->sprites[1].height));
-	game->sprites[2].img = mlx_xpm_file_to_image(game->mlx, \
-	EA, &(game->sprites[2].width), &(game->sprites[2].height));
-	game->sprites[3].img = mlx_xpm_file_to_image(game->mlx, \
-	WE, &(game->sprites[3].width), &(game->sprites[3].height));
+	g->sprites = ft_calloc(4, sizeof(t_img));
+	if (!g->sprites)
+		error_msg(g, "Could not allocate memory for sprites.\n");
+	g->sprites[0].img = mlx_xpm_file_to_image(g->mlx, \
+	NO, &(g->sprites[N].width), &(g->sprites[N].height));
+	g->sprites[N].addr = mlx_get_data_addr(g->sprites[N].img, \
+	&g->sprites[N].bpp, &g->sprites[N].line_length, &g->sprites[N].endian);
+	g->sprites[S].img = mlx_xpm_file_to_image(g->mlx, \
+	SO, &(g->sprites[S].width), &(g->sprites[S].height));
+	g->sprites[S].addr = mlx_get_data_addr(g->sprites[S].img, \
+	&g->sprites[S].bpp, &g->sprites[S].line_length, &g->sprites[S].endian);
+	g->sprites[E].img = mlx_xpm_file_to_image(g->mlx, \
+	EA, &(g->sprites[E].width), &(g->sprites[E].height));
+	g->sprites[E].addr = mlx_get_data_addr(g->sprites[E].img, \
+	&g->sprites[E].bpp, &g->sprites[E].line_length, &g->sprites[E].endian);
+	g->sprites[W].img = mlx_xpm_file_to_image(g->mlx, \
+	WE, &(g->sprites[W].width), &(g->sprites[W].height));
+	g->sprites[W].addr = mlx_get_data_addr(g->sprites[W].img, \
+	&g->sprites[W].bpp, &g->sprites[W].line_length, &g->sprites[W].endian);
 }
 
 void	init_player(t_game *g)// later get values from mapfile

@@ -12,6 +12,21 @@
 
 #include "../includes/cub3d.h"
 
+bool	facing_north(float angle)
+{
+	if (angle > 0 && angle < PI)
+		return (true);
+	else
+		return (false);
+}
+
+bool	facing_left(float angle)
+{
+	if (angle > PI_HALF && angle < PI_THREE_HALFS)
+		return (true);
+	else
+		return (false);
+}
 
 // Given that when malloc fails it returns NULL, is this not the same as a normal malloc?
 void	*safe_malloc(int bytes)

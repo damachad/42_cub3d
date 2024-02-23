@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/16 13:48:01 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:59:04 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,35 +186,38 @@ void	set_wall_side(t_game *g, float horizontal, float vertical)
 		g->wall_side = 0;
 }
 
-/* Returns shorter distance and chooses bitmap offset for wall texture
+/* Returns shorter distance, chooses bitmap offset for wall texture, 
+and selects the right texture
 If one method failed to find wall, return the distance obtained 
 by the other */
 float	shorter_distance(t_game *g, float horizontal, float vertical, bool p_ray)
 {
+	float	shorter;
+
+	shorter = horizontal;
 	if (horizontal == -1 && vertical == -1)
 		return (-1);
-	else if (p_ray)
+	if (p_ray)
 		set_wall_side(g, horizontal, vertical);
-	if (horizontal == -1 && vertical > 0)
-	{
-		g->draw_offset_x = -1;
-		return (vertical);
-	}
-	else if (vertical == -1 && horizontal > 0)
+	if ((horizontal == -1 && vertical > 0) || (horizontal > vertical && vertical >= 0))
+		shorter = vertical;
+	if (shorter == horizontal)
 	{
 		g->draw_offset_y = -1;
-		return (horizontal);
-	}
-	else if (horizontal > vertical)
-	{
-		g->draw_offset_x = -1;
-		return (vertical);
+		if (facing_north(g->alpha))
+			g->right_texture = &g->sprites[N];
+		else
+			g->right_texture = &g->sprites[S];
 	}
 	else
 	{
-		g->draw_offset_y = -1;
-		return (horizontal);
+		g->draw_offset_x = -1;
+		if (facing_left(g->alpha))
+			g->right_texture = &g->sprites[W];
+		else
+			g->right_texture = &g->sprites[E];
 	}
+	return (shorter);
 }
 
 /* Sets if player's back is facing a N/S or W/E wall */
@@ -247,15 +250,14 @@ float	fisheye_correction(float pa, float ra)
 int	draw_wall(t_game *g)
 {
 	int		x;
-	float	alpha;
 	float	d_to_wall;
 	float	proj_wall_height;
 	float	d_to_proj_plane;
 	float	back_angle;
 	
-	alpha = g->p_angle + ((float)FOV / 2);
-	if (alpha >= PI_DOUBLE)
-		alpha -= PI_DOUBLE;
+	g->alpha = g->p_angle + ((float)FOV / 2);
+	if (g->alpha >= PI_DOUBLE)
+		g->alpha -= PI_DOUBLE;
 	x = -1;
 	d_to_wall = 0;
 	proj_wall_height = 0;
@@ -265,9 +267,9 @@ int	draw_wall(t_game *g)
 	draw_minimap(g);
 	while (++x < SCREEN_WIDTH)
 	{
-		d_to_wall = shorter_distance(g, wall_dist_horizontal(g, g->p_pos, alpha), wall_dist_vertical(g, g->p_pos, alpha), \
-		(fabs(alpha - g->p_angle) < (float)1/SCREEN_WIDTH));
-		if (fabs(alpha - g->p_angle) < (float)1/SCREEN_WIDTH)
+		d_to_wall = shorter_distance(g, wall_dist_horizontal(g, g->p_pos, g->alpha), wall_dist_vertical(g, g->p_pos, g->alpha), \
+		(fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH));
+		if (fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH)
 		{
 			back_angle = g->p_angle - PI;
 			if (back_angle < 0)
@@ -279,14 +281,17 @@ int	draw_wall(t_game *g)
 			ft_putstr_fd("Error calculating wall distance\n", 2);
 			break;
 		}
-		d_to_wall *= fisheye_correction(g->p_angle, alpha);// Not working perfectly
+		d_to_wall *= fisheye_correction(g->p_angle, g->alpha);// Not working perfectly
 		// d_to_wall *= cos(fabs(g->p_angle - alpha));// fisheye-correction
 		proj_wall_height = (CUB_SIDE / d_to_wall * d_to_proj_plane);
+		draw_collumn(g, x, (float)(SCREEN_HEIGHT / 2 + proj_wall_height / 2), proj_wall_height);
+		/*
 		draw_line(g, &(t_point_int){x, SCREEN_HEIGHT / 2 + proj_wall_height / 2}, \
 		&(t_point_int){x, SCREEN_HEIGHT / 2 - proj_wall_height / 2}, RED_BRICK);
-		alpha -= (float)1/SCREEN_WIDTH;
-		if (alpha < 0)
-			alpha += PI_DOUBLE;
+		*/
+		g->alpha -= (float)1/SCREEN_WIDTH;
+		if (g->alpha < 0)
+			g->alpha += PI_DOUBLE;
 	}
 	draw_minimap(g);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);

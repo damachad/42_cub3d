@@ -6,7 +6,7 @@
 #    By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/02/12 11:50:48 by damachad         ###   ########.fr        #
+#    Updated: 2024/02/23 14:49:33 by damachad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ MAP_DIR		= maps
 NAME 		= cub3D
 LIBFT		= libft/libft.a
 MLX			= mlx/libmlx.a
-FILES 		= main map init clean checker draw_line background raycasting \
+FILES 		= main map init clean checker draw_line textures raycasting \
 			utils movement
 SRC 		= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
 OBJ 		= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
@@ -91,5 +91,8 @@ re: fclean all
 
 test: $(NAME)
 	@./$(NAME) "$(MAP_DIR)/$(MAP)"
+
+gdb: $(NAME)
+	@gdb --args ./$(NAME) "$(MAP_DIR)/$(MAP)"
 
 .PHONY: all clean fclean re test

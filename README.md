@@ -10,8 +10,8 @@ Parser:
 - Checker for other elements besides the map (textures and colors);   
 
 Graphics:
-- Fix line where player is facing (no wall drawn);
-- Fix texture orientation (S is reflected);
+- Fix collumn where player is facing (incorrectly drawn);
+- Fix texture orientation (S is reflected, and W might be too);
 - Fix direction line on minimap (how to make it rotate with the player, maintaining its length);
 - Fisheye correction not working perfectly;
 

@@ -193,8 +193,9 @@ bool	is_wall(int x, int y);
 void	parse_file(t_game *game, char *file);
 void	parse_color(t_game *game, char *line, t_color_type color_type);
 void	parse_texture(t_game *game, char *line, t_dir dir);
-void	parse_map(t_game *game, char *line, int row);
-
+void	parse_map(t_game *game, char *file);
+void	get_map_size(t_game *game, char *line);
+bool	is_empty_line(char *line);
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);
 

@@ -36,8 +36,6 @@ bool is_empty_line(char *line)
 
 void parse_textures_and_colors(t_game *game, char *line, int fd)
 {
-	if (is_empty_line(line))
-		return ;
 	if (line[0] == 'N' && line[1] == 'O')
 		parse_texture(game, line, NO);
 	else if (line[0] == 'S' && line[1] == 'O')
@@ -50,41 +48,13 @@ void parse_textures_and_colors(t_game *game, char *line, int fd)
 		parse_color(game, line, FLOOR);
 	else if (line[0] == 'C')
 		parse_color(game, line, CEILING);
-	else 
+	else if ((line[0] == '1' || line[0] == ' ') && (all_textures_and_colors_set(game)))
+		get_map_size(game, line);
+	else if (!is_empty_line(line))
 	{
 		free(line);
 		close(fd);
-		error_msg(game, "Invalid line in map file.\n");
-	}
-}
-
-void	read_map(t_game *game, int fd)
-{
-	int		row;
-	char	*line;
-	char	*tmp_line;
-
-	row = 0;
-	while ((line = get_next_line(fd)) != NULL)
-	{
-	 	if (!is_empty_line(line))
-        {
-            tmp_line = ft_strtrim(line, "\n");
-            free(line);
-            parse_map(game, tmp_line, row);
-            free(tmp_line);
-            game->map_rows++;
-            row++;
-        }
-        else
-        {
-            free(line);
-        }
-	}
-	if (line == NULL && row == 0)
-	{
-		close(fd);
-        error_msg(game, "Map is missing in the input file.\n");
+		error_msg(game, "Invalid line in input file.\n");
 	}
 }
 
@@ -97,11 +67,8 @@ void	parse_file(t_game *game, char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		error_msg(game, "Could not open input file.\n");
-	while (!all_textures_and_colors_set(game))
+	while ((line = get_next_line(fd)) != NULL)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
 		tmp_line = ft_strtrim(line, "\n");
 		free(line);
 		parse_textures_and_colors(game, tmp_line, fd);
@@ -112,11 +79,6 @@ void	parse_file(t_game *game, char *file)
 		close(fd);
 		error_msg(game, "Missing info in map file.\n");
 	}
-	else if (line == NULL)
-	{
-		close(fd);
-        error_msg(game, "Map is missing in the input file.\n");
-	}
-	read_map(game, fd);
 	close(fd);
+	parse_map(game, file);
 }

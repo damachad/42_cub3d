@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/23 14:59:04 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:10:41 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ float	get_xa(float alpha)
 	if (alpha == 0 || alpha == PI)
 		return (CUB_SIDE);
 	xa = CUB_SIDE / tan(alpha);
-	if (alpha > PI && alpha < PI_DOUBLE)
+	if (facing_down(alpha))
 		xa *= -1;
 	return (xa);
 }
@@ -82,7 +82,7 @@ float	get_ya(float alpha)
 	if (alpha == PI_HALF || alpha == PI_THREE_HALFS)
 		return (CUB_SIDE);
 	ya = CUB_SIDE * tan(alpha);
-	if (alpha > PI_THREE_HALFS || alpha < PI_HALF)
+	if (facing_right(alpha, 0))
 		ya *= -1;
 	return (ya);
 }
@@ -93,13 +93,13 @@ float	wall_dist_horizontal(t_game *g, t_point p, float alpha)
 	t_point		offset;
  
 	offset.y = 0;
-	if (alpha > 0 && alpha < PI)// If the ray is facing up
+	if (facing_up(alpha))
 	{
 		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE - 0.0001;
 		a.x = p.x + (p.y - a.y) / tan(alpha);
 		offset.y = -1 * CUB_SIDE;
 	}
-	else if (alpha > PI && alpha < PI_DOUBLE)// If the ray is facing down
+	else if (facing_down(alpha))
 	{
 		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE + CUB_SIDE;
 		a.x = p.x + (p.y - a.y) / tan(alpha);
@@ -137,13 +137,13 @@ float	wall_dist_vertical(t_game *g, t_point p, float alpha)
 	t_point		offset;
 
 	offset.x = 0;
-	if (alpha > PI_HALF && alpha < PI_THREE_HALFS)// If the ray is facing left
+	if (facing_left(alpha, 0))
 	{
 		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE - 0.0001;
 		b.y = p.y + (p.x - b.x) * tan(alpha);
 		offset.x = -1 * CUB_SIDE;
 	}
-	else if (alpha < PI_HALF || alpha > PI_THREE_HALFS)// If the ray is facing right
+	else if (facing_right(alpha, 0))
 	{
 		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE + CUB_SIDE;
 		b.y = p.y + (p.x - b.x) * tan(alpha);
@@ -204,7 +204,7 @@ float	shorter_distance(t_game *g, float horizontal, float vertical, bool p_ray)
 	if (shorter == horizontal)
 	{
 		g->draw_offset_y = -1;
-		if (facing_north(g->alpha))
+		if (facing_up(g->alpha))
 			g->right_texture = &g->sprites[N];
 		else
 			g->right_texture = &g->sprites[S];
@@ -212,7 +212,7 @@ float	shorter_distance(t_game *g, float horizontal, float vertical, bool p_ray)
 	else
 	{
 		g->draw_offset_x = -1;
-		if (facing_left(g->alpha))
+		if (facing_left(g->alpha, 0))
 			g->right_texture = &g->sprites[W];
 		else
 			g->right_texture = &g->sprites[E];

@@ -192,8 +192,10 @@ bool	is_wall(int x, int y);
 
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);
-bool	facing_north(float angle);
-bool	facing_left(float angle);
+bool	facing_up(float angle);
+bool	facing_down(float angle);
+bool	facing_left(float angle, float buffer);
+bool	facing_right(float angle, float buffer);
 
 /*---------------------------movement------------------------*/
 int		handle_keypress(int keysym, t_game *g);

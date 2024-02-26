@@ -11,7 +11,6 @@ Parser:
 
 Graphics:
 - Fix collumn where player is facing (incorrectly drawn);
-- Fix texture orientation (S is reflected, and W might be too);
 - Fix direction line on minimap (how to make it rotate with the player, maintaining its length);
 - Fisheye correction not working perfectly;
 

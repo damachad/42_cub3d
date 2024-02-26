@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/23 14:10:54 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:44:33 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,23 @@ void	load_sprites(t_game *g)
 	g->sprites = ft_calloc(4, sizeof(t_img));
 	if (!g->sprites)
 		error_msg(g, "Could not allocate memory for sprites.\n");
-	g->sprites[0].img = mlx_xpm_file_to_image(g->mlx, \
+	g->sprites[N].img = mlx_xpm_file_to_image(g->mlx, \
 	NO, &(g->sprites[N].width), &(g->sprites[N].height));
-	g->sprites[N].addr = mlx_get_data_addr(g->sprites[N].img, \
-	&g->sprites[N].bpp, &g->sprites[N].line_length, &g->sprites[N].endian);
 	g->sprites[S].img = mlx_xpm_file_to_image(g->mlx, \
 	SO, &(g->sprites[S].width), &(g->sprites[S].height));
-	g->sprites[S].addr = mlx_get_data_addr(g->sprites[S].img, \
-	&g->sprites[S].bpp, &g->sprites[S].line_length, &g->sprites[S].endian);
 	g->sprites[E].img = mlx_xpm_file_to_image(g->mlx, \
 	EA, &(g->sprites[E].width), &(g->sprites[E].height));
-	g->sprites[E].addr = mlx_get_data_addr(g->sprites[E].img, \
-	&g->sprites[E].bpp, &g->sprites[E].line_length, &g->sprites[E].endian);
 	g->sprites[W].img = mlx_xpm_file_to_image(g->mlx, \
 	WE, &(g->sprites[W].width), &(g->sprites[W].height));
+	if (!g->sprites[N].img || !g->sprites[S].img || \
+	!g->sprites[E].img || !g->sprites[W].img)
+		error_msg(g, "Invalid texture file.\n");
+	g->sprites[N].addr = mlx_get_data_addr(g->sprites[N].img, \
+	&g->sprites[N].bpp, &g->sprites[N].line_length, &g->sprites[N].endian);
+	g->sprites[S].addr = mlx_get_data_addr(g->sprites[S].img, \
+	&g->sprites[S].bpp, &g->sprites[S].line_length, &g->sprites[S].endian);
+	g->sprites[E].addr = mlx_get_data_addr(g->sprites[E].img, \
+	&g->sprites[E].bpp, &g->sprites[E].line_length, &g->sprites[E].endian);
 	g->sprites[W].addr = mlx_get_data_addr(g->sprites[W].img, \
 	&g->sprites[W].bpp, &g->sprites[W].line_length, &g->sprites[W].endian);
 }

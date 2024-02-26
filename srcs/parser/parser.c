@@ -37,13 +37,13 @@ bool is_empty_line(char *line)
 void parse_textures_and_colors(t_game *game, char *line, int fd)
 {
 	if (line[0] == 'N' && line[1] == 'O')
-		parse_texture(game, line, NO);
+		parse_texture(game, line, N);
 	else if (line[0] == 'S' && line[1] == 'O')
-		parse_texture(game, line, SO);
+		parse_texture(game, line, S);
 	else if (line[0] == 'W' && line[1] == 'E')
-		parse_texture(game, line, WE);
+		parse_texture(game, line, W);
 	else if (line[0] == 'E' && line[1] == 'A')
-		parse_texture(game, line, EA);
+		parse_texture(game, line, E);
  	else if (line[0] == 'F')
 		parse_color(game, line, FLOOR);
 	else if (line[0] == 'C')

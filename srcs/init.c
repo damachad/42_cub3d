@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/26 13:26:28 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:58:13 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_img	new_img(t_game *game)
 
 	img.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (img.img == NULL)
-		error_msg(game, "Failed to create image.\n");
+		error_msg(game, "Failed to create image.");
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, \
 									&img.endian);
 	img.width = SCREEN_WIDTH;
@@ -45,13 +45,13 @@ void	load_sprites(t_game *g)
 	if (!g->sprites)
 		error_msg(g, "Could not allocate memory for sprites.\n");
 	g->sprites[N].img = mlx_xpm_file_to_image(g->mlx, \
-	NO, &(g->sprites[N].width), &(g->sprites[N].height));
+	NORTH, &(g->sprites[N].width), &(g->sprites[N].height));
 	g->sprites[S].img = mlx_xpm_file_to_image(g->mlx, \
-	SO, &(g->sprites[S].width), &(g->sprites[S].height));
+	SOUTH, &(g->sprites[S].width), &(g->sprites[S].height));
 	g->sprites[E].img = mlx_xpm_file_to_image(g->mlx, \
-	EA, &(g->sprites[E].width), &(g->sprites[E].height));
+	EAST, &(g->sprites[E].width), &(g->sprites[E].height));
 	g->sprites[W].img = mlx_xpm_file_to_image(g->mlx, \
-	WE, &(g->sprites[W].width), &(g->sprites[W].height));
+	WEST, &(g->sprites[W].width), &(g->sprites[W].height));
 	if (!g->sprites[N].img || !g->sprites[S].img || \
 	!g->sprites[E].img || !g->sprites[W].img)
 		error_msg(g, "Invalid texture file.\n");
@@ -76,21 +76,37 @@ void	init_player(t_game *g)// later get values from mapfile
 	g->draw_offset_y = -1;
 }
 
+/* set colors to -1 as a flag that they haven't been parsed yet */
+void init_input(t_input *input)
+{
+	input->no = NULL;
+	input->so = NULL;
+	input->we = NULL;
+	input->ea = NULL;
+	input->floor_color = -1;
+	input->ceiling_color = -1;
+}
+
 /* Initialize 't_game' struct, load and check map,
    initialize graphics, load sprites,
    and start game loop */
-void	start_game(char	*mapfile)
+void	start_game(char	*file)
 {
 	t_game	game;
 
-	(void)mapfile;
+	(void)file;
 	ft_bzero(&game, sizeof(t_game));
+	game.input = safe_malloc(sizeof(t_input));
+	init_input(game.input);
+	parse_file(&game, file);
+	print_input(game.input);
+	print_map(&game);
 	// load_map(&game, mapfile);
 	// validate_map(&game);
 	init_graphics(&game);
 	init_player(&game);
 	game.img = new_img(&game);
-	draw_background(&game.img);
+	draw_background(&game);
 	load_sprites(&game);
 	draw_wall(&game);
 	mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);

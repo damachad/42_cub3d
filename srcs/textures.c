@@ -6,13 +6,13 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:29:40 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/26 13:46:59 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:25:55 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	draw_background(t_img *img)
+void	draw_background(t_game *game)
 {
 	int x;
 	int y;
@@ -22,9 +22,9 @@ void	draw_background(t_img *img)
 	{
 		y = -1;
 		while (++y < SCREEN_HEIGHT/2)
-			put_pixel(img, x, y, BLUE_LIGHT);
+			put_pixel(&game->img, x, y, game->input->ceiling_color);
 		while (++y < SCREEN_HEIGHT)
-			put_pixel(img, x, y, GREEN_ALT);
+			put_pixel(&game->img, x, y, game->input->floor_color);
 	}
 }
 

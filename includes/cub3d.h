@@ -41,12 +41,10 @@
 # define BLUE_LIGHT 0x7BD3EA
 # define RED_BRICK 0xD04848
 
-# define NO "textures/directions/N1.xpm"
-# define SO "textures/directions/S1.xpm"
-# define EA "textures/directions/E1.xpm"
-# define WE "textures/directions/W1.xpm"
-# define FLOOR "" // How to process input color ?
-# define CEILING "" // Check for valid range
+# define NORTH "textures/directions/N1.xpm"
+# define SOUTH "textures/directions/S1.xpm"
+# define EAST "textures/directions/E1.xpm"
+# define WEST "textures/directions/W1.xpm"
 # define START_ANGLE 1 // angle in radians
 # define MINIMAP_SCALE 0.3
 # define SPEED 2
@@ -67,6 +65,11 @@ typedef enum s_dir{
 	E,
 	W
 }			t_dir;
+
+typedef enum s_color_type{
+	FLOOR,
+	CEILING
+}			t_color_type;
 
 //line drawing algorithm variables
 typedef struct s_bresenham
@@ -100,18 +103,6 @@ typedef struct s_keys
 	bool	d;
 }			t_keys;
 
-typedef struct s_map
-{
-	char			**bytes;
-	unsigned int	rows;
-}					t_map;
-
-// typedef struct s_sprite{
-// 	void	*img;
-// 	int		width;
-// 	int		height;
-// }			t_sprite;
-
 typedef struct s_img {
 	void	*img;
 	char	*addr;
@@ -128,8 +119,8 @@ typedef struct s_input
 	char	*so;
 	char	*we;
 	char	*ea;
-	int		floor[3];
-	int		ceiling[3];
+	int		floor_color;
+	int		ceiling_color;
 }				t_input;
 
 typedef struct s_game
@@ -139,7 +130,9 @@ typedef struct s_game
 	float			p_angle;
 	t_point			p_pos;
 	t_point			p_dir;
-	t_map			*map;
+	char			**map;
+	int				map_cols;
+	int				map_rows;
 	t_img			img;
 	t_img			*sprites;
 	t_input			*input;
@@ -155,7 +148,7 @@ typedef struct s_game
 extern int	map[10][10];
 
 /*----------------------------map----------------------------*/
-t_map	*new_map(unsigned int rows);
+/* t_map	*new_map(unsigned int rows); */
 int		nr_lines(t_game *game, char *mapfile);
 void	load_map(t_game *game, char *mapfile);
 
@@ -172,15 +165,16 @@ t_img	new_img(t_game *game);
 void	error_msg(t_game *game, char *msg);
 int		quit_prog(t_game *game);
 void	destroy_game(t_game *game);
-void	destroy_map(t_map *map);
+/* void	destroy_map(t_map *map); */
 
 /*--------------------------draw_line------------------------*/
 void	put_pixel(t_img *img, int x, int y, int color);
 void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color);
 
 /*---------------------------textures------------------------*/
-void	draw_background(t_img *img);
+void	draw_background(t_game *game);
 void	draw_column(t_game *g, int x, float y_btm, float wall_h);
+
 // void	draw_wall_test(t_game *game);
 
 /*--------------------------raycasting-----------------------*/
@@ -188,8 +182,12 @@ int		draw_wall(t_game *game);
 bool	is_wall(int x, int y);
 
 /*----------------------------parser-------------------------*/
-/* void	parse_file(t_game *game, char *file); */
-
+void	parse_file(t_game *game, char *file);
+void	parse_color(t_game *game, char *line, t_color_type color_type);
+void	parse_texture(t_game *game, char *line, t_dir dir);
+void	parse_map(t_game *game, char *file);
+void	get_map_size(t_game *game, char *line);
+bool	is_empty_line(char *line);
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);
 bool	facing_up(float angle);
@@ -202,5 +200,9 @@ int		handle_keypress(int keysym, t_game *g);
 int		handle_keyrelease(int keysym, t_game *g);
 int		render_movement(t_game *g);
 void	draw_minimap(t_game *g);
+
+/* -----------------------debug print----------------------- */
+void	print_input(t_input *input);
+void	print_map(t_game *game);
 
 #endif

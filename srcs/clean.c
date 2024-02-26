@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:21:32 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/13 15:31:37 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/17 11:13:47 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,25 @@ void	destroy_sprites(t_game *game)
 	free(game->sprites);
 }
 
-void	destroy_map(t_map *map)
+/* void	destroy_map(t_map *map)
 {
 	if (!map)
 		return ;
 	free_matrix(map->bytes);
 	free(map);
-}
+} */
 
 /* Free all used resources */
 void	destroy_game(t_game *game)
 {
 	if (!game)
 		return ;
+	if (game->input)
+		free(game->input);
 	if (game->sprites)
 		destroy_sprites(game);
 	if (game->map)
-		destroy_map(game->map);
+		free_matrix(game->map);
 	// if (game->img.img)
 	// 	mlx_destroy_image(game->mlx, game->img.img);
 	if (game->win)

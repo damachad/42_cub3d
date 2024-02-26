@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/16 13:25:53 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:13:56 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	wall_sliding(t_game *g)
 {
 	if (g->wall_side == 0)
 	{
-		if ((g->p_angle < PI_HALF - SLIDE_BUFF || g->p_angle > PI_THREE_HALFS + SLIDE_BUFF) && 
+		if (facing_right(g->p_angle, SLIDE_BUFF) && \
 		!is_wall((g->p_pos.x + SPEED + WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
 			g->p_pos.x += SPEED;
-		else if (g->p_angle > PI_HALF + SLIDE_BUFF && g->p_angle < PI_THREE_HALFS - SLIDE_BUFF && 
+		else if (facing_left(g->p_angle, SLIDE_BUFF) && \
 		!is_wall((g->p_pos.x - SPEED - WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
 			g->p_pos.x -= SPEED;
 	}
@@ -38,10 +38,10 @@ void	wall_sliding_back(t_game *g)
 {
 	if (g->back_wall == 0)
 	{
-		if ((g->p_angle < PI_HALF - SLIDE_BUFF || g->p_angle > PI_THREE_HALFS + SLIDE_BUFF) && 
+		if (facing_right(g->p_angle, SLIDE_BUFF) && \
 		!is_wall((g->p_pos.x - SPEED - WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
 			g->p_pos.x -= SPEED;
-		else if (g->p_angle > PI_HALF + SLIDE_BUFF && g->p_angle < PI_THREE_HALFS - SLIDE_BUFF && 
+		else if (facing_left(g->p_angle, SLIDE_BUFF) && \
 		!is_wall((g->p_pos.x + SPEED + WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
 			g->p_pos.x += SPEED;
 	}

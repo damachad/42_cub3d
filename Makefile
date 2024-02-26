@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/02/17 13:20:01 by marvin           ###   ########.fr        #
+#    Updated: 2024/02/26 19:28:57 by damachad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ MAP_DIR		= maps
 NAME 		= cub3D
 LIBFT		= libft/libft.a
 MLX			= mlx/libmlx.a
-FILES 		= main init clean draw_line background raycasting \
+FILES 		= main init clean draw_line textures raycasting \
 			utils movement debug_print \
 			parser/parser parser/parse_color parser/parse_texture parser/parse_map 
 SRC 		= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
@@ -93,5 +93,8 @@ re: fclean all
 
 test: $(NAME)
 	@./$(NAME) "$(MAP_DIR)/$(MAP)"
+
+gdb: $(NAME)
+	@gdb --args ./$(NAME) "$(MAP_DIR)/$(MAP)"
 
 .PHONY: all clean fclean re test

@@ -41,16 +41,10 @@
 # define BLUE_LIGHT 0x7BD3EA
 # define RED_BRICK 0xD04848
 
-/* # define NO "textures/ice.png"
-# define SO "textures/lava.png"
-# define WE "textures/bricks.png"
-# define EA "textures/leaves.png" 
-# define NO "textures/ice.xpm"
-# define SO "textures/lava.xpm"
-# define WE "textures/bricks.xpm"
-# define EA "textures/leaves.xpm"
-# define FLOOR "" // How to process input color ?
-# define CEILING "" // Check for valid range */
+# define NO "textures/directions/N1.xpm"
+# define SO "textures/directions/S1.xpm"
+# define EA "textures/directions/E1.xpm"
+# define WE "textures/directions/W1.xpm"
 # define START_ANGLE 1 // angle in radians
 # define MINIMAP_SCALE 0.3
 # define SPEED 2
@@ -66,10 +60,10 @@
 // Structs
 
 typedef enum s_dir{
-	NO,
-	SO,
-	WE,
-	EA
+	N,
+	S,
+	E,
+	W
 }			t_dir;
 
 typedef enum s_color_type{
@@ -109,12 +103,6 @@ typedef struct s_keys
 	bool	d;
 }			t_keys;
 
-typedef struct s_sprite{
-	void	*img;
-	int		width;
-	int		height;
-}			t_sprite;
-
 typedef struct s_img {
 	void	*img;
 	char	*addr;
@@ -146,13 +134,15 @@ typedef struct s_game
 	int				map_cols;
 	int				map_rows;
 	t_img			img;
-	t_sprite		*sprites;
+	t_img			*sprites;
 	t_input			*input;
 	t_keys			keys;
 	int				wall_side;
 	int				back_wall;
+	float			alpha;
 	float			draw_offset_x;
 	float			draw_offset_y;
+	t_img			*right_texture;
 }					t_game;
 
 extern int	map[10][10];
@@ -181,8 +171,10 @@ void	destroy_game(t_game *game);
 void	put_pixel(t_img *img, int x, int y, int color);
 void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color);
 
-/*--------------------------background-----------------------*/
+/*---------------------------textures------------------------*/
 void	draw_background(t_game *game);
+void	draw_column(t_game *g, int x, float y_btm, float wall_h);
+
 // void	draw_wall_test(t_game *game);
 
 /*--------------------------raycasting-----------------------*/
@@ -198,6 +190,10 @@ void	get_map_size(t_game *game, char *line);
 bool	is_empty_line(char *line);
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);
+bool	facing_up(float angle);
+bool	facing_down(float angle);
+bool	facing_left(float angle, float buffer);
+bool	facing_right(float angle, float buffer);
 
 /*---------------------------movement------------------------*/
 int		handle_keypress(int keysym, t_game *g);

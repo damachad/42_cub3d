@@ -50,7 +50,7 @@
 # define START_ANGLE 1 // angle in radians
 # define MINIMAP_SCALE 0.3
 # define SPEED 2
-# define ROT_SPEED 0.004
+# define ROT_SPEED 0.04
 # define WALL_BUFF 5
 # define SLIDE_BUFF 0.17
 

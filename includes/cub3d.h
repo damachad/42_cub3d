@@ -50,7 +50,7 @@
 # define START_ANGLE 1 // angle in radians
 # define MINIMAP_SCALE 0.3
 # define SPEED 2
-# define ROT_SPEED 0.04
+# define ROT_SPEED 0.004
 # define WALL_BUFF 5
 # define SLIDE_BUFF 0.17
 
@@ -180,7 +180,7 @@ void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color);
 
 /*---------------------------textures------------------------*/
 void	draw_background(t_img *img);
-void	draw_collumn(t_game *g, int x, float y_btm, float wall_h);
+void	draw_column(t_game *g, int x, float y_btm, float wall_h);
 // void	draw_wall_test(t_game *game);
 
 /*--------------------------raycasting-----------------------*/

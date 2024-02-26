@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/26 11:44:33 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:26:28 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_img	new_img(t_game *game)
 
 	img.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (img.img == NULL)
-		error_msg(game, "Failed to create image.");
+		error_msg(game, "Failed to create image.\n");
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_length, \
 									&img.endian);
 	img.width = SCREEN_WIDTH;

@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/26 13:10:41 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:33:08 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,7 @@ int	draw_wall(t_game *g)
 		d_to_wall *= fisheye_correction(g->p_angle, g->alpha);// Not working perfectly
 		// d_to_wall *= cos(fabs(g->p_angle - alpha));// fisheye-correction
 		proj_wall_height = (CUB_SIDE / d_to_wall * d_to_proj_plane);
-		draw_collumn(g, x, (float)(SCREEN_HEIGHT / 2 + proj_wall_height / 2), proj_wall_height);
+		draw_column(g, x, (float)(SCREEN_HEIGHT / 2 + proj_wall_height / 2), proj_wall_height);
 		/*
 		draw_line(g, &(t_point_int){x, SCREEN_HEIGHT / 2 + proj_wall_height / 2}, \
 		&(t_point_int){x, SCREEN_HEIGHT / 2 - proj_wall_height / 2}, RED_BRICK);

@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:29:40 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/26 12:19:04 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:46:59 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	get_texture_color(t_game *g, t_img *tex, int pixel_x, int pixel_y)
 	return (*(int *)(tex->addr + (pixel_y * tex->line_length) + (pixel_x * tex->bpp / 8)));
 }
 
-void	draw_collumn(t_game *g, int x, float y_btm, float wall_h)
+void	draw_column(t_game *g, int x, float y_btm, float wall_h)
 {
 	int		text_x;
 	int		y;

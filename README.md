@@ -10,7 +10,7 @@ Parser:
 - Checker for other elements besides the map (textures and colors);   
 
 Graphics:
-- Fix collumn where player is facing (incorrectly drawn);
+- Fix column where player is facing (incorrectly drawn);
 - Fix direction line on minimap (how to make it rotate with the player, maintaining its length);
 - Fisheye correction not working perfectly;
 

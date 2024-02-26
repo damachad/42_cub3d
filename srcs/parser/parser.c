@@ -69,7 +69,7 @@ void	parse_file(t_game *game, char *file)
 		error_msg(game, "Could not open input file.\n");
 	while ((line = get_next_line(fd)) != NULL)
 	{
-		tmp_line = ft_strtrim(line, "\n");
+		tmp_line = ft_strtrim(line, "\r\n");
 		free(line);
 		parse_textures_and_colors(game, tmp_line, fd);
 		free(tmp_line);

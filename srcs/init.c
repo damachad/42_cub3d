@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/26 19:58:13 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:14:45 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ void	load_sprites(t_game *g)
 	if (!g->sprites)
 		error_msg(g, "Could not allocate memory for sprites.\n");
 	g->sprites[N].img = mlx_xpm_file_to_image(g->mlx, \
-	NORTH, &(g->sprites[N].width), &(g->sprites[N].height));
+	g->input->no, &(g->sprites[N].width), &(g->sprites[N].height));
 	g->sprites[S].img = mlx_xpm_file_to_image(g->mlx, \
-	SOUTH, &(g->sprites[S].width), &(g->sprites[S].height));
+	g->input->so, &(g->sprites[S].width), &(g->sprites[S].height));
 	g->sprites[E].img = mlx_xpm_file_to_image(g->mlx, \
-	EAST, &(g->sprites[E].width), &(g->sprites[E].height));
+	g->input->ea, &(g->sprites[E].width), &(g->sprites[E].height));
 	g->sprites[W].img = mlx_xpm_file_to_image(g->mlx, \
-	WEST, &(g->sprites[W].width), &(g->sprites[W].height));
+	g->input->we, &(g->sprites[W].width), &(g->sprites[W].height));
 	if (!g->sprites[N].img || !g->sprites[S].img || \
 	!g->sprites[E].img || !g->sprites[W].img)
 		error_msg(g, "Invalid texture file.\n");

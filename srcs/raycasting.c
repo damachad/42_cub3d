@@ -6,29 +6,16 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/26 19:34:52 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:20:45 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int map[10][10] = {
-	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-	{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 1, 0, 0, 0, 0, 0, 0, 0, 1},
-	{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-};
-
 // Later adapt to get map from t_game
-bool	is_wall(int x, int y)
+bool	is_wall(char **map, int x, int y)
 {
-	if (x < 10 && y < 10 && map[y][x] == 1)// How to check if the position is valid?
+	if (x < 10 && y < 10 && map[y][x] == '1')// How to check if the position is valid?
 		return (true);
 	else
 		return (false);
@@ -116,7 +103,7 @@ float	wall_dist_horizontal(t_game *g, t_point p, float alpha)
 	// Check for wall collision on horizontal lines
 	while (a.x < SCREEN_WIDTH && a.x > 0 && a.y > 0 && a.y < SCREEN_HEIGHT)// should be while in map range
 	{
-		if (is_wall(a.x / CUB_SIDE, a.y / CUB_SIDE))
+		if (is_wall(g->map, a.x / CUB_SIDE, a.y / CUB_SIDE))
 		{
 			g->draw_offset_x = (int)a.x % CUB_SIDE;
 			return (get_distance(a, p, alpha));
@@ -159,7 +146,7 @@ float	wall_dist_vertical(t_game *g, t_point p, float alpha)
 	// Check for wall collision on horizontal lines
 	while (b.x < SCREEN_WIDTH && b.x > 0 && b.y > 0 && b.y < SCREEN_HEIGHT)
 	{
-		if (is_wall(b.x / CUB_SIDE, b.y / CUB_SIDE))
+		if (is_wall(g->map, b.x / CUB_SIDE, b.y / CUB_SIDE))
 		{
 			g->draw_offset_y = (int)b.y % CUB_SIDE;
 			return (get_distance(b, p, alpha));

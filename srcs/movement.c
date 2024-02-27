@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/26 20:20:53 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:16:29 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,11 @@ int	handle_keypress(int keysym, t_game *g)
 		quit_prog(g);
 	else if (keysym == XK_w)
 		g->keys.w = 1;
-	else if (keysym == XK_a)
+	else if (keysym == XK_a || keysym == XK_Left)
 		g->keys.a = 1;
 	else if (keysym == XK_s)
 		g->keys.s = 1;
-	else if (keysym == XK_d)
+	else if (keysym == XK_d || keysym == XK_Right)
 		g->keys.d = 1;
 	return (keysym);
 }
@@ -112,11 +112,11 @@ int	handle_keyrelease(int keysym, t_game *g)
 {
 	if (keysym == XK_w)
 		g->keys.w = 0;
-	else if (keysym == XK_a)
+	else if (keysym == XK_a || keysym == XK_Left)
 		g->keys.a = 0;
 	else if (keysym == XK_s)
 		g->keys.s = 0;
-	else if (keysym == XK_d)
+	else if (keysym == XK_d || keysym == XK_Right)
 		g->keys.d = 0;
 	return (keysym);
 }

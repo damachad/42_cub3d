@@ -52,10 +52,11 @@
 # define WALL_BUFF 5
 # define SLIDE_BUFF 0.17
 
-# define PI 3.1415926535
+// east is 0
+# define PI 3.1415926535 // west
 # define PI_DOUBLE 6.2831853071
-# define PI_HALF 1.5707963267
-# define PI_THREE_HALFS 4.7123889803
+# define PI_HALF 1.5707963267 // north
+# define PI_THREE_HALFS 4.7123889803 // south
 
 // Structs
 

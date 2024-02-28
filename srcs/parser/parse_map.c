@@ -46,6 +46,21 @@
         game->map_cols = col;
 } */
 
+void    set_player(t_game *game, char c, int x, int y)
+{
+    game->p_pos = (t_point){(float)x * CUB_SIDE + CUB_SIDE/2, (float)y * CUB_SIDE + CUB_SIDE/2};
+    if (c == 'N')
+        game->p_angle = PI_HALF;
+    else if (c == 'S')
+        game->p_angle = PI_THREE_HALFS;
+    else if (c == 'E')
+        game->p_angle = 0;
+    else if (c == 'W')
+        game->p_angle = PI;
+    else
+        error_msg(game, "Invalid player character in map file.\n");
+}
+
 void	get_map_size(t_game *game, char *line)
 {
 	int	line_len;
@@ -72,6 +87,10 @@ bool    is_valid_char(char c, int *player)
     return (false);
 }
 
+/* 
+** copy map row to game->map 
+** and set player coordinates and direction 
+*/
 void copy_row(t_game *game, char *line, int row, int *player)
 {
     int i;
@@ -87,6 +106,8 @@ void copy_row(t_game *game, char *line, int row, int *player)
             error_msg(game, "Invalid character in map file.\n");
         }
         game->map[row][i] = line[i];
+        if (ft_strchr("NSEW", line[i]))
+            set_player(game, line[i], i, row);
         i++;
     }
 }

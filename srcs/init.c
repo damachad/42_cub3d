@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/26 20:14:45 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/27 21:27:27 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	load_sprites(t_game *g)
 
 void	init_player(t_game *g)// later get values from mapfile
 {
-	g->p_angle = START_ANGLE;
-	g->p_pos = (t_point){(float)3 * CUB_SIDE + CUB_SIDE/2, (float)3 * CUB_SIDE + CUB_SIDE/2};
+	//g->p_angle = START_ANGLE;
+	//g->p_pos = (t_point){(float)3 * CUB_SIDE + CUB_SIDE/2, (float)3 * CUB_SIDE + CUB_SIDE/2};
 	g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
 	g->wall_side = -1;
 	g->back_wall = -1;

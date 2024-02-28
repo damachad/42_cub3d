@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/26 20:20:45 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/28 12:24:25 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ float	get_ya(float alpha)
 	return (ya);
 }
 
-float	wall_dist_horizontal(t_game *g, t_point p, float alpha)
+float	wall_dist_horizontal(t_game *g, t_point p, float alpha, bool set)
 {
 	t_point 	a;
 	t_point		offset;
@@ -105,7 +105,8 @@ float	wall_dist_horizontal(t_game *g, t_point p, float alpha)
 	{
 		if (is_wall(g->map, a.x / CUB_SIDE, a.y / CUB_SIDE))
 		{
-			g->draw_offset_x = (int)a.x % CUB_SIDE;
+			if (set)
+				g->draw_offset_x = (int)a.x % CUB_SIDE;
 			return (get_distance(a, p, alpha));
 		}
 		else
@@ -118,7 +119,7 @@ float	wall_dist_horizontal(t_game *g, t_point p, float alpha)
 }
 
 // Transform alpha so that when it is bigger than 2PI, resets to 0
-float	wall_dist_vertical(t_game *g, t_point p, float alpha)
+float	wall_dist_vertical(t_game *g, t_point p, float alpha, bool set)
 {
 	t_point 	b;
 	t_point		offset;
@@ -148,7 +149,8 @@ float	wall_dist_vertical(t_game *g, t_point p, float alpha)
 	{
 		if (is_wall(g->map, b.x / CUB_SIDE, b.y / CUB_SIDE))
 		{
-			g->draw_offset_y = (int)b.y % CUB_SIDE;
+			if (set)
+				g->draw_offset_y = (int)b.y % CUB_SIDE;
 			return (get_distance(b, p, alpha));
 		}
 		else
@@ -254,14 +256,14 @@ int	draw_wall(t_game *g)
 	draw_minimap(g);
 	while (++x < SCREEN_WIDTH)
 	{
-		d_to_wall = shorter_distance(g, wall_dist_horizontal(g, g->p_pos, g->alpha), wall_dist_vertical(g, g->p_pos, g->alpha), \
+		d_to_wall = shorter_distance(g, wall_dist_horizontal(g, g->p_pos, g->alpha, 1), wall_dist_vertical(g, g->p_pos, g->alpha, 1), \
 		(fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH));
 		if (fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH)
 		{
 			back_angle = g->p_angle - PI;
 			if (back_angle < 0)
 				back_angle += PI_DOUBLE;
-			set_back_wall(g, wall_dist_horizontal(g, g->p_pos, back_angle), wall_dist_vertical(g, g->p_pos, back_angle));
+			set_back_wall(g, wall_dist_horizontal(g, g->p_pos, back_angle, 0), wall_dist_vertical(g, g->p_pos, back_angle, 0));
 		}
 		if (d_to_wall == -1)
 		{

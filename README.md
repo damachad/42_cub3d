@@ -10,7 +10,7 @@ Parser:
 - Checker for other elements besides the map (textures and colors);   
 
 Graphics:
-- Fix direction line on minimap (how to make it rotate with the player, maintaining its length);
+- Reduce lag when rotating close to walls;
 - Fisheye correction not working perfectly;
 
 ## Links:

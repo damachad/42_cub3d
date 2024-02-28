@@ -27,7 +27,6 @@
 # define SCREEN_WIDTH 960
 # define SCREEN_HEIGHT 768
 # define CUB_SIDE 64
-# define PLAYER_H 32 // necessary?
 # define FOV 1 // in radians
 # define NB_SPRITES 4
 
@@ -41,11 +40,6 @@
 # define BLUE_LIGHT 0x7BD3EA
 # define RED_BRICK 0xD04848
 
-# define NORTH "textures/directions/N1.xpm"
-# define SOUTH "textures/directions/S1.xpm"
-# define EAST "textures/directions/E1.xpm"
-# define WEST "textures/directions/W1.xpm"
-# define START_ANGLE 1 // angle in radians
 # define MINIMAP_SCALE 0.3
 # define SPEED 2
 # define ROT_SPEED 0.04
@@ -146,14 +140,6 @@ typedef struct s_game
 	t_img			*right_texture;
 }					t_game;
 
-/*----------------------------map----------------------------*/
-/* t_map	*new_map(unsigned int rows); */
-int		nr_lines(t_game *game, char *mapfile);
-void	load_map(t_game *game, char *mapfile);
-
-/*--------------------------checker--------------------------*/
-void	validate_map(t_game *game);
-
 /*---------------------------init----------------------------*/
 void	init_graphics(t_game *game);
 void	start_game(char	*mapfile);
@@ -198,6 +184,8 @@ bool	facing_right(float angle, float buffer);
 int		handle_keypress(int keysym, t_game *g);
 int		handle_keyrelease(int keysym, t_game *g);
 int		render_movement(t_game *g);
+
+/*---------------------------minimap------------------------*/
 void	draw_minimap(t_game *g);
 
 /* -----------------------debug print----------------------- */

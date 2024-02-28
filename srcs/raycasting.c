@@ -6,37 +6,20 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/28 12:24:25 by damachad         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:25:02 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
 // Later adapt to get map from t_game
-bool	is_wall(char **map, int x, int y)
+bool	is_wall(char **map, int x, int y) // update with map measures
 {
 	if (x < 10 && y < 10 && map[y][x] == '1')// How to check if the position is valid?
 		return (true);
 	else
 		return (false);
 }
-
-/* Formula to get the distance */
-// float	get_distance(t_point a, t_point p, float alpha)
-// {
-// 	float	distance;
-
-// 	distance = 0;
-// 	if (alpha > 0 && alpha < PI)
-// 		distance = fabs(p.x - a.x) / fabs(cos(alpha));
-// 	else if (alpha > PI && alpha < PI_DOUBLE)
-// 		distance = fabs(p.x - a.x) / fabs(cos(alpha - PI));
-// 	else if (alpha == PI_HALF || alpha == PI_THREE_HALFS)
-// 		distance = fabs(p.y - a.y);
-// 	else if (alpha == PI || alpha == 0)
-// 		distance = fabs(p.x - a.x);
-// 	return (distance);
-// }
 
 float	get_distance(t_point a, t_point p, float alpha)
 {
@@ -274,10 +257,6 @@ int	draw_wall(t_game *g)
 		// d_to_wall *= cos(fabs(g->p_angle - alpha));// fisheye-correction
 		proj_wall_height = (CUB_SIDE / d_to_wall * d_to_proj_plane);
 		draw_column(g, x, (float)(SCREEN_HEIGHT / 2 + proj_wall_height / 2), proj_wall_height);
-		/*
-		draw_line(g, &(t_point_int){x, SCREEN_HEIGHT / 2 + proj_wall_height / 2}, \
-		&(t_point_int){x, SCREEN_HEIGHT / 2 - proj_wall_height / 2}, RED_BRICK);
-		*/
 		g->alpha -= (float)1/SCREEN_WIDTH;
 		if (g->alpha < 0)
 			g->alpha += PI_DOUBLE;

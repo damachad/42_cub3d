@@ -40,7 +40,7 @@
 # define BLUE_LIGHT 0x7BD3EA
 # define RED_BRICK 0xD04848
 
-# define MINIMAP_SCALE 0.3
+# define MINIMAP_SCALE 3.0
 # define SPEED 2
 # define ROT_SPEED 0.04
 # define WALL_BUFF 5

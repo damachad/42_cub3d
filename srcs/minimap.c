@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:16:23 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/09 12:43:07 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/09 12:50:07 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	draw_square(t_game *g, int x, int y, int size, int color)
 
 	i = 0;
 	img = &g->img;
-	while (i < (size - 4) * g->minimap_scale && i + size * g->minimap_scale < img->height)
+	while (i < size * g->minimap_scale && i + size * g->minimap_scale < img->height)
 	{
 		j = 0;
-		while (j < (size - 4) * g->minimap_scale && j + size * g->minimap_scale < img->width)
+		while (j < size * g->minimap_scale && j + size * g->minimap_scale < img->width)
 		{
 			put_pixel(img, x + i, y + j, color);
 			j++;
@@ -31,24 +31,6 @@ void	draw_square(t_game *g, int x, int y, int size, int color)
 		i++;
 	}
 }
-
-// void	draw_square(t_img *img, int x, int y, int size, int color)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (i < (size - 4) * MINIMAP_SCALE && i + size * MINIMAP_SCALE < img->height)
-// 	{
-// 		j = 0;
-// 		while (j < (size - 4) * MINIMAP_SCALE && j + size * MINIMAP_SCALE < img->width)
-// 		{
-// 			put_pixel(img, x + i, y + j, color);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
 
 void	set_scale_minimap(t_game *g, int rows, int cols)
 {
@@ -58,7 +40,7 @@ void	set_scale_minimap(t_game *g, int rows, int cols)
 		bigger = rows;
 	else
 		bigger = cols;
-	g->minimap_scale = 3.0 / (float)bigger;
+	g->minimap_scale = MINIMAP_SCALE / (float)bigger;
 }
 
 void	draw_minimap(t_game *g)

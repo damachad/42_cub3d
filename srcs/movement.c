@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/28 15:16:34 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/09 10:14:44 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ void	wall_sliding(t_game *g)
 	if (g->wall_side == 0)
 	{
 		if (facing_right(g->p_angle, SLIDE_BUFF) && \
-		!is_wall(g->map, (g->p_pos.x + SPEED + WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
+		!is_wall(g, (g->p_pos.x + SPEED + WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
 			g->p_pos.x += SPEED;
 		else if (facing_left(g->p_angle, SLIDE_BUFF) && \
-		!is_wall(g->map, (g->p_pos.x - SPEED - WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
+		!is_wall(g, (g->p_pos.x - SPEED - WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
 			g->p_pos.x -= SPEED;
 	}
 	else if (g->wall_side == 1)
 	{
-		if (g->p_angle < PI - SLIDE_BUFF && !is_wall(g->map, g->p_pos.x / CUB_SIDE, (g->p_pos.y - SPEED - WALL_BUFF) / CUB_SIDE))
+		if (g->p_angle < PI - SLIDE_BUFF && !is_wall(g, g->p_pos.x / CUB_SIDE, (g->p_pos.y - SPEED - WALL_BUFF) / CUB_SIDE))
 			g->p_pos.y -= SPEED;
-		else if (g->p_angle > PI + SLIDE_BUFF && !is_wall(g->map, g->p_pos.x / CUB_SIDE, (g->p_pos.y + SPEED + WALL_BUFF) / CUB_SIDE))
+		else if (g->p_angle > PI + SLIDE_BUFF && !is_wall(g, g->p_pos.x / CUB_SIDE, (g->p_pos.y + SPEED + WALL_BUFF) / CUB_SIDE))
 			g->p_pos.y += SPEED;
 	}
 }
@@ -39,17 +39,17 @@ void	wall_sliding_back(t_game *g)
 	if (g->back_wall == 0)
 	{
 		if (facing_right(g->p_angle, SLIDE_BUFF) && \
-		!is_wall(g->map, (g->p_pos.x - SPEED - WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
+		!is_wall(g, (g->p_pos.x - SPEED - WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
 			g->p_pos.x -= SPEED;
 		else if (facing_left(g->p_angle, SLIDE_BUFF) && \
-		!is_wall(g->map, (g->p_pos.x + SPEED + WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
+		!is_wall(g, (g->p_pos.x + SPEED + WALL_BUFF) / CUB_SIDE, g->p_pos.y / CUB_SIDE))
 			g->p_pos.x += SPEED;
 	}
 	else if (g->back_wall == 1)
 	{
-		if (g->p_angle < PI - SLIDE_BUFF && !is_wall(g->map, g->p_pos.x / CUB_SIDE, (g->p_pos.y + SPEED + WALL_BUFF) / CUB_SIDE))
+		if (g->p_angle < PI - SLIDE_BUFF && !is_wall(g, g->p_pos.x / CUB_SIDE, (g->p_pos.y + SPEED + WALL_BUFF) / CUB_SIDE))
 			g->p_pos.y += SPEED;
-		else if (g->p_angle > PI + SLIDE_BUFF && !is_wall(g->map, g->p_pos.x / CUB_SIDE, (g->p_pos.y - SPEED - WALL_BUFF) / CUB_SIDE))
+		else if (g->p_angle > PI + SLIDE_BUFF && !is_wall(g, g->p_pos.x / CUB_SIDE, (g->p_pos.y - SPEED - WALL_BUFF) / CUB_SIDE))
 			g->p_pos.y -= SPEED;
 	}
 }
@@ -58,7 +58,7 @@ int	render_movement(t_game *g)
 {
 	if (g->keys.w)
 	{
-		if (!is_wall(g->map, (g->p_pos.x + g->p_dir.x * WALL_BUFF) / CUB_SIDE, (g->p_pos.y + g->p_dir.y * WALL_BUFF) / CUB_SIDE))
+		if (!is_wall(g, (g->p_pos.x + g->p_dir.x * WALL_BUFF) / CUB_SIDE, (g->p_pos.y + g->p_dir.y * WALL_BUFF) / CUB_SIDE))
 		{
 			g->p_pos.x += g->p_dir.x;
 			g->p_pos.y += g->p_dir.y;
@@ -75,7 +75,7 @@ int	render_movement(t_game *g)
 	}
 	else if (g->keys.s)
 	{
-		if (!is_wall(g->map, (g->p_pos.x - g->p_dir.x * WALL_BUFF) / CUB_SIDE, (g->p_pos.y - g->p_dir.y * WALL_BUFF) / CUB_SIDE))
+		if (!is_wall(g, (g->p_pos.x - g->p_dir.x * WALL_BUFF) / CUB_SIDE, (g->p_pos.y - g->p_dir.y * WALL_BUFF) / CUB_SIDE))
 		{
 			g->p_pos.x -= g->p_dir.x;
 			g->p_pos.y -= g->p_dir.y;

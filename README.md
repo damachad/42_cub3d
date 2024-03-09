@@ -10,6 +10,7 @@ Parser:
 - Checker for other elements besides the map (textures and colors);   
 
 Graphics:
+- Improve minimap;
 - Reduce lag when rotating close to walls;
 - Fisheye correction not working perfectly;
 

@@ -6,16 +6,15 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/28 15:25:02 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:47:40 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// Later adapt to get map from t_game
-bool	is_wall(char **map, int x, int y) // update with map measures
+bool	is_wall(t_game *g, int x, int y)
 {
-	if (x < 10 && y < 10 && map[y][x] == '1')// How to check if the position is valid?
+	if (x < g->map_cols && y < g->map_rows && g->map[y][x] && g->map[y][x] == '1')
 		return (true);
 	else
 		return (false);
@@ -84,9 +83,9 @@ float	wall_dist_horizontal(t_game *g, t_point p, float alpha, bool set)
 	offset.x = get_xa(alpha);
 	// offset.x = -1 * offset.y * (-1 / tan(alpha));
 	// Check for wall collision on horizontal lines
-	while (a.x < SCREEN_WIDTH && a.x > 0 && a.y > 0 && a.y < SCREEN_HEIGHT)// should be while in map range
+	while (a.x < g->map_cols * CUB_SIDE && a.x > 0 && a.y > 0 && a.y < g->map_rows * CUB_SIDE)// should be while in map range
 	{
-		if (is_wall(g->map, a.x / CUB_SIDE, a.y / CUB_SIDE))
+		if (is_wall(g, a.x / CUB_SIDE, a.y / CUB_SIDE))
 		{
 			if (set)
 				g->draw_offset_x = (int)a.x % CUB_SIDE;
@@ -128,9 +127,9 @@ float	wall_dist_vertical(t_game *g, t_point p, float alpha, bool set)
 	offset.y = get_ya(alpha);
 	// offset.y = -1 * offset.x * (-1 * tan(alpha));
 	// Check for wall collision on horizontal lines
-	while (b.x < SCREEN_WIDTH && b.x > 0 && b.y > 0 && b.y < SCREEN_HEIGHT)
+	while (b.x < g->map_cols * CUB_SIDE && b.x > 0 && b.y > 0 && b.y < g->map_rows * CUB_SIDE)
 	{
-		if (is_wall(g->map, b.x / CUB_SIDE, b.y / CUB_SIDE))
+		if (is_wall(g, b.x / CUB_SIDE, b.y / CUB_SIDE))
 		{
 			if (set)
 				g->draw_offset_y = (int)b.y % CUB_SIDE;

@@ -134,6 +134,7 @@ typedef struct s_game
 	t_keys			keys;
 	int				wall_side;
 	int				back_wall;
+	float			minimap_scale;
 	float			alpha;
 	float			draw_offset_x;
 	float			draw_offset_y;
@@ -164,7 +165,7 @@ void	draw_column(t_game *g, int x, float y_btm, float wall_h);
 
 /*--------------------------raycasting-----------------------*/
 int		draw_wall(t_game *game);
-bool	is_wall(char **map, int x, int y);
+bool	is_wall(t_game *g, int x, int y);
 
 /*----------------------------parser-------------------------*/
 void	parse_file(t_game *game, char *file);

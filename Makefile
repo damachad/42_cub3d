@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/02/26 20:11:39 by damachad         ###   ########.fr        #
+#    Updated: 2024/03/07 20:40:14 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ LIBFT		= libft/libft.a
 MLX			= mlx/libmlx.a
 FILES 		= main init clean draw_line textures raycasting \
 			utils movement debug_print \
-			parser/parser parser/parse_color parser/parse_texture parser/parse_map 
+			parser/parser parser/parse_color parser/parse_texture parser/parse_map \
+			parser/check_map
 SRC 		= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
 OBJ 		= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
 

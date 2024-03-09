@@ -187,6 +187,8 @@ void	parse_texture(t_game *game, char *line, t_dir dir);
 void	parse_map(t_game *game, char *file);
 void	get_map_size(t_game *game, char *line);
 bool	is_empty_line(char *line);
+void	check_map(t_game *game);
+
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);
 bool	facing_up(float angle);

@@ -10,6 +10,7 @@ Parser:
 - Checker for other elements besides the map (textures and colors);   
 
 Graphics:
+- When big map, sometimes errors drawing wall (on W walls, from up a certain distance, distance gets calculates with horizontal instead of vertical);
 - Improve minimap;
 - Reduce lag when rotating close to walls;
 - Fisheye correction not working perfectly;

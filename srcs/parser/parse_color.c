@@ -15,7 +15,7 @@
 
 static int get_color_hex(int r, int g, int b)
 {
-	return (r << 16) | (g << 8) | b;
+	return ((r << 16) | (g << 8) | b);
 }
 
 /* place rgb input into integer array */
@@ -24,11 +24,13 @@ static void parse_color_components(t_game *game, char *line, int *i, int *color)
 	int j;
 
 	j = 0;
-	while (j < 3) 
+	while (line[*i] != '\0') 
 	{
 		while (line[*i] != '\0' && is_space(line[*i])) {
 			(*i)++;
 		}
+		if (!ft_isdigit(line[*i]))
+			error_msg(game, "Invalid color value.\n");
 		while (line[*i] != '\0' && line[*i] >= '0' && line[*i] <= '9') {
 			color[j] = color[j] * 10 + (line[*i] - '0');
 			(*i)++;
@@ -39,8 +41,10 @@ static void parse_color_components(t_game *game, char *line, int *i, int *color)
 			(*i)++;
 		}
 		j++;
+		if (j == 3 && line[*i] != '\0')
+			error_msg(game, "Invalid color format.\n");
 	}
-} 
+}
 
 void parse_color(t_game *game, char *line, t_color_type color_type)
 {

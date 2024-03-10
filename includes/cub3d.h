@@ -31,7 +31,7 @@
 # define FOV 1 // in radians
 # define NB_SPRITES 4
 
-# define HEX_COLOR 0xFFFFFFFF
+/* # define HEX_COLOR 0xFFFFFFFF
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
 # define RED 0xFF0000
@@ -39,12 +39,12 @@
 # define BLUE 0x0000FF
 # define GREEN_ALT 0x65B741
 # define BLUE_LIGHT 0x7BD3EA
-# define RED_BRICK 0xD04848
+# define RED_BRICK 0xD04848 */
 
-# define NORTH "textures/directions/N1.xpm"
+/* # define NORTH "textures/directions/N1.xpm"
 # define SOUTH "textures/directions/S1.xpm"
 # define EAST "textures/directions/E1.xpm"
-# define WEST "textures/directions/W1.xpm"
+# define WEST "textures/directions/W1.xpm" */
 # define START_ANGLE 1 // angle in radians
 # define MINIMAP_SCALE 0.3
 # define SPEED 2
@@ -187,6 +187,8 @@ void	parse_texture(t_game *game, char *line, t_dir dir);
 void	parse_map(t_game *game, char *file);
 void	get_map_size(t_game *game, char *line);
 bool	is_empty_line(char *line);
+void	check_map(t_game *game);
+
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);
 bool	facing_up(float angle);

@@ -12,40 +12,6 @@
 
 #include "../../includes/cub3d.h"
 
-/* void	parse_map(t_game *game, char *line, int row)
-{
-    int col;
-    int i;
-
-    col = 0;
-    i = 0;
-    if (game->map == NULL)
-    {
-        game->map = safe_malloc(sizeof(char *));
-    }
-    else
-    {
-        // Allocate memory for the new row
-        char **temp = safe_malloc((row + 1) * sizeof(char *));
-        // Copy existing rows to the new memory location
-        while (i < row) {
-            temp[i] = game->map[i];
-            i++;
-        }
-        // Free the old memory
-        free(game->map);
-        // Assign the new memory to game->map
-        game->map = temp;
-    }
-    game->map[row] = ft_strdup(line);
-    if (row == 0)
-        game->map_cols = ft_strlen(line);
-    // Check if the current row has more columns than previous rows
-    col = ft_strlen(line);
-    if (col > game->map_cols)
-        game->map_cols = col;
-} */
-
 void    set_player(t_game *game, char c, int x, int y)
 {
     game->p_pos = (t_point){(float)x * CUB_SIDE + CUB_SIDE/2, (float)y * CUB_SIDE + CUB_SIDE/2};
@@ -110,6 +76,11 @@ void copy_row(t_game *game, char *line, int row, int *player)
             set_player(game, line[i], i, row);
         i++;
     }
+    while (i < game->map_cols)
+    {
+        game->map[row][i] = ' ';
+        i++;
+    }
 }
 
 /* 
@@ -145,7 +116,7 @@ void fill_map(t_game *game, char *file)
             free(tmp_line);
             error_msg(game, "Invalid line in map file.\n");
         }
-        if (tmp_line[0] == '1' || is_space(tmp_line[0]))
+        if (tmp_line[0] == '1' || tmp_line[0] == ' ')
         {
             start_map = 1;
             copy_row(game, tmp_line, row, &player);
@@ -163,4 +134,6 @@ void parse_map(t_game *game, char *file)
     game->map = safe_malloc(sizeof(char *) * (game->map_rows + 1)); 
     game->map[game->map_rows] = NULL;
     fill_map(game, file);
+    check_map(game);
+   
 }

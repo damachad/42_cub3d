@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/27 21:27:27 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/09 17:01:08 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,8 @@ void	start_game(char	*file)
 	game.input = safe_malloc(sizeof(t_input));
 	init_input(game.input);
 	parse_file(&game, file);
-	print_input(game.input);
-	print_map(&game);
-	// load_map(&game, mapfile);
-	// validate_map(&game);
+	//print_input(game.input);
+	//print_map(&game);
 	init_graphics(&game);
 	init_player(&game);
 	game.img = new_img(&game);

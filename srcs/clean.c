@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:21:32 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/17 11:13:47 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/28 15:20:38 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-// NOTE: Functions from So_long, need to be adapted
 
 /* Calls cleaning function, displays message in fd 2 and exits */
 void	error_msg(t_game *game, char *msg)
@@ -41,14 +39,6 @@ void	destroy_sprites(t_game *game)
 		mlx_destroy_image(game->mlx, game->sprites[i++].img);
 	free(game->sprites);
 }
-
-/* void	destroy_map(t_map *map)
-{
-	if (!map)
-		return ;
-	free_matrix(map->bytes);
-	free(map);
-} */
 
 /* Free all used resources */
 void	destroy_game(t_game *game)

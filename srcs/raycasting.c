@@ -6,42 +6,18 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/28 12:24:25 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:55:11 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// Later adapt to get map from t_game
-bool	is_wall(char **map, int x, int y)
+bool	is_wall(t_game *g, int x, int y)
 {
-	if (x < 10 && y < 10 && map[y][x] == '1')// How to check if the position is valid?
+	if (x < g->map_cols && y < g->map_rows && g->map[y][x] && g->map[y][x] == '1')
 		return (true);
 	else
 		return (false);
-}
-
-/* Formula to get the distance */
-// float	get_distance(t_point a, t_point p, float alpha)
-// {
-// 	float	distance;
-
-// 	distance = 0;
-// 	if (alpha > 0 && alpha < PI)
-// 		distance = fabs(p.x - a.x) / fabs(cos(alpha));
-// 	else if (alpha > PI && alpha < PI_DOUBLE)
-// 		distance = fabs(p.x - a.x) / fabs(cos(alpha - PI));
-// 	else if (alpha == PI_HALF || alpha == PI_THREE_HALFS)
-// 		distance = fabs(p.y - a.y);
-// 	else if (alpha == PI || alpha == 0)
-// 		distance = fabs(p.x - a.x);
-// 	return (distance);
-// }
-
-float	get_distance(t_point a, t_point p, float alpha)
-{
-	(void)alpha;
-	return (sqrt(pow(a.x - p.x, 2) + pow(a.y - p.y, 2)));
 }
 
 /* Calculates the distance between horizontal intersections in the grid,
@@ -74,40 +50,15 @@ float	get_ya(float alpha)
 	return (ya);
 }
 
-float	wall_dist_horizontal(t_game *g, t_point p, float alpha, bool set)
+float	find_collision_v(t_game *g, t_point a, t_point offset, t_point p, bool set)
 {
-	t_point 	a;
-	t_point		offset;
- 
-	offset.y = 0;
-	if (facing_up(alpha))
+	while (a.x <= g->map_cols * CUB_SIDE && a.x >= 0 && a.y >= 0 && a.y <= g->map_rows * CUB_SIDE)
 	{
-		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE - 0.0001;
-		a.x = p.x + (p.y - a.y) / tan(alpha);
-		offset.y = -1 * CUB_SIDE;
-	}
-	else if (facing_down(alpha))
-	{
-		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE + CUB_SIDE;
-		a.x = p.x + (p.y - a.y) / tan(alpha);
-		// a.x = p.x + (p.y - a.y) * (-1 / tan(alpha));
-		offset.y = CUB_SIDE;
-	}
-	else if (alpha == PI || alpha == 0)
-	{
-		a.y = p.y;
-		a.x = p.x;
-	}
-	offset.x = get_xa(alpha);
-	// offset.x = -1 * offset.y * (-1 / tan(alpha));
-	// Check for wall collision on horizontal lines
-	while (a.x < SCREEN_WIDTH && a.x > 0 && a.y > 0 && a.y < SCREEN_HEIGHT)// should be while in map range
-	{
-		if (is_wall(g->map, a.x / CUB_SIDE, a.y / CUB_SIDE))
+		if (is_wall(g, a.x / CUB_SIDE, a.y / CUB_SIDE))
 		{
 			if (set)
-				g->draw_offset_x = (int)a.x % CUB_SIDE;
-			return (get_distance(a, p, alpha));
+				g->draw_offset_y = (int)a.y % CUB_SIDE;
+			return (sqrt(pow(a.x - p.x, 2) + pow(a.y - p.y, 2)));
 		}
 		else
 		{
@@ -118,7 +69,53 @@ float	wall_dist_horizontal(t_game *g, t_point p, float alpha, bool set)
 	return (-1);
 }
 
-// Transform alpha so that when it is bigger than 2PI, resets to 0
+float	find_collision_h(t_game *g, t_point a, t_point offset, t_point p, bool set)
+{
+	while (a.x <= g->map_cols * CUB_SIDE && a.x >= 0 && a.y >= 0 && a.y <= g->map_rows * CUB_SIDE)
+	{
+		if (is_wall(g, a.x / CUB_SIDE, a.y / CUB_SIDE))
+		{
+			if (set)
+				g->draw_offset_x = (int)a.x % CUB_SIDE;
+			return (sqrt(pow(a.x - p.x, 2) + pow(a.y - p.y, 2)));
+		}
+		else
+		{
+			a.x += offset.x;
+			a.y += offset.y;
+		}
+	}
+	return (-1);
+}
+
+// Check for wall collision on horizontal lines
+float	wall_dist_horizontal(t_game *g, t_point p, float alpha, bool set)
+{
+	t_point 	a;
+	t_point		offset;
+ 
+	offset.y = 0;
+	if (facing_up(alpha))
+	{
+		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE - 0.001;
+		a.x = p.x + (p.y - a.y) / tan(alpha);
+		offset.y = -1 * CUB_SIDE;
+	}
+	else if (facing_down(alpha))
+	{
+		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE + CUB_SIDE;
+		a.x = p.x + (p.y - a.y) / tan(alpha);
+		offset.y = CUB_SIDE;
+	}
+	else if (alpha == PI || alpha == 0)
+	{
+		a.y = p.y;
+		a.x = p.x;
+	}
+	offset.x = get_xa(alpha);
+	return (find_collision_h(g, a, offset, p, set));
+}
+
 float	wall_dist_vertical(t_game *g, t_point p, float alpha, bool set)
 {
 	t_point 	b;
@@ -127,7 +124,7 @@ float	wall_dist_vertical(t_game *g, t_point p, float alpha, bool set)
 	offset.x = 0;
 	if (facing_left(alpha, 0))
 	{
-		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE - 0.0001;
+		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE - 0.1;
 		b.y = p.y + (p.x - b.x) * tan(alpha);
 		offset.x = -1 * CUB_SIDE;
 	}
@@ -143,23 +140,7 @@ float	wall_dist_vertical(t_game *g, t_point p, float alpha, bool set)
 		b.y = p.y;
 	}
 	offset.y = get_ya(alpha);
-	// offset.y = -1 * offset.x * (-1 * tan(alpha));
-	// Check for wall collision on horizontal lines
-	while (b.x < SCREEN_WIDTH && b.x > 0 && b.y > 0 && b.y < SCREEN_HEIGHT)
-	{
-		if (is_wall(g->map, b.x / CUB_SIDE, b.y / CUB_SIDE))
-		{
-			if (set)
-				g->draw_offset_y = (int)b.y % CUB_SIDE;
-			return (get_distance(b, p, alpha));
-		}
-		else
-		{
-			b.x += offset.x;
-			b.y += offset.y;
-		}
-	}
-	return (-1);
+	return (find_collision_v(g, b, offset, p, set));
 }
 
 /* Sets if player is facing a N/S or W/E wall */
@@ -236,48 +217,50 @@ float	fisheye_correction(float pa, float ra)
 	return (cos(ca));
 }
 
+void draw_wall_assist(t_game *g, float d_to_proj_plane, int x)
+{
+	float	d_to_wall;
+	float	proj_wall_height;
+	float	back_angle;
+
+	d_to_wall = 0;
+	proj_wall_height = 0;
+	d_to_wall = shorter_distance(g, wall_dist_horizontal(g, g->p_pos, g->alpha, 1), wall_dist_vertical(g, g->p_pos, g->alpha, 1), \
+	(fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH));
+	if (fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH)
+	{
+		back_angle = g->p_angle - PI;
+		if (back_angle < 0)
+			back_angle += PI_DOUBLE;
+		set_back_wall(g, wall_dist_horizontal(g, g->p_pos, back_angle, 0), wall_dist_vertical(g, g->p_pos, back_angle, 0));
+	}
+	if (d_to_wall == -1)
+	{
+		ft_putstr_fd("Error calculating wall distance\n", 2);
+		return;
+	}
+	d_to_wall *= fisheye_correction(g->p_angle, g->alpha);// Not working perfectly
+	// d_to_wall *= cos(fabs(g->p_angle - alpha));// fisheye-correction
+	proj_wall_height = (CUB_SIDE / d_to_wall * d_to_proj_plane);
+	draw_column(g, x, (float)(SCREEN_HEIGHT / 2 + proj_wall_height / 2), proj_wall_height);
+}
+
 int	draw_wall(t_game *g)
 {
 	int		x;
-	float	d_to_wall;
-	float	proj_wall_height;
 	float	d_to_proj_plane;
-	float	back_angle;
 	
+	x = -1;
 	g->alpha = g->p_angle + ((float)FOV / 2);
 	if (g->alpha >= PI_DOUBLE)
 		g->alpha -= PI_DOUBLE;
-	x = -1;
-	d_to_wall = 0;
-	proj_wall_height = 0;
 	d_to_proj_plane = (SCREEN_WIDTH / 2) / tan((float)FOV / 2);// later initialize this variable in t_game or define as macro
 	g->img = new_img(g);
 	draw_background(g);
 	draw_minimap(g);
 	while (++x < SCREEN_WIDTH)
 	{
-		d_to_wall = shorter_distance(g, wall_dist_horizontal(g, g->p_pos, g->alpha, 1), wall_dist_vertical(g, g->p_pos, g->alpha, 1), \
-		(fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH));
-		if (fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH)
-		{
-			back_angle = g->p_angle - PI;
-			if (back_angle < 0)
-				back_angle += PI_DOUBLE;
-			set_back_wall(g, wall_dist_horizontal(g, g->p_pos, back_angle, 0), wall_dist_vertical(g, g->p_pos, back_angle, 0));
-		}
-		if (d_to_wall == -1)
-		{
-			ft_putstr_fd("Error calculating wall distance\n", 2);
-			break;
-		}
-		d_to_wall *= fisheye_correction(g->p_angle, g->alpha);// Not working perfectly
-		// d_to_wall *= cos(fabs(g->p_angle - alpha));// fisheye-correction
-		proj_wall_height = (CUB_SIDE / d_to_wall * d_to_proj_plane);
-		draw_column(g, x, (float)(SCREEN_HEIGHT / 2 + proj_wall_height / 2), proj_wall_height);
-		/*
-		draw_line(g, &(t_point_int){x, SCREEN_HEIGHT / 2 + proj_wall_height / 2}, \
-		&(t_point_int){x, SCREEN_HEIGHT / 2 - proj_wall_height / 2}, RED_BRICK);
-		*/
+		draw_wall_assist(g, d_to_proj_plane, x);
 		g->alpha -= (float)1/SCREEN_WIDTH;
 		if (g->alpha < 0)
 			g->alpha += PI_DOUBLE;

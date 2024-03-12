@@ -1,0 +1,18 @@
+NO textures/directions/N1.xpm
+SO textures/directions/S1.xpm
+WE textures/directions/W1.xpm
+EA textures/directions/E1.xpm
+
+F 101,183,65
+C 123,211,234
+
+1111111111
+1000000001
+1000000001
+100000W001
+1001000001
+1001110101
+1000010101
+100S010101
+1000000001
+1111111111

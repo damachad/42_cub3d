@@ -73,7 +73,9 @@ void copy_row(t_game *game, char *line, int row, int *player)
         }
         game->map[row][i] = line[i];
         if (ft_strchr("NSEW", line[i]))
+        {
             set_player(game, line[i], i, row);
+        }
         i++;
     }
     while (i < game->map_cols)
@@ -81,6 +83,32 @@ void copy_row(t_game *game, char *line, int row, int *player)
         game->map[row][i] = ' ';
         i++;
     }
+}
+
+void process_line (t_game *game, char *line, int *row, int *player)
+{
+    int start_map;
+
+    start_map = 0;
+    if (is_empty_line(line) && !start_map)
+    {
+        free(line);
+        return;
+    }
+    if (is_empty_line(line) && start_map)
+    {
+        free(line);
+        error_msg(game, "Invalid line in map file.\n");
+    }
+    if (line[0] == '1' || line[0] == ' ')
+    {
+        start_map = 1;
+        copy_row(game, line, *row, player);
+        (*row)++;
+        if (*row == game->map_rows)
+            start_map = 0;
+    }
+    free(line);
 }
 
 /* 
@@ -92,13 +120,11 @@ void fill_map(t_game *game, char *file)
     int fd;
     int row;
     int player;
-    int start_map;
     char *line;
     char *tmp_line;
 
     row = 0;
     player = 0;
-    start_map = 0;
     fd = open(file, O_RDONLY);
     if (fd < 0)
         error_msg(game, "Could not open input file.\n");
@@ -106,26 +132,10 @@ void fill_map(t_game *game, char *file)
     {
         tmp_line = ft_strtrim(line, "\r\n");
         free(line);
-        if (is_empty_line(tmp_line) && !start_map)
-        {
-            free(tmp_line);
-            continue;
-        }
-        if (is_empty_line(tmp_line) && start_map)
-        {
-            free(tmp_line);
-            error_msg(game, "Invalid line in map file.\n");
-        }
-        if (tmp_line[0] == '1' || tmp_line[0] == ' ')
-        {
-            start_map = 1;
-            copy_row(game, tmp_line, row, &player);
-            row++;
-            if (row == game->map_rows)
-                start_map = 0;
-        }
-        free(tmp_line);
+        process_line(game, tmp_line, &row, &player);
     }
+    if (player == 0)
+        error_msg(game, "Player missing.\n");
     close(fd);
 }
 

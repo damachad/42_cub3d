@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/09 10:14:44 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:04:28 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,24 @@ void	wall_sliding_back(t_game *g)
 	}
 }
 
+void	rotate(t_game *g)
+{
+	if (g->keys.a)
+	{
+		g->p_angle += ROT_SPEED;
+		if (g->p_angle >= PI_DOUBLE)
+			g->p_angle -= PI_DOUBLE;
+		g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
+	}
+	else if (g->keys.d)
+	{
+		g->p_angle -= ROT_SPEED;
+		if (g->p_angle < 0)
+			g->p_angle += PI_DOUBLE;
+		g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
+	}
+}
+
 int	render_movement(t_game *g)
 {
 	if (g->keys.w)
@@ -66,13 +84,6 @@ int	render_movement(t_game *g)
 		else
 			wall_sliding(g);
 	}
-	else if (g->keys.a)
-	{
-		g->p_angle += ROT_SPEED;
-		if (g->p_angle >= PI_DOUBLE)
-			g->p_angle -= PI_DOUBLE;
-		g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
-	}
 	else if (g->keys.s)
 	{
 		if (!is_wall(g, (g->p_pos.x - g->p_dir.x * WALL_BUFF) / CUB_SIDE, (g->p_pos.y - g->p_dir.y * WALL_BUFF) / CUB_SIDE))
@@ -83,13 +94,8 @@ int	render_movement(t_game *g)
 		else
 			wall_sliding_back(g);
 	}
-	else if (g->keys.d)
-	{
-		g->p_angle -= ROT_SPEED;
-		if (g->p_angle < 0)
-			g->p_angle += PI_DOUBLE;
-		g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
-	}
+	else if (g->keys.a || g->keys.d)
+		rotate(g);
 	draw_wall(g);
 	return (0);
 }

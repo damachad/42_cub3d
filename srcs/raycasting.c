@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/11 13:52:00 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:55:11 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ float	wall_dist_vertical(t_game *g, t_point p, float alpha, bool set)
 	offset.x = 0;
 	if (facing_left(alpha, 0))
 	{
-		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE - 0.0001;
+		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE - 0.1;
 		b.y = p.y + (p.x - b.x) * tan(alpha);
 		offset.x = -1 * CUB_SIDE;
 	}

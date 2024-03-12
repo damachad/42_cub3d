@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:16:23 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/09 12:50:07 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:49:21 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,13 @@ void	set_scale_minimap(t_game *g, int rows, int cols)
 	g->minimap_scale = MINIMAP_SCALE / (float)bigger;
 }
 
-void	draw_minimap(t_game *g)
+void	mini_backgroud(t_game *g, int offset)
 {
 	int		i;
 	int		j;
-	int		offset;
 
 	i = -1;
 	j = -1;
-	offset = 5;
-	set_scale_minimap(g, g->map_rows, g->map_cols);
 	while (++i < g->map_rows)
 	{
 		j = -1;
@@ -66,8 +63,17 @@ void	draw_minimap(t_game *g)
 				(i * CUB_SIDE * g->minimap_scale) + offset, CUB_SIDE, BLACK);
 		}
 	}
-	draw_square(g, (int)g->p_pos.x * g->minimap_scale + offset - 3.5, \
-	(int)g->p_pos.y * g->minimap_scale + offset - 3.5, CUB_SIDE / 3, RED);
+}
+
+void	draw_minimap(t_game *g)
+{
+	int		offset;
+
+	offset = 5;
+	set_scale_minimap(g, g->map_rows, g->map_cols);
+	mini_backgroud(g, offset);
+	draw_square(g, (int)(g->p_pos.x * g->minimap_scale) + offset - 2.5, \
+	(int)(g->p_pos.y * g->minimap_scale) + offset - 2.5, 5 / g->minimap_scale, RED);
 	draw_line(g, &(t_point_int){(int)(g->p_pos.x * g->minimap_scale) + offset, \
 	(int)(g->p_pos.y * g->minimap_scale) + offset}, \
 	&(t_point_int){(int)(g->p_pos.x * g->minimap_scale + g->p_dir.x * 5) + offset, \

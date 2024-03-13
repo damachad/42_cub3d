@@ -30,7 +30,6 @@
 # define FOV 1 // in radians
 # define NB_SPRITES 4
 
-/* # define HEX_COLOR 0xFFFFFFFF
 # define WHITE 0xFFFFFF
 # define BLACK 0x000000
 # define RED 0xFF0000
@@ -38,7 +37,7 @@
 # define BLUE 0x0000FF
 # define GREEN_ALT 0x65B741
 # define BLUE_LIGHT 0x7BD3EA
-# define RED_BRICK 0xD04848 */
+# define RED_BRICK 0xD04848
 
 /* # define NORTH "textures/directions/N1.xpm"
 # define SOUTH "textures/directions/S1.xpm"

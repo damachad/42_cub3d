@@ -27,7 +27,6 @@
 # define SCREEN_WIDTH 960
 # define SCREEN_HEIGHT 768
 # define CUB_SIDE 64
-# define PLAYER_H 32 // necessary?
 # define FOV 1 // in radians
 # define NB_SPRITES 4
 
@@ -46,7 +45,7 @@
 # define EAST "textures/directions/E1.xpm"
 # define WEST "textures/directions/W1.xpm" */
 # define START_ANGLE 1 // angle in radians
-# define MINIMAP_SCALE 0.3
+# define MINIMAP_SCALE 3.0
 # define SPEED 2
 # define ROT_SPEED 0.04
 # define WALL_BUFF 5
@@ -140,19 +139,12 @@ typedef struct s_game
 	t_keys			keys;
 	int				wall_side;
 	int				back_wall;
+	float			minimap_scale;
 	float			alpha;
 	float			draw_offset_x;
 	float			draw_offset_y;
 	t_img			*right_texture;
 }					t_game;
-
-/*----------------------------map----------------------------*/
-/* t_map	*new_map(unsigned int rows); */
-int		nr_lines(t_game *game, char *mapfile);
-void	load_map(t_game *game, char *mapfile);
-
-/*--------------------------checker--------------------------*/
-void	validate_map(t_game *game);
 
 /*---------------------------init----------------------------*/
 void	init_graphics(t_game *game);
@@ -178,7 +170,7 @@ void	draw_column(t_game *g, int x, float y_btm, float wall_h);
 
 /*--------------------------raycasting-----------------------*/
 int		draw_wall(t_game *game);
-bool	is_wall(char **map, int x, int y);
+bool	is_wall(t_game *g, int x, int y);
 
 /*----------------------------parser-------------------------*/
 void	parse_file(t_game *game, char *file);
@@ -200,6 +192,8 @@ bool	facing_right(float angle, float buffer);
 int		handle_keypress(int keysym, t_game *g);
 int		handle_keyrelease(int keysym, t_game *g);
 int		render_movement(t_game *g);
+
+/*---------------------------minimap------------------------*/
 void	draw_minimap(t_game *g);
 
 /* -----------------------debug print----------------------- */

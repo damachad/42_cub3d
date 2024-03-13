@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/12 11:55:11 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:39:54 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ float	get_ya(float alpha)
 	return (ya);
 }
 
-float	find_collision_v(t_game *g, t_point a, t_point offset, t_point p, bool set)
+float	find_collision_v(t_game *g, t_point a, t_point offset, t_point p, bool set, float correct)
 {
 	while (a.x <= g->map_cols * CUB_SIDE && a.x >= 0 && a.y >= 0 && a.y <= g->map_rows * CUB_SIDE)
 	{
-		if (is_wall(g, a.x / CUB_SIDE, a.y / CUB_SIDE))
+		if (is_wall(g, a.x / CUB_SIDE - correct, a.y / CUB_SIDE))
 		{
 			if (set)
 				g->draw_offset_y = (int)a.y % CUB_SIDE;
@@ -69,11 +69,11 @@ float	find_collision_v(t_game *g, t_point a, t_point offset, t_point p, bool set
 	return (-1);
 }
 
-float	find_collision_h(t_game *g, t_point a, t_point offset, t_point p, bool set)
+float	find_collision_h(t_game *g, t_point a, t_point offset, t_point p, bool set, float correct)
 {
 	while (a.x <= g->map_cols * CUB_SIDE && a.x >= 0 && a.y >= 0 && a.y <= g->map_rows * CUB_SIDE)
 	{
-		if (is_wall(g, a.x / CUB_SIDE, a.y / CUB_SIDE))
+		if (is_wall(g, a.x / CUB_SIDE, a.y / CUB_SIDE - correct))
 		{
 			if (set)
 				g->draw_offset_x = (int)a.x % CUB_SIDE;
@@ -93,12 +93,15 @@ float	wall_dist_horizontal(t_game *g, t_point p, float alpha, bool set)
 {
 	t_point 	a;
 	t_point		offset;
+	float		correct;
  
 	offset.y = 0;
+	correct = 0;
 	if (facing_up(alpha))
 	{
-		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE - 0.001;
+		a.y = floor(p.y / CUB_SIDE) * CUB_SIDE - 0.0001;
 		a.x = p.x + (p.y - a.y) / tan(alpha);
+		correct = 0.1;
 		offset.y = -1 * CUB_SIDE;
 	}
 	else if (facing_down(alpha))
@@ -113,19 +116,22 @@ float	wall_dist_horizontal(t_game *g, t_point p, float alpha, bool set)
 		a.x = p.x;
 	}
 	offset.x = get_xa(alpha);
-	return (find_collision_h(g, a, offset, p, set));
+	return (find_collision_h(g, a, offset, p, set, correct));
 }
 
 float	wall_dist_vertical(t_game *g, t_point p, float alpha, bool set)
 {
 	t_point 	b;
 	t_point		offset;
+	float		correct;
 
 	offset.x = 0;
+	correct = 0;
 	if (facing_left(alpha, 0))
 	{
-		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE - 0.1;
+		b.x = floor(p.x / CUB_SIDE) * CUB_SIDE - 0.0001;
 		b.y = p.y + (p.x - b.x) * tan(alpha);
+		correct = 0.1;
 		offset.x = -1 * CUB_SIDE;
 	}
 	else if (facing_right(alpha, 0))
@@ -140,7 +146,7 @@ float	wall_dist_vertical(t_game *g, t_point p, float alpha, bool set)
 		b.y = p.y;
 	}
 	offset.y = get_ya(alpha);
-	return (find_collision_v(g, b, offset, p, set));
+	return (find_collision_v(g, b, offset, p, set, correct));
 }
 
 /* Sets if player is facing a N/S or W/E wall */
@@ -187,6 +193,10 @@ float	shorter_distance(t_game *g, float horizontal, float vertical, bool p_ray)
 		else
 			g->right_texture = &g->sprites[E];
 	}
+	// if (fabs(horizontal - vertical) < 1)
+	// {	printf("ver: %f, hor: %f\n", vertical, horizontal);
+	// 	if (vertical > horizontal && horizontal > 0)
+	// 		printf("\n");}
 	return (shorter);
 }
 

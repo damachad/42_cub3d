@@ -10,7 +10,7 @@ Parser:
 - Checker for other elements besides the map (textures and colors);   
 
 Graphics:
-- Problem identifying right texture at each cube's limits (horizontal and vertical wall collisions return very close distances);
+- Create struct for wall collision calculations;
 - Fisheye correction not working perfectly;
 
 ## Links:

@@ -40,14 +40,16 @@ void	parse_texture(t_game *game, char *line, t_dir dir)
 		i++;
 	path = ft_strdup(line + i);
 	if (!path)
+	{
+		free(line);
 		error_msg(game, "Could not allocate memory for texture path.\n");
+	}
 	if (dir == N)
-		game->input->no = ft_strdup(path);
+		game->input->no = path;
 	else if (dir == S)
-		game->input->so = ft_strdup(path);
+		game->input->so = path;
 	else if (dir == W)
-		game->input->we = ft_strdup(path);
+		game->input->we = path;
 	else if (dir == E)
-		game->input->ea = ft_strdup(path);
-	free(path);
+		game->input->ea = path;
 }

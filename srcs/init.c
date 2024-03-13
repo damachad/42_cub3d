@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/28 14:52:24 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:02:15 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	start_game(char	*file)
 	(void)file;
 	ft_bzero(&game, sizeof(t_game));
 	game.input = safe_malloc(sizeof(t_input));
+	game.calc = ft_calloc(1, sizeof(t_calc));
 	init_input(game.input);
 	parse_file(&game, file);
 	print_input(game.input);

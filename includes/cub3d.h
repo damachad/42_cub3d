@@ -118,6 +118,14 @@ typedef struct s_input
 	int		ceiling_color;
 }				t_input;
 
+typedef struct s_calc
+{
+	t_point	a;
+	t_point	b;
+	t_point	offset;
+	bool	set;
+}			t_calc;
+
 typedef struct s_game
 {
 	void			*mlx;
@@ -132,6 +140,7 @@ typedef struct s_game
 	t_img			*sprites;
 	t_input			*input;
 	t_keys			keys;
+	t_calc			*calc;
 	int				wall_side;
 	int				back_wall;
 	float			minimap_scale;

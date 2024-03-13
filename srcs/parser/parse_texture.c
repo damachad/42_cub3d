@@ -12,16 +12,17 @@
 
 #include "../../includes/cub3d.h"
 
-void check_texture_duplicates(t_game *game, t_dir dir)
+bool is_texture_duplicate(t_game *game, t_dir dir)
 {
 	if (dir == N && game->input->no)
-		error_msg(game, "Duplicate texture.\n");
+		return (true);
 	else if (dir == S && game->input->so)
-		error_msg(game, "Duplicate texture.\n");
+		return (true);
 	else if (dir == W && game->input->we)
-		error_msg(game, "Duplicate texture.\n");
+		return (true);
 	else if (dir == E && game->input->ea)
-		error_msg(game, "Duplicate texture.\n");
+		return (true);
+	return (false);
 }
 
 void	parse_texture(t_game *game, char *line, t_dir dir)
@@ -30,7 +31,11 @@ void	parse_texture(t_game *game, char *line, t_dir dir)
 	int		i;
 
 	i = 2;
-	check_texture_duplicates(game, dir);
+	if (is_texture_duplicate(game, dir))
+	{
+		free(line);
+		error_msg(game, "Duplicate texture.\n");
+	}
 	while (is_space(line[i]))
 		i++;
 	path = ft_strdup(line + i);

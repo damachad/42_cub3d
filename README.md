@@ -10,8 +10,7 @@ Parser:
 - Checker for other elements besides the map (textures and colors);   
 
 Graphics:
-- Improve minimap;
-- Reduce lag when rotating close to walls;
+- Problem identifying right texture at each cube's limits (horizontal and vertical wall collisions return very close distances);
 - Fisheye correction not working perfectly;
 
 ## Links:

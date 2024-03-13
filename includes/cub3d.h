@@ -43,7 +43,7 @@
 # define MINIMAP_SCALE 3.0
 # define SPEED 2
 # define ROT_SPEED 0.04
-# define WALL_BUFF 5
+# define WALL_BUFF 6
 # define SLIDE_BUFF 0.17
 
 // east is 0

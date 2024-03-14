@@ -1,7 +1,8 @@
-NO textures/directions/north.xpm
-SO textures/directions/south.xpm
-SO textures/directions/south.xpm
-EA textures/directions/east.xpm
+NO textures/directions/N1.xpm
+WE textures/directions/W1.xpm
+SO textures/directions/S1.xpm
+SO textures/directions/S1.xpm
+EA textures/directions/E1.xpm
 
 F 20,20,20
 C 200,200,200

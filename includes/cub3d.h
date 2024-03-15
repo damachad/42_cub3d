@@ -96,6 +96,8 @@ typedef struct s_keys
 	bool	a;
 	bool	s;
 	bool	d;
+	bool	l_a;
+	bool	r_a;
 }			t_keys;
 
 typedef struct s_img {

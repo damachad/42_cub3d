@@ -47,7 +47,7 @@
 # define MINIMAP_SCALE 3.0
 # define SPEED 2
 # define ROT_SPEED 0.04
-# define WALL_BUFF 5
+# define WALL_BUFF 6
 # define SLIDE_BUFF 0.17
 
 // east is 0
@@ -100,6 +100,8 @@ typedef struct s_keys
 	bool	a;
 	bool	s;
 	bool	d;
+	bool	l_a;
+	bool	r_a;
 }			t_keys;
 
 typedef struct s_img {
@@ -122,6 +124,14 @@ typedef struct s_input
 	int		ceiling_color;
 }				t_input;
 
+typedef struct s_calc
+{
+	t_point	a;
+	t_point	b;
+	t_point	offset;
+	bool	set;
+}			t_calc;
+
 typedef struct s_game
 {
 	void			*mlx;
@@ -136,6 +146,7 @@ typedef struct s_game
 	t_img			*sprites;
 	t_input			*input;
 	t_keys			keys;
+	t_calc			*calc;
 	int				wall_side;
 	int				back_wall;
 	float			minimap_scale;

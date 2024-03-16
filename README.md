@@ -1,13 +1,21 @@
 # cub3d_sandbox
 Building repo for cub3d
 
+## Parser plan
+
+1. Check arg count and file extension before starting the game.
+2. Open file, trim whitepace if the line contains textures and colors, store texture and color info
+3. In the same loop, count lines and rows to determine max map size (get max numbers, map will be square)
+4. Texture validation: check file extension and for duplicates
+5. Color validation: check duplicates, check incorrect color number (≠3) check for non-numeric characters, negative numbers and >255
+6. Transform the 3 color numbers into one
+7. Open the file again to parse the map
+8. Skip the lines that contain textures and colors
+9. Copy map lines into map matrix (if the rows are not max length, fill the rest with spaces), set the player position and direction angle
+10. Map validation: check for empty rows, check if only valid characters present, check for player duplicates, 
+11. Map validation (part 2): check if the border contains only ‘ ’ and ‘1’, if the coordinate is ‘ ‘, check if the grid around it contains only ‘ ‘ or ‘1’ → ensures that all parts of the map is closed.
+    
 ## TODOs:
-Parser:
-- Function to check if map is bordered;
-- Function to check if components are only "1,0, ,N,S,E,W" and that at only one (N,S,E,W) is present;
-- Decide how to treat spaces (remove them or treat as 0?), what about space outside borders? (define as -1);
-- How to get nr_lines from map, how to get the map from the file that has other info;
-- Checker for other elements besides the map (textures and colors);   
 
 Graphics:
 - Fisheye correction not working perfectly;

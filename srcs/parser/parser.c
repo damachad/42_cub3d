@@ -36,18 +36,25 @@ bool is_empty_line(char *line)
 
 void parse_textures_and_colors(t_game *game, char *line, int fd)
 {
-	if (line[0] == 'N' && line[1] == 'O')
-		parse_texture(game, line, N);
-	else if (line[0] == 'S' && line[1] == 'O')
-		parse_texture(game, line, S);
-	else if (line[0] == 'W' && line[1] == 'E')
-		parse_texture(game, line, W);
-	else if (line[0] == 'E' && line[1] == 'A')
-		parse_texture(game, line, E);
- 	else if (line[0] == 'F')
-		parse_color(game, line, FLOOR);
-	else if (line[0] == 'C')
-		parse_color(game, line, CEILING);
+	char *trim_line;
+
+	trim_line = NULL;
+	if (ft_strchr(line, '.') || ft_strchr(line, ','))
+		trim_line = ft_strtrim(line, " \t\r");
+	if (trim_line && trim_line[0] == 'N' && trim_line[1] == 'O')
+		parse_texture(game, trim_line, N);
+	else if (trim_line && trim_line[0] == 'S' && trim_line[1] == 'O')
+		parse_texture(game, trim_line, S);
+	else if (trim_line && trim_line[0] == 'W' && trim_line[1] == 'E')
+		parse_texture(game, trim_line, W);
+	else if (trim_line && trim_line[0] == 'E' && trim_line[1] == 'A')
+		parse_texture(game, trim_line, E);
+ 	else if (trim_line && trim_line[0] == 'F')
+		parse_color(game, trim_line, FLOOR);
+	else if (trim_line && trim_line[0] == 'C')
+		parse_color(game, trim_line, CEILING);
+	if (trim_line)
+		free(trim_line);
 	else if ((line[0] == '1' || line[0] == ' ') && (all_textures_and_colors_set(game)))
 		get_map_size(game, line);
 	else if (!is_empty_line(line))

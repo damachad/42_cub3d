@@ -23,7 +23,7 @@ void free_partial_map(t_game *game, int rows_allocated) {
         }
         free(game->map);
         game->map = NULL;
-    }
+    } 
 }
 
 void    set_player(t_game *game, char c, int x, int y)
@@ -100,30 +100,26 @@ void copy_row(t_game *game, char *line, int row, int *player)
     }
 }
 
-void process_line (t_game *game, char *line, int *row, int *player)
+void process_line (t_game *game, char *line, int *row, int *player, int *start_map)
 {
-    int start_map;
-
-    start_map = 0;
-    if (is_empty_line(line) && !start_map)
+    if (is_empty_line(line))
     {
-        free(line);
+        if (*start_map)
+        {
+            free_partial_map(game, *row - 1);
+            free(line);
+            error_msg(game, "Empty line in map file.\n");
+        }
         return;
-    }
-    if (is_empty_line(line) && start_map)
-    {
-        free(line);
-        error_msg(game, "Invalid line in map file.\n");
     }
     if (line[0] == '1' || line[0] == ' ')
     {
-        start_map = 1;
+        *start_map = 1;
         copy_row(game, line, *row, player);
         (*row)++;
         if (*row == game->map_rows)
-            start_map = 0;
+            *start_map = 0;
     }
-    free(line);
 }
 
 /* 
@@ -137,17 +133,25 @@ void fill_map(t_game *game, char *file)
     int player;
     char *line;
     char *tmp_line;
+    int start_map;
 
     row = 0;
     player = 0;
+    start_map = 0;
     fd = open(file, O_RDONLY);
     if (fd < 0)
         error_msg(game, "Could not open input file.\n");
     while ((line = get_next_line(fd)) != NULL)
     {
+        if (ft_strchr(line, '.') || ft_strchr(line, ','))
+        {
+            free(line);
+            continue ;
+        }
         tmp_line = ft_strtrim(line, "\r\n");
         free(line);
-        process_line(game, tmp_line, &row, &player);
+        process_line(game, tmp_line, &row, &player, &start_map);
+        free(tmp_line);
     }
     if (player == 0)
         error_msg(game, "Player missing.\n");

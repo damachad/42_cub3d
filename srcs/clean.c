@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:21:32 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/13 20:46:55 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/16 09:50:07 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	destroy_game(t_game *game)
 {
 	if (!game)
 		return ;
-	if (game->input)
-		free(game->input);
 	if (game->sprites)
 		destroy_sprites(game);
 	if (game->map)
@@ -59,8 +57,10 @@ void	destroy_game(t_game *game)
 		free(game->input->we);
 	if (game->input->ea)
 		free(game->input->ea);
-	// if (game->img.img)
-	// 	mlx_destroy_image(game->mlx, game->img.img);
+	if (game->input)
+		free(game->input);
+	//if (game->img.img)
+	//	mlx_destroy_image(game->mlx, game->img.img);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)

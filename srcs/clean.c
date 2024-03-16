@@ -6,7 +6,7 @@
 /*   By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:21:32 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/16 09:50:07 by arepsa           ###   ########.fr       */
+/*   Updated: 2024/03/16 18:11:15 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	destroy_game(t_game *game)
 		free(game->input->ea);
 	if (game->input)
 		free(game->input);
-	//if (game->img.img)
-	//	mlx_destroy_image(game->mlx, game->img.img);
+	// if (game->img.img)
+	// 	mlx_destroy_image(game->mlx, game->img.img);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)

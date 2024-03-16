@@ -10,9 +10,8 @@ Parser:
 - Checker for other elements besides the map (textures and colors);   
 
 Graphics:
-- Improve minimap;
-- Reduce lag when rotating close to walls;
 - Fisheye correction not working perfectly;
+- Walls not smooth on the upper and lower limits (bigger effect the farthest from them);
 
 ## Links:
 - [Raycasting and DDA](https://lodev.org/cgtutor/raycasting.html) (contains 2 files with implementations in c++)

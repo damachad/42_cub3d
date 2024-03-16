@@ -12,6 +12,20 @@
 
 #include "../../includes/cub3d.h"
 
+void free_partial_map(t_game *game, int rows_allocated) {
+    if (game->map) {
+        while (rows_allocated >= 0) {
+            if (game->map[rows_allocated]) {
+                free(game->map[rows_allocated]);
+                game->map[rows_allocated] = NULL;
+            }
+            rows_allocated--;
+        }
+        free(game->map);
+        game->map = NULL;
+    } 
+}
+
 void    set_player(t_game *game, char c, int x, int y)
 {
     game->p_pos = (t_point){(float)x * CUB_SIDE + CUB_SIDE/2, (float)y * CUB_SIDE + CUB_SIDE/2};
@@ -38,15 +52,15 @@ void	get_map_size(t_game *game, char *line)
 }
 
 /* check for valid map chars and duplicate players */
-bool    is_valid_char(char c, int *player)
+bool    is_valid_char(t_game *game, char c)
 {
     if (ft_strchr("01NSEW ", c))
     {
         if (ft_isalpha(c))
         {
-            if (*player == 1)
+            if (game->player == 1)
                 return (false); 
-            *player = 1;
+            game->player = 1;
         }
         return (true);
     }
@@ -57,7 +71,7 @@ bool    is_valid_char(char c, int *player)
 ** copy map row to game->map 
 ** and set player coordinates and direction 
 */
-void copy_row(t_game *game, char *line, int row, int *player)
+void copy_row(t_game *game, char *line, int row)
 {
     int i;
 
@@ -66,8 +80,9 @@ void copy_row(t_game *game, char *line, int row, int *player)
     game->map[row][game->map_cols] = '\0';
     while (line[i])
     {
-       if (!(is_valid_char(line[i], player)))
+       if (!(is_valid_char(game, line[i])))
         {
+            free_partial_map(game, row); 
             free(line);
             error_msg(game, "Invalid character in map file.\n");
         }
@@ -85,30 +100,26 @@ void copy_row(t_game *game, char *line, int row, int *player)
     }
 }
 
-void process_line (t_game *game, char *line, int *row, int *player)
+void process_line (t_game *game, char *line, int *row, int *start_map)
 {
-    int start_map;
-
-    start_map = 0;
-    if (is_empty_line(line) && !start_map)
+    if (is_empty_line(line))
     {
-        free(line);
+        if (*start_map)
+        {
+            free_partial_map(game, *row - 1);
+            free(line);
+            error_msg(game, "Empty line in map file.\n");
+        }
         return;
-    }
-    if (is_empty_line(line) && start_map)
-    {
-        free(line);
-        error_msg(game, "Invalid line in map file.\n");
     }
     if (line[0] == '1' || line[0] == ' ')
     {
-        start_map = 1;
-        copy_row(game, line, *row, player);
+        *start_map = 1;
+        copy_row(game, line, *row);
         (*row)++;
         if (*row == game->map_rows)
-            start_map = 0;
+            *start_map = 0;
     }
-    free(line);
 }
 
 /* 
@@ -119,22 +130,28 @@ void fill_map(t_game *game, char *file)
 {
     int fd;
     int row;
-    int player;
     char *line;
     char *tmp_line;
+    int start_map;
 
     row = 0;
-    player = 0;
+    start_map = 0;
     fd = open(file, O_RDONLY);
     if (fd < 0)
         error_msg(game, "Could not open input file.\n");
     while ((line = get_next_line(fd)) != NULL)
     {
+        if (ft_strchr(line, '.') || ft_strchr(line, ','))
+        {
+            free(line);
+            continue ;
+        }
         tmp_line = ft_strtrim(line, "\r\n");
         free(line);
-        process_line(game, tmp_line, &row, &player);
+        process_line(game, tmp_line, &row, &start_map);
+        free(tmp_line);
     }
-    if (player == 0)
+    if (game->player == 0)
         error_msg(game, "Player missing.\n");
     close(fd);
 }

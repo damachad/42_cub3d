@@ -142,8 +142,9 @@ typedef struct s_game
 	char			**map;
 	int				map_cols;
 	int				map_rows;
+	bool			player;
 	t_img			img;
-	t_img			*sprites;
+	t_img			*sprites; 
 	t_input			*input;
 	t_keys			keys;
 	t_calc			*calc;

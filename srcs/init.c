@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/15 12:21:12 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:11:49 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	start_game(char	*file)
 {
 	t_game	game;
 
-	(void)file;
 	ft_bzero(&game, sizeof(t_game));
 	game.input = safe_malloc(sizeof(t_input));
 	game.calc = ft_calloc(1, sizeof(t_calc));

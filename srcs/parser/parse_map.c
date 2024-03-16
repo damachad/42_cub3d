@@ -12,6 +12,20 @@
 
 #include "../../includes/cub3d.h"
 
+void free_partial_map(t_game *game, int rows_allocated) {
+    if (game->map) {
+        while (rows_allocated >= 0) {
+            if (game->map[rows_allocated]) {
+                free(game->map[rows_allocated]);
+                game->map[rows_allocated] = NULL;
+            }
+            rows_allocated--;
+        }
+        free(game->map);
+        game->map = NULL;
+    }
+}
+
 void    set_player(t_game *game, char c, int x, int y)
 {
     game->p_pos = (t_point){(float)x * CUB_SIDE + CUB_SIDE/2, (float)y * CUB_SIDE + CUB_SIDE/2};
@@ -68,6 +82,7 @@ void copy_row(t_game *game, char *line, int row, int *player)
     {
        if (!(is_valid_char(line[i], player)))
         {
+            free_partial_map(game, row); 
             free(line);
             error_msg(game, "Invalid character in map file.\n");
         }

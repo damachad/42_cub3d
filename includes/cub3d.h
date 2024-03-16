@@ -133,7 +133,7 @@ typedef struct s_game
 	int				map_cols;
 	int				map_rows;
 	t_img			img;
-	t_img			*sprites;
+	t_img			*sprites; 
 	t_input			*input;
 	t_keys			keys;
 	int				wall_side;

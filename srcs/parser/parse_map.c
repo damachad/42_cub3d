@@ -52,15 +52,15 @@ void	get_map_size(t_game *game, char *line)
 }
 
 /* check for valid map chars and duplicate players */
-bool    is_valid_char(char c, int *player)
+bool    is_valid_char(t_game *game, char c)
 {
     if (ft_strchr("01NSEW ", c))
     {
         if (ft_isalpha(c))
         {
-            if (*player == 1)
+            if (game->player == 1)
                 return (false); 
-            *player = 1;
+            game->player = 1;
         }
         return (true);
     }
@@ -71,7 +71,7 @@ bool    is_valid_char(char c, int *player)
 ** copy map row to game->map 
 ** and set player coordinates and direction 
 */
-void copy_row(t_game *game, char *line, int row, int *player)
+void copy_row(t_game *game, char *line, int row)
 {
     int i;
 
@@ -80,7 +80,7 @@ void copy_row(t_game *game, char *line, int row, int *player)
     game->map[row][game->map_cols] = '\0';
     while (line[i])
     {
-       if (!(is_valid_char(line[i], player)))
+       if (!(is_valid_char(game, line[i])))
         {
             free_partial_map(game, row); 
             free(line);
@@ -100,7 +100,7 @@ void copy_row(t_game *game, char *line, int row, int *player)
     }
 }
 
-void process_line (t_game *game, char *line, int *row, int *player, int *start_map)
+void process_line (t_game *game, char *line, int *row, int *start_map)
 {
     if (is_empty_line(line))
     {
@@ -115,7 +115,7 @@ void process_line (t_game *game, char *line, int *row, int *player, int *start_m
     if (line[0] == '1' || line[0] == ' ')
     {
         *start_map = 1;
-        copy_row(game, line, *row, player);
+        copy_row(game, line, *row);
         (*row)++;
         if (*row == game->map_rows)
             *start_map = 0;
@@ -130,13 +130,11 @@ void fill_map(t_game *game, char *file)
 {
     int fd;
     int row;
-    int player;
     char *line;
     char *tmp_line;
     int start_map;
 
     row = 0;
-    player = 0;
     start_map = 0;
     fd = open(file, O_RDONLY);
     if (fd < 0)
@@ -150,10 +148,10 @@ void fill_map(t_game *game, char *file)
         }
         tmp_line = ft_strtrim(line, "\r\n");
         free(line);
-        process_line(game, tmp_line, &row, &player, &start_map);
+        process_line(game, tmp_line, &row, &start_map);
         free(tmp_line);
     }
-    if (player == 0)
+    if (game->player == 0)
         error_msg(game, "Player missing.\n");
     close(fd);
 }

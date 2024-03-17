@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:29:40 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/12 16:04:31 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/17 11:49:14 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	get_texture_color(t_game *g, t_img *tex, int pixel_x, int pixel_y)
 {
 	if (tex == &g->sprites[S] || tex == &g->sprites[W])
 		pixel_x = CUB_SIDE - pixel_x - 1;
-	return (*(int *)(tex->addr + (pixel_y * tex->line_length) + (pixel_x * tex->bpp / 8)));
+	return (*(int *)(tex->addr + (pixel_y * tex->line_length) + \
+	(pixel_x * tex->bpp / 8)));
 }
 
 void	draw_column(t_game *g, int x, float y_btm, float wall_h)
@@ -58,7 +59,8 @@ void	draw_column(t_game *g, int x, float y_btm, float wall_h)
 	{
 		text_y = (int)pos & (CUB_SIDE - 1);
 		pos += step_y;
-		put_pixel(&g->img, x, y, get_texture_color(g, g->right_texture, text_x, text_y));
+		put_pixel(&g->img, x, y, \
+		get_texture_color(g, g->right_texture, text_x, text_y));
 		y++;
 	}
 }

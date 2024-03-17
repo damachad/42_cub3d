@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+        */
+/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/16 18:11:49 by arepsa           ###   ########.fr       */
+/*   Updated: 2024/03/17 11:51:51 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	init_graphics(t_game *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		error_msg(game, "mlx_init() failed\n");
-	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
+	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, \
+	"cub3D");
 	if (!game->win)
 		error_msg(game, "mlx_new_window() failed\n");
 }
@@ -67,7 +68,7 @@ void	load_sprites(t_game *g)
 
 void	init_player(t_game *g)// later get values from mapfile
 {
-	g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
+	g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -SPEED};
 	g->wall_side = -1;
 	g->back_wall = -1;
 	g->draw_offset_x = -1;

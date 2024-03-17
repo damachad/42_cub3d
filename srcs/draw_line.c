@@ -35,7 +35,7 @@ void	put_pixel(t_img *img, int x, int y, int color)
 
 /* Set the starting point and decide weather to increment or decrement
 * each axis, based on difference between starting and ending points*/
-static void	bresenham_define(t_bresenham *param, t_point_int *a, t_point_int *b)
+static void	bresenham_def(t_bresenham *param, t_point_int *a, t_point_int *b)
 {
 	param->dx = abs(b->x - a->x);
 	param->dy = -1 * abs(b->y - a->y);
@@ -60,7 +60,7 @@ void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color)
 	t_bresenham	param;
 
 	//if map needs some transformation, place it here
-	bresenham_define(&param, a, b);
+	bresenham_def(&param, a, b);
 	while (1)
 	{
 		//WIDTH and HEIGHT are the dimensions of the image, not screen,
@@ -68,7 +68,7 @@ void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color)
 		if (param.x0 < SCREEN_WIDTH && param.x0 > 0
 			&& param.y0 < SCREEN_HEIGHT && param.y0 > 0)
 			//for now draw RED by default
-			put_pixel(&game->img, param.x0, param.y0, color); // How to get color to apply in pixel from texture?
+			put_pixel(&game->img, param.x0, param.y0, color);
 		if (param.x0 == b->x && param.y0 == b->y)
 			break ;
 		if (2 * param.err >= param.dy && param.x0 != b->x)

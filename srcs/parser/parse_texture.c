@@ -28,15 +28,21 @@ bool is_texture_duplicate(t_game *game, t_dir dir)
 void	check_file_extension(t_game *game, char *path)
 {
 	int		len;
-	char	*ext;
+	char	*filename;
+	
+	filename = ft_strrchr(path, '/');
 
-	len = ft_strlen(path);
-	ext = path + len - 4;
-	if (ft_strncmp(ext, ".xpm", 4) != 0)
-	{
-		free(path);
-		error_msg(game, "Invalid texture file extension.\n");
-	}
+    if (filename)
+        filename++;
+    else 
+        filename = path;
+
+    len = ft_strlen(filename);
+    if (len <= 4 || ft_strncmp(filename + len - 4, ".xpm", 4) != 0)
+    {
+        free(path);
+        error_msg(game, "Invalid texture file.\n");
+    }
 }
 
 void	parse_texture(t_game *game, char *line, t_dir dir)

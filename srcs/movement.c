@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/17 11:39:20 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:34:05 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,31 @@ void	sideways_movement(t_game *g)
 		g->p_pos.y += perp_dir.y;
 	}
 }
+
+/*
+bool	is_empty_corner(t_game *g)
+{
+	bool	empty;
+	int		x_sign;
+	int		y_sign;
+
+	empty = false;
+	x_sign = 1;
+	y_sign = 1;
+	if (facing_left(g->p_angle, 0))
+		x_sign = -1;
+	if (facing_up(g->p_angle))
+		y_sign = -1;
+	if (!is_wall(g, (g->p_pos.x + g->p_dir.x * WALL_BUFF) / CUB_SIDE, \
+	(g->p_pos.y + g->p_dir.y * WALL_BUFF) / CUB_SIDE) && \
+	is_wall(g, (g->p_pos.x + g->p_dir.x * WALL_BUFF) / CUB_SIDE - x_sign, \
+	(g->p_pos.y + g->p_dir.y * WALL_BUFF) / CUB_SIDE) &&
+	is_wall(g, (g->p_pos.x + g->p_dir.x * WALL_BUFF) / CUB_SIDE - x_sign, \
+	(g->p_pos.y + g->p_dir.y * WALL_BUFF) / CUB_SIDE - y_sign))
+		empty = true;
+	return (empty);
+}
+*/
 
 void	front_back_move(t_game *g)
 {

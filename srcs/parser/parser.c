@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3d.h"
 
-int all_textures_and_colors_set(t_game *game)
+int	all_textures_and_colors_set(t_game *game)
 {
 	if (game->input->no && game->input->so && game->input->we && game->input->ea
 		&& game->input->floor_color != -1 && game->input->ceiling_color != -1)
@@ -20,9 +20,9 @@ int all_textures_and_colors_set(t_game *game)
 	return (0);
 }
 
-bool is_empty_line(char *line)
+bool	is_empty_line(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i] != '\0')
@@ -34,9 +34,9 @@ bool is_empty_line(char *line)
 	return (true);
 }
 
-void parse_textures_and_colors(t_game *game, char *line, int fd)
+void	parse_textures_and_colors(t_game *game, char *line, int fd)
 {
-	char *trim_line;
+	char	*trim_line;
 
 	trim_line = NULL;
 	if (ft_strchr(line, '.') || ft_strchr(line, ','))
@@ -49,13 +49,14 @@ void parse_textures_and_colors(t_game *game, char *line, int fd)
 		parse_texture(game, trim_line, W);
 	else if (trim_line && trim_line[0] == 'E' && trim_line[1] == 'A')
 		parse_texture(game, trim_line, E);
- 	else if (trim_line && trim_line[0] == 'F')
+	else if (trim_line && trim_line[0] == 'F')
 		parse_color(game, trim_line, FLOOR);
 	else if (trim_line && trim_line[0] == 'C')
 		parse_color(game, trim_line, CEILING);
 	if (trim_line)
 		free(trim_line);
-	else if ((line[0] == '1' || line[0] == ' ') && (all_textures_and_colors_set(game)))
+	else if ((line[0] == '1' || line[0] == ' ') && \
+			(all_textures_and_colors_set(game)))
 		get_map_size(game, line);
 	else if (!is_empty_line(line))
 	{
@@ -69,7 +70,7 @@ void	parse_file(t_game *game, char *file)
 {
 	int		fd;
 	char	*line;
-	char 	*tmp_line;
+	char	*tmp_line;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)

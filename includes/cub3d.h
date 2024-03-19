@@ -150,6 +150,7 @@ typedef struct s_game
 	t_calc			*calc;
 	int				wall_side;
 	int				back_wall;
+	float			d_proj_plane;
 	float			minimap_scale;
 	float			alpha;
 	float			draw_offset_x;
@@ -176,8 +177,6 @@ void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color);
 /*---------------------------textures------------------------*/
 void	draw_background(t_game *game);
 void	draw_column(t_game *g, int x, float y_btm, float wall_h);
-
-// void	draw_wall_test(t_game *game);
 
 /*--------------------------raycasting-----------------------*/
 int		draw_wall(t_game *game);

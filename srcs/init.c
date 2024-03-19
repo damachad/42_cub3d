@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/17 11:51:51 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:51:28 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_img	new_img(t_game *game)
 /* Initialize graphics using mlx_init() and mlx_new_window() */
 void	init_graphics(t_game *game)
 {
+	game->d_proj_plane = (SCREEN_WIDTH / 2) / tan((float)FOV / 2);
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		error_msg(game, "mlx_init() failed\n");

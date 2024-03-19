@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/19 13:42:48 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:53:07 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,20 +91,19 @@ bool	is_empty_corner(t_game *g, float dir_x, float dir_y)
 	empty = false;
 	x_sign = 1;
 	y_sign = 1;
-	x = (g->p_pos.x + dir_x * WALL_BUFF) / CUB_SIDE;
-	y = (g->p_pos.y + dir_y * WALL_BUFF) / CUB_SIDE;
+	x = (g->p_pos.x + dir_x * 40) / CUB_SIDE;
+	y = (g->p_pos.y + dir_y * 40) / CUB_SIDE;
 	if (facing_right(g->p_angle, 0))
 		x_sign = -1;
 	if (facing_down(g->p_angle))
 		y_sign = -1;
 	if (!is_wall(g, x, y) && is_wall(g, x + x_sign, y) \
 	&& is_wall(g, x, y + y_sign))
-	{
 		empty = true;
-		printf("Empty corner at x:%d y:%d\n", x, y);
-		printf("side wall 1 at x:%d y:%d\n", x + x_sign, y);
-		printf("Side wall 2 at x:%d y:%d\n", x, y + y_sign);
-	}
+	printf("Check for empty corner at x:%d y:%d\n", x, y);
+	printf("side wall 1 at x:%d y:%d\n", x + x_sign, y);
+	printf("Side wall 2 at x:%d y:%d\n", x, y + y_sign);
+	printf("x_sign: %d, y_sign: %d\n", x_sign, y_sign);
 	return (empty);
 }
 */

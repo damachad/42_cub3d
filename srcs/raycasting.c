@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/17 12:02:48 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:05:31 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,19 +259,17 @@ void draw_wall_assist(t_game *g, float d_to_proj_plane, int x)
 int	draw_wall(t_game *g)
 {
 	int		x;
-	float	d_to_proj_plane;
 	
 	x = -1;
 	g->alpha = g->p_angle + ((float)FOV / 2);
 	if (g->alpha >= PI_DOUBLE)
 		g->alpha -= PI_DOUBLE;
-	d_to_proj_plane = (SCREEN_WIDTH / 2) / tan((float)FOV / 2);// later initialize this variable in t_game or define as macro
 	g->img = new_img(g);
 	draw_background(g);
 	draw_minimap(g);
 	while (++x < SCREEN_WIDTH)
 	{
-		draw_wall_assist(g, d_to_proj_plane, x);
+		draw_wall_assist(g, g->d_proj_plane, x);
 		g->alpha -= (float)1/SCREEN_WIDTH;
 		if (g->alpha < 0)
 			g->alpha += PI_DOUBLE;

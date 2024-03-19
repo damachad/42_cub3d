@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/18 20:34:05 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:42:48 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,35 @@ void	rotate(t_game *g)
 		g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -SPEED};
 	}
 }
+/*
+bool	is_empty_corner(t_game *g, float dir_x, float dir_y)
+{
+	bool	empty;
+	int		x_sign;
+	int		y_sign;
+	int		x;
+	int		y;
+
+	empty = false;
+	x_sign = 1;
+	y_sign = 1;
+	x = (g->p_pos.x + dir_x * WALL_BUFF) / CUB_SIDE;
+	y = (g->p_pos.y + dir_y * WALL_BUFF) / CUB_SIDE;
+	if (facing_right(g->p_angle, 0))
+		x_sign = -1;
+	if (facing_down(g->p_angle))
+		y_sign = -1;
+	if (!is_wall(g, x, y) && is_wall(g, x + x_sign, y) \
+	&& is_wall(g, x, y + y_sign))
+	{
+		empty = true;
+		printf("Empty corner at x:%d y:%d\n", x, y);
+		printf("side wall 1 at x:%d y:%d\n", x + x_sign, y);
+		printf("Side wall 2 at x:%d y:%d\n", x, y + y_sign);
+	}
+	return (empty);
+}
+*/
 
 void	sideways_movement(t_game *g)
 {
@@ -108,31 +137,6 @@ void	sideways_movement(t_game *g)
 		g->p_pos.y += perp_dir.y;
 	}
 }
-
-/*
-bool	is_empty_corner(t_game *g)
-{
-	bool	empty;
-	int		x_sign;
-	int		y_sign;
-
-	empty = false;
-	x_sign = 1;
-	y_sign = 1;
-	if (facing_left(g->p_angle, 0))
-		x_sign = -1;
-	if (facing_up(g->p_angle))
-		y_sign = -1;
-	if (!is_wall(g, (g->p_pos.x + g->p_dir.x * WALL_BUFF) / CUB_SIDE, \
-	(g->p_pos.y + g->p_dir.y * WALL_BUFF) / CUB_SIDE) && \
-	is_wall(g, (g->p_pos.x + g->p_dir.x * WALL_BUFF) / CUB_SIDE - x_sign, \
-	(g->p_pos.y + g->p_dir.y * WALL_BUFF) / CUB_SIDE) &&
-	is_wall(g, (g->p_pos.x + g->p_dir.x * WALL_BUFF) / CUB_SIDE - x_sign, \
-	(g->p_pos.y + g->p_dir.y * WALL_BUFF) / CUB_SIDE - y_sign))
-		empty = true;
-	return (empty);
-}
-*/
 
 void	front_back_move(t_game *g)
 {

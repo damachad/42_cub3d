@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3d.h"
 
-bool is_texture_duplicate(t_game *game, t_dir dir)
+bool	is_texture_duplicate(t_game *game, t_dir dir)
 {
 	if (dir == N && game->input->no)
 		return (true);
@@ -28,14 +28,18 @@ bool is_texture_duplicate(t_game *game, t_dir dir)
 void	check_file_extension(t_game *game, char *path)
 {
 	int		len;
-	char	*ext;
+	char	*filename;
 
-	len = ft_strlen(path);
-	ext = path + len - 4;
-	if (ft_strncmp(ext, ".xpm", 4) != 0)
+	filename = ft_strrchr(path, '/');
+	if (filename)
+		filename++;
+	else
+		filename = path;
+	len = ft_strlen(filename);
+	if (len <= 4 || ft_strncmp(filename + len - 4, ".xpm", 4) != 0)
 	{
 		free(path);
-		error_msg(game, "Invalid texture file extension.\n");
+		error_msg(game, "Invalid texture file.\n");
 	}
 }
 

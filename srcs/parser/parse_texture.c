@@ -25,6 +25,12 @@ bool	is_texture_duplicate(t_game *game, t_dir dir)
 	return (false);
 }
 
+void	free_line_end_game(t_game *game, char *line, char *msg)
+{
+	free(line);
+	error_msg(game, msg);
+}
+
 void	check_file_extension(t_game *game, char *path)
 {
 	int		len;
@@ -37,32 +43,30 @@ void	check_file_extension(t_game *game, char *path)
 		filename = path;
 	len = ft_strlen(filename);
 	if (len <= 4 || ft_strncmp(filename + len - 4, ".xpm", 4) != 0)
-	{
-		free(path);
-		error_msg(game, "Invalid texture file.\n");
-	}
+		free_line_end_game(game, path, "Invalid texture file.\n");
 }
 
 void	parse_texture(t_game *game, char *line, t_dir dir)
 {
 	char	*path;
 	int		i;
+	int		fd;
 
 	i = 2;
 	if (is_texture_duplicate(game, dir))
-	{
-		free(line);
-		error_msg(game, "Duplicate texture.\n");
-	}
-	while (is_space(line[i]))
+		free_line_end_game(game, line, "Duplicate texture.\n");
+	if (!line[i] || !is_space(line[i]))
+		free_line_end_game(game, line, "Invalid texture line.\n");
+	while (line[i] && is_space(line[i]))
 		i++;
 	path = ft_strdup(line + i);
-	check_file_extension(game, path);
 	if (!path)
-	{
-		free(line);
-		error_msg(game, "Could not allocate memory for texture path.\n");
-	}
+		free_line_end_game(game, line, "Could not allocate memory for texture path.\n");
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		free_line_end_game(game, path, "Invalid texture file.\n");
+	close(fd);
+	check_file_extension(game, path);
 	if (dir == N)
 		game->input->no = path;
 	else if (dir == S)

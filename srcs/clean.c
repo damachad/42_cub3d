@@ -36,7 +36,11 @@ void	destroy_sprites(t_game *game)
 
 	i = 0;
 	while (i < NB_SPRITES)
-		mlx_destroy_image(game->mlx, game->sprites[i++].img);
+	{
+		if (game->sprites[i].img)
+			mlx_destroy_image(game->mlx, game->sprites[i].img);
+		i++;
+	}
 	free(game->sprites);
 }
 

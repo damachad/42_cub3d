@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/20 14:28:28 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:39:53 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ bool	is_empty_corner(t_game *g, float dir_x, float dir_y, float angle)
 	empty = false;
 	x_sign = 1;
 	y_sign = 1;
-	x = (g->p_pos.x + dir_x * 10) / CUB_SIDE;
-	y = (g->p_pos.y + dir_y * 10) / CUB_SIDE;
+	x = (g->p_pos.x + dir_x * WALL_BUFF) / CUB_SIDE;
+	y = (g->p_pos.y + dir_y * WALL_BUFF) / CUB_SIDE;
 	if (x == (int)g->p_pos.x / CUB_SIDE && y == (int)g->p_pos.y / CUB_SIDE)
 		return (empty);
 	if (facing_right(angle, 0))
@@ -104,7 +104,7 @@ void	sideways_movement(t_game *g)
 	}
 	if (!is_wall(g, (g->p_pos.x + perp_dir.x * WALL_BUFF) / CUB_SIDE, \
 	(g->p_pos.y + perp_dir.y * WALL_BUFF) / CUB_SIDE) && \
-	!is_empty_corner(g, perp_dir.x, perp_dir.y, g->p_angle))
+	!is_empty_corner(g, perp_dir.x, perp_dir.y, perp_angle))
 	{
 		g->p_pos.x += perp_dir.x;
 		g->p_pos.y += perp_dir.y;

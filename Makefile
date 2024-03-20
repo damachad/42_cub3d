@@ -6,7 +6,7 @@
 #    By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/03/19 17:03:06 by damachad         ###   ########.fr        #
+#    Updated: 2024/03/20 15:44:41 by damachad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,11 +73,11 @@ $(OBJ_DIR):
 	@echo "[$(GREEN)objs directory created$(RESET)]"
 
 $(MLX):
+	@echo "Compiling mlx..."
 	@make $(MK_FLAG) -sC mlx > /dev/null 2>&1
-	@echo "[$(GREEN)libmlx.a created$(RESET)]"
-
 
 $(LIBFT):
+	@echo "Compiling libft..."
 	@make $(MK_FLAG) -C ./libft > /dev/null
 
 clean:
@@ -97,5 +97,8 @@ test: $(NAME)
 
 gdb: $(NAME)
 	@gdb --args ./$(NAME) "$(MAP_DIR)/$(MAP)"
+
+valgrind: $(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) "$(MAP_DIR)/$(MAP)"
 
 .PHONY: all clean fclean re test

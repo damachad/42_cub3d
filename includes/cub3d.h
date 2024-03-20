@@ -39,10 +39,6 @@
 # define BLUE_LIGHT 0x7BD3EA
 # define RED_BRICK 0xD04848
 
-/* # define NORTH "textures/directions/N1.xpm"
-# define SOUTH "textures/directions/S1.xpm"
-# define EAST "textures/directions/E1.xpm"
-# define WEST "textures/directions/W1.xpm" */
 # define START_ANGLE 1 // angle in radians
 # define MINIMAP_SCALE 3.0
 # define SPEED 2

@@ -36,7 +36,9 @@ static void	parse_color_components(t_game *game, char *line, int *i, int *color)
 		}
 		if (color[j] > 255 || color[j] < 0)
 			error_msg(game, "Invalid color value.\n");
-		while (line[*i] != '\0' && (is_space(line[*i]) || line[*i] == ','))
+		if (line[*i] == ',')
+			(*i)++;
+		while (line[*i] != '\0' && is_space(line[*i]))
 			(*i)++;
 		j++;
 		if (j == 3 && line[*i] != '\0')
@@ -56,7 +58,7 @@ void	parse_color(t_game *game, char *line, t_color_type color_type)
 	color[2] = 0;
 	if (game->input->ceiling_color != -1 && game->input->floor_color != -1)
 		error_msg(game, "Duplicate color.\n");
-	while (line[i] != '\0' && (line[i] == ',' || is_space(line[i])))
+	while (line[i] != '\0' && is_space(line[i]))
         i++;
 	parse_color_components(game, line, &i, color);
     color_hex = get_color_hex(color[0], color[1], color[2]);

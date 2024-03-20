@@ -24,15 +24,16 @@ Graphics:
 - Walls not smooth on the upper and lower limits (bigger effect the farthest from them);
 
 ## To Solve:
-- More than a '.' in texture file extension leads to **SEGFAULT**. Ex: "EA textures/directions/E1..xpm";
-- More characters on Identifier leads to **SEGFAULT**. Ex: "EAA textures/directions/E1.xpm";
-- A '/' before texture file path leads to **SEGFAULT**. Ex: "SO /textures/directions/S1.xpm";
-- If a file does not exist (wrong path or filename), leads to **SEGFAULT**;
-- Adding a pdf as a .xpm texture file leads to **SEGFAULT**;
-- More than a '/' in texture file path does not cause an error;
+- More than a '.' in texture file extension leads to **SEGFAULT**. Ex: "EA textures/directions/E1..xpm"; - DONE
+- More characters on Identifier leads to **SEGFAULT**. Ex: "EAA textures/directions/E1.xpm"; - DONE
+- A '/' before texture file path leads to **SEGFAULT**. Ex: "SO /textures/directions/S1.xpm"; - DONE
+- If a file does not exist (wrong path or filename), leads to **SEGFAULT**; - DONE
+- Adding a pdf as a .xpm texture file leads to **SEGFAULT**; - DONE
+- More than a '/' in texture file path does not cause an error; - and it shouldn't :) check bash
 - More than a ',' between color values does not cause an error;
 - Extra spaces after map (to the right or below) get parsed into map matrix, causing problems to minimap;
 - Same thing for spaces before map (to the left);
+- Fix empty line exit in the map.
 
 ## Links:
 - [Raycasting and DDA](https://lodev.org/cgtutor/raycasting.html) (contains 2 files with implementations in c++)

@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/19 17:53:07 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:27:17 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ void	rotate(t_game *g)
 		g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -SPEED};
 	}
 }
-/*
-bool	is_empty_corner(t_game *g, float dir_x, float dir_y)
+
+bool	is_empty_corner(t_game *g, float dir_x, float dir_y, float angle)
 {
 	bool	empty;
 	int		x_sign;
@@ -91,22 +91,20 @@ bool	is_empty_corner(t_game *g, float dir_x, float dir_y)
 	empty = false;
 	x_sign = 1;
 	y_sign = 1;
-	x = (g->p_pos.x + dir_x * 40) / CUB_SIDE;
-	y = (g->p_pos.y + dir_y * 40) / CUB_SIDE;
-	if (facing_right(g->p_angle, 0))
-		x_sign = -1;
-	if (facing_down(g->p_angle))
-		y_sign = -1;
+	x = (g->p_pos.x + dir_x * 10) / CUB_SIDE;
+	y = (g->p_pos.y + dir_y * 10) / CUB_SIDE;
+	if (x == (int)g->p_pos.x / CUB_SIDE && y == (int)g->p_pos.y / CUB_SIDE)
+		return (empty);
+	if (facing_right(angle, 0))
+		x_sign *= -1;
+	if (facing_down(angle))
+		y_sign *= -1;
 	if (!is_wall(g, x, y) && is_wall(g, x + x_sign, y) \
 	&& is_wall(g, x, y + y_sign))
 		empty = true;
-	printf("Check for empty corner at x:%d y:%d\n", x, y);
-	printf("side wall 1 at x:%d y:%d\n", x + x_sign, y);
-	printf("Side wall 2 at x:%d y:%d\n", x, y + y_sign);
-	printf("x_sign: %d, y_sign: %d\n", x_sign, y_sign);
 	return (empty);
 }
-*/
+
 
 void	sideways_movement(t_game *g)
 {
@@ -142,7 +140,8 @@ void	front_back_move(t_game *g)
 	if (g->keys.w)
 	{
 		if (!is_wall(g, (g->p_pos.x + g->p_dir.x * WALL_BUFF) / CUB_SIDE, \
-		(g->p_pos.y + g->p_dir.y * WALL_BUFF) / CUB_SIDE))
+		(g->p_pos.y + g->p_dir.y * WALL_BUFF) / CUB_SIDE) && \
+		!is_empty_corner(g, g->p_dir.x, g->p_dir.y, g->p_angle))
 		{
 			g->p_pos.x += g->p_dir.x;
 			g->p_pos.y += g->p_dir.y;
@@ -153,7 +152,8 @@ void	front_back_move(t_game *g)
 	else if (g->keys.s)
 	{
 		if (!is_wall(g, (g->p_pos.x - g->p_dir.x * WALL_BUFF) / CUB_SIDE, \
-		(g->p_pos.y - g->p_dir.y * WALL_BUFF) / CUB_SIDE))
+		(g->p_pos.y - g->p_dir.y * WALL_BUFF) / CUB_SIDE) && \
+		!is_empty_corner(g, -g->p_dir.x, -g->p_dir.y, g->p_b_angle))
 		{
 			g->p_pos.x -= g->p_dir.x;
 			g->p_pos.y -= g->p_dir.y;
@@ -167,9 +167,9 @@ int	render_movement(t_game *g)
 {
 	if (g->keys.w || g->keys.s)
 		front_back_move(g);
-	else if (g->keys.a || g->keys.d)
+	if (g->keys.a || g->keys.d)
 		sideways_movement(g);
-	else if (g->keys.l_a || g->keys.r_a)
+	if (g->keys.l_a || g->keys.r_a)
 		rotate(g);
 	draw_wall(g);
 	return (0);

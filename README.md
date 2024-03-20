@@ -18,7 +18,8 @@ Building repo for cub3d
 ## TODOs:
 
 Graphics:
-- Player goes through hollow corners;
+- Implement wallsiding when walking sideways;
+- Player goes through hollow corners if walking sideways;
 - Fisheye correction not working perfectly;
 - Walls not smooth on the upper and lower limits (bigger effect the farthest from them);
 

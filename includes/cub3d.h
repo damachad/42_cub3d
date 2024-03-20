@@ -47,7 +47,7 @@
 # define MINIMAP_SCALE 3.0
 # define SPEED 2
 # define ROT_SPEED 0.04
-# define WALL_BUFF 6
+# define WALL_BUFF 10
 # define SLIDE_BUFF 0.17
 
 // east is 0
@@ -137,6 +137,7 @@ typedef struct s_game
 	void			*mlx;
 	void			*win;
 	float			p_angle;
+	float			p_b_angle;
 	t_point			p_pos;
 	t_point			p_dir;
 	char			**map;

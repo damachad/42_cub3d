@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/19 17:05:31 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:22:19 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,11 +227,10 @@ float	fisheye_correction(float pa, float ra)
 	return (cos(ca));
 }
 
-void draw_wall_assist(t_game *g, float d_to_proj_plane, int x)
+void draw_wall_assist(t_game *g, int x)
 {
 	float	d_to_wall;
 	float	p_w_height;
-	float	back_angle;
 
 	d_to_wall = 0;
 	p_w_height = 0;
@@ -240,11 +239,11 @@ void draw_wall_assist(t_game *g, float d_to_proj_plane, int x)
 	(fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH));
 	if (fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH)
 	{
-		back_angle = g->p_angle - PI;
-		if (back_angle < 0)
-			back_angle += PI_DOUBLE;
-		set_back_wall(g, wall_dist_horiz(g, g->p_pos, back_angle, 0), \
-		wall_dist_vertical(g, g->p_pos, back_angle, 0));
+		g->p_b_angle = g->p_angle - PI;
+		if (g->p_b_angle < 0)
+			g->p_b_angle += PI_DOUBLE;
+		set_back_wall(g, wall_dist_horiz(g, g->p_pos, g->p_b_angle, 0), \
+		wall_dist_vertical(g, g->p_pos, g->p_b_angle, 0));
 	}
 	if (d_to_wall == -1)
 	{
@@ -252,7 +251,7 @@ void draw_wall_assist(t_game *g, float d_to_proj_plane, int x)
 		return;
 	}
 	d_to_wall *= fisheye_correction(g->p_angle, g->alpha);// Not working perfectly
-	p_w_height = (CUB_SIDE / d_to_wall * d_to_proj_plane);
+	p_w_height = (CUB_SIDE / d_to_wall * g->d_proj_plane);
 	draw_column(g, x, (float)(SCREEN_HEIGHT / 2 + p_w_height / 2), p_w_height);
 }
 
@@ -269,7 +268,7 @@ int	draw_wall(t_game *g)
 	draw_minimap(g);
 	while (++x < SCREEN_WIDTH)
 	{
-		draw_wall_assist(g, g->d_proj_plane, x);
+		draw_wall_assist(g, x);
 		g->alpha -= (float)1/SCREEN_WIDTH;
 		if (g->alpha < 0)
 			g->alpha += PI_DOUBLE;

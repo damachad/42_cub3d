@@ -198,6 +198,7 @@ bool	facing_up(float angle);
 bool	facing_down(float angle);
 bool	facing_left(float angle, float buffer);
 bool	facing_right(float angle, float buffer);
+float	set_angle(float angle);
 
 /*---------------------------movement------------------------*/
 int		handle_keypress(int keysym, t_game *g);

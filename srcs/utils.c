@@ -12,6 +12,15 @@
 
 #include "../includes/cub3d.h"
 
+float	set_angle(float angle)
+{
+	if (angle < 0)
+		angle += PI_DOUBLE;
+	else if (angle > PI_DOUBLE)
+		angle -= PI_DOUBLE;
+	return (angle);
+}
+
 bool	facing_up(float angle)
 {
 	if (angle > 0 && angle < PI)

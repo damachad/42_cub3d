@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+        */
+/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/16 18:11:49 by arepsa           ###   ########.fr       */
+/*   Updated: 2024/03/20 15:44:12 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_img	new_img(t_game *game)
 {
 	t_img	img;
 
+	ft_bzero(&img, sizeof(t_img));
 	img.img = mlx_new_image(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (img.img == NULL)
 		error_msg(game, "Failed to create image.");
@@ -31,10 +32,12 @@ t_img	new_img(t_game *game)
 /* Initialize graphics using mlx_init() and mlx_new_window() */
 void	init_graphics(t_game *game)
 {
+	game->d_proj_plane = (SCREEN_WIDTH / 2) / tan((float)FOV / 2);
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		error_msg(game, "mlx_init() failed\n");
-	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
+	game->win = mlx_new_window(game->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, \
+	"cub3D");
 	if (!game->win)
 		error_msg(game, "mlx_new_window() failed\n");
 }
@@ -65,9 +68,9 @@ void	load_sprites(t_game *g)
 	&g->sprites[W].bpp, &g->sprites[W].line_length, &g->sprites[W].endian);
 }
 
-void	init_player(t_game *g)// later get values from mapfile
+void	init_player(t_game *g)
 {
-	g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -1 * SPEED};
+	g->p_dir = (t_point){cos(g->p_angle) * SPEED, sin(g->p_angle) * -SPEED};
 	g->wall_side = -1;
 	g->back_wall = -1;
 	g->draw_offset_x = -1;
@@ -95,15 +98,16 @@ void	start_game(char	*file)
 	ft_bzero(&game, sizeof(t_game));
 	game.input = safe_malloc(sizeof(t_input));
 	game.calc = ft_calloc(1, sizeof(t_calc));
+	if (!game.input || !game.calc)
+		error_msg(&game, "Could not allocate memory.\n");
 	init_input(game.input);
 	parse_file(&game, file);
 	//print_input(game.input);
 	//print_map(&game);
-	init_graphics(&game);
 	init_player(&game);
-	game.img = new_img(&game);
-	draw_background(&game);
+	init_graphics(&game);
 	load_sprites(&game);
+	draw_background(&game);
 	draw_wall(&game);
 	mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);
 	mlx_hook(game.win, KeyRelease, KeyReleaseMask, handle_keyrelease, &game);

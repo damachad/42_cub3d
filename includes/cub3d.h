@@ -39,15 +39,11 @@
 # define BLUE_LIGHT 0x7BD3EA
 # define RED_BRICK 0xD04848
 
-/* # define NORTH "textures/directions/N1.xpm"
-# define SOUTH "textures/directions/S1.xpm"
-# define EAST "textures/directions/E1.xpm"
-# define WEST "textures/directions/W1.xpm" */
 # define START_ANGLE 1 // angle in radians
 # define MINIMAP_SCALE 3.0
 # define SPEED 2
 # define ROT_SPEED 0.04
-# define WALL_BUFF 6
+# define WALL_BUFF 10
 # define SLIDE_BUFF 0.17
 
 // east is 0
@@ -137,6 +133,7 @@ typedef struct s_game
 	void			*mlx;
 	void			*win;
 	float			p_angle;
+	float			p_b_angle;
 	t_point			p_pos;
 	t_point			p_dir;
 	char			**map;
@@ -150,6 +147,7 @@ typedef struct s_game
 	t_calc			*calc;
 	int				wall_side;
 	int				back_wall;
+	float			d_proj_plane;
 	float			minimap_scale;
 	float			alpha;
 	float			draw_offset_x;
@@ -177,8 +175,6 @@ void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color);
 void	draw_background(t_game *game);
 void	draw_column(t_game *g, int x, float y_btm, float wall_h);
 
-// void	draw_wall_test(t_game *game);
-
 /*--------------------------raycasting-----------------------*/
 int		draw_wall(t_game *game);
 bool	is_wall(t_game *g, int x, int y);
@@ -198,6 +194,7 @@ bool	facing_up(float angle);
 bool	facing_down(float angle);
 bool	facing_left(float angle, float buffer);
 bool	facing_right(float angle, float buffer);
+float	set_angle(float angle);
 
 /*---------------------------movement------------------------*/
 int		handle_keypress(int keysym, t_game *g);

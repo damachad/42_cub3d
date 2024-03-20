@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+         #
+#    By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/03/16 18:10:12 by arepsa           ###   ########.fr        #
+#    Updated: 2024/03/20 15:44:41 by damachad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ OBJ 		= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
 
 # /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ ARGUMENTS _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ #
 
-MAP			= colors.cub
+MAP			= map_spaces.cub
 
 # /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ RULES _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ #
 
@@ -73,17 +73,17 @@ $(OBJ_DIR):
 	@echo "[$(GREEN)objs directory created$(RESET)]"
 
 $(MLX):
-	@make $(MK_FLAG) -sC mlx
-	@echo "[$(GREEN)libmlx.a created$(RESET)]"
-
+	@echo "Compiling mlx..."
+	@make $(MK_FLAG) -sC mlx > /dev/null 2>&1
 
 $(LIBFT):
-	@make $(MK_FLAG) -C ./libft
+	@echo "Compiling libft..."
+	@make $(MK_FLAG) -C ./libft > /dev/null
 
 clean:
 	@$(RM) $(OBJ_DIR) $(OBJ_BNS_DIR)
-	@make $(MK_FLAG) -C ./libft clean
-	@make $(MK_FLAG) -C ./mlx clean
+	@make $(MK_FLAG) -C ./libft clean > /dev/null
+	@make $(MK_FLAG) -C ./mlx clean > /dev/null
 	@echo "[$(RED)objs removed$(RESET)]"
 
 fclean: clean
@@ -97,5 +97,8 @@ test: $(NAME)
 
 gdb: $(NAME)
 	@gdb --args ./$(NAME) "$(MAP_DIR)/$(MAP)"
+
+valgrind: $(NAME)
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) "$(MAP_DIR)/$(MAP)"
 
 .PHONY: all clean fclean re test

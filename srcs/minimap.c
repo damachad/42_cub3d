@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:16:23 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/17 11:50:45 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/18 18:48:14 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	mini_backgroud(t_game *g, int offset)
 			if (g->map[i][j] == '1')
 				draw_square(g, (j * CUB_SIDE * g->minimap_scale) + offset, \
 				(i * CUB_SIDE * g->minimap_scale) + offset, CUB_SIDE, WHITE);
-			else
+			else if (ft_strchr("0NSWE", g->map[i][j]))
 				draw_square(g, (j * CUB_SIDE * g->minimap_scale) + offset, \
 				(i * CUB_SIDE * g->minimap_scale) + offset, CUB_SIDE, BLACK);
 		}

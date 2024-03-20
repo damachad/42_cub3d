@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/17 12:02:48 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:16:50 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,11 +227,10 @@ float	fisheye_correction(float pa, float ra)
 	return (cos(ca));
 }
 
-void draw_wall_assist(t_game *g, float d_to_proj_plane, int x)
+void draw_wall_assist(t_game *g, int x)
 {
 	float	d_to_wall;
 	float	p_w_height;
-	float	back_angle;
 
 	d_to_wall = 0;
 	p_w_height = 0;
@@ -240,11 +239,9 @@ void draw_wall_assist(t_game *g, float d_to_proj_plane, int x)
 	(fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH));
 	if (fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH)
 	{
-		back_angle = g->p_angle - PI;
-		if (back_angle < 0)
-			back_angle += PI_DOUBLE;
-		set_back_wall(g, wall_dist_horiz(g, g->p_pos, back_angle, 0), \
-		wall_dist_vertical(g, g->p_pos, back_angle, 0));
+		g->p_b_angle = set_angle(g->p_angle - PI);
+		set_back_wall(g, wall_dist_horiz(g, g->p_pos, g->p_b_angle, 0), \
+		wall_dist_vertical(g, g->p_pos, g->p_b_angle, 0));
 	}
 	if (d_to_wall == -1)
 	{
@@ -252,29 +249,23 @@ void draw_wall_assist(t_game *g, float d_to_proj_plane, int x)
 		return;
 	}
 	d_to_wall *= fisheye_correction(g->p_angle, g->alpha);// Not working perfectly
-	p_w_height = (CUB_SIDE / d_to_wall * d_to_proj_plane);
+	p_w_height = (CUB_SIDE / d_to_wall * g->d_proj_plane);
 	draw_column(g, x, (float)(SCREEN_HEIGHT / 2 + p_w_height / 2), p_w_height);
 }
 
 int	draw_wall(t_game *g)
 {
 	int		x;
-	float	d_to_proj_plane;
 	
 	x = -1;
-	g->alpha = g->p_angle + ((float)FOV / 2);
-	if (g->alpha >= PI_DOUBLE)
-		g->alpha -= PI_DOUBLE;
-	d_to_proj_plane = (SCREEN_WIDTH / 2) / tan((float)FOV / 2);// later initialize this variable in t_game or define as macro
+	g->alpha = set_angle(g->p_angle + ((float)FOV / 2));
 	g->img = new_img(g);
 	draw_background(g);
 	draw_minimap(g);
 	while (++x < SCREEN_WIDTH)
 	{
-		draw_wall_assist(g, d_to_proj_plane, x);
-		g->alpha -= (float)1/SCREEN_WIDTH;
-		if (g->alpha < 0)
-			g->alpha += PI_DOUBLE;
+		draw_wall_assist(g, x);
+		g->alpha = set_angle(g->alpha - (float)1/SCREEN_WIDTH);
 	}
 	draw_minimap(g);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);

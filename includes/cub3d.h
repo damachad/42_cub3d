@@ -139,6 +139,9 @@ typedef struct s_game
 	char			**map;
 	int				map_cols;
 	int				map_rows;
+	size_t			l_bottom;
+	size_t			l_left;
+	size_t			l_right;
 	bool			player;
 	t_img			img;
 	t_img			*sprites; 
@@ -187,6 +190,7 @@ void	parse_map(t_game *game, char *file);
 void	get_map_size(t_game *game, char *line);
 bool	is_empty_line(char *line);
 void	check_map(t_game *game);
+void	get_map_limits(t_game *game);
 
 /*----------------------------utils--------------------------*/
 void	*safe_malloc(int bytes);

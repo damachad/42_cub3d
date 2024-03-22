@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+         #
+#    By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/03/20 15:44:41 by damachad         ###   ########.fr        #
+#    Updated: 2024/03/22 17:29:37 by arepsa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ MLX			= mlx/libmlx.a
 FILES 		= main init clean draw_line textures raycasting \
 			utils movement debug_print minimap \
 			parser/parser parser/parse_color parser/parse_texture parser/parse_map \
-			parser/check_map
+			parser/check_map parser/parser_utils
 SRC 		= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
 OBJ 		= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
 

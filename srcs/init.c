@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/20 15:44:12 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/22 17:46:09 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ void	start_game(char	*file)
 	parse_file(&game, file);
 	//print_input(game.input);
 	//print_map(&game);
+	printf("Left limit %zu\n", game.l_left);
+	printf("Right limit %zu\n", game.l_right);
+	printf("Bottom limit %zu\n", game.l_bottom);
 	init_player(&game);
 	init_graphics(&game);
 	load_sprites(&game);

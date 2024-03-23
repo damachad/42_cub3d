@@ -12,7 +12,7 @@
 
 #include "../includes/cub3d.h"
 
-//customized mlx_pixel_put.... 
+/* customized mlx_pixel_put */
 void	put_pixel(t_img *img, int x, int y, int color)
 {
 	char	*pixel;
@@ -24,17 +24,10 @@ void	put_pixel(t_img *img, int x, int y, int color)
 	}
 }
 
-
-///in case t_point will contain color....
-/* int	get_color(t_dot *a, t_dot *z)
-{
-	if (a->color != WHITE)
-		return (a->color);
-	return (WHITE);
-} */
-
-/* Set the starting point and decide weather to increment or decrement
-* each axis, based on difference between starting and ending points*/
+/* 
+** Set the starting point and decide weather to increment or decrement
+** each axis, based on difference between starting and ending points
+*/
 static void	bresenham_def(t_bresenham *param, t_point_int *a, t_point_int *b)
 {
 	param->dx = abs(b->x - a->x);
@@ -52,22 +45,20 @@ static void	bresenham_def(t_bresenham *param, t_point_int *a, t_point_int *b)
 	param->y0 = a->y;
 }
 
-/* Check if the current point is within image boundaries
-* Check if we have reached the end point
-* Increment or decrement x and y coordinates based on error parameter*/
+/*
+** Check if the current point is within image boundaries
+** Check if we have reached the end point
+** Increment or decrement x and y coordinates based on error parameter
+*/
 void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color)
 {
 	t_bresenham	param;
 
-	//if map needs some transformation, place it here
 	bresenham_def(&param, a, b);
 	while (1)
 	{
-		//WIDTH and HEIGHT are the dimensions of the image, not screen,
-		//unless the size is one and the same
 		if (param.x0 < SCREEN_WIDTH && param.x0 > 0
 			&& param.y0 < SCREEN_HEIGHT && param.y0 > 0)
-			//for now draw RED by default
 			put_pixel(&game->img, param.x0, param.y0, color);
 		if (param.x0 == b->x && param.y0 == b->y)
 			break ;

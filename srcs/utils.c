@@ -52,16 +52,3 @@ bool	facing_right(float angle, float buffer)
 	else
 		return (false);
 }
-
-// Given that when malloc fails it returns NULL, is this not the same as a normal malloc?
-void	*safe_malloc(int bytes)
-{
-	void	*result;
-	
-	result = malloc(bytes);
-	if (!result)
-	{
-		return(NULL);
-	}
-	return (result);
-}

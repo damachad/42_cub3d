@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: arepsa <arepsa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/20 14:16:50 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:49:58 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ bool	is_wall(t_game *g, int x, int y)
 		return (false);
 }
 
-/* Calculates the distance between horizontal intersections in the grid,
-aplies a correction in sign depending on the angle */
+/*
+** Calculates the distance between horizontal intersections in the grid,
+** applies a correction in sign depending on the angle
+*/
 float	get_xa(float alpha)
 {
 	float	xa;
@@ -36,8 +38,10 @@ float	get_xa(float alpha)
 	return (xa);
 }
 
-/* Calculates the distance between vertical intersections in the grid,
-aplies a correction in sign depending on the angle */
+/*
+** Calculates the distance between vertical intersections in the grid,
+** applies a correction in sign depending on the angle
+*/
 float	get_ya(float alpha)
 {
 	float	ya;
@@ -91,7 +95,7 @@ float	find_collision_h(t_game *g, t_calc *calc, t_point p, float correct)
 	return (-1);
 }
 
-// Check for wall collision on horizontal lines
+/* Check for wall collision on horizontal lines */
 float	wall_dist_horiz(t_game *g, t_point p, float alpha, bool set)
 {
 	float	correct;
@@ -152,9 +156,9 @@ float	wall_dist_vertical(t_game *g, t_point p, float alpha, bool set)
 void	set_wall_side(t_game *g, float horizontal, float vertical)
 {
 	if (horizontal == -1 && vertical > 0)
-		g->wall_side = 1; // vertical
+		g->wall_side = 1;
 	else if (vertical == -1 && horizontal > 0)
-		g->wall_side = 0; // horizontal
+		g->wall_side = 0;
 	else if (horizontal > vertical)
 		g->wall_side = 1;
 	else
@@ -181,10 +185,12 @@ void	set_texture(t_game *g, bool horiz)
 	}
 }
 
-/* Returns shorter distance, chooses bitmap offset for wall texture, 
-and selects the right texture
-If one method failed to find wall, return the distance obtained 
-by the other */
+/*
+** Returns shorter distance, chooses bitmap offset for wall texture, 
+** and selects the right texture
+** If one method failed to find wall, return the distance obtained 
+** by the other
+*/
 float	shorter_distance(t_game *g, float horiz, float vertical, bool p_ray)
 {
 	float	shorter;
@@ -204,11 +210,11 @@ float	shorter_distance(t_game *g, float horiz, float vertical, bool p_ray)
 void	set_back_wall(t_game *g, float horizontal, float vertical)
 {
 	if (horizontal == -1 && vertical == -1)
-		return;
+		return ;
 	if (horizontal == -1 && vertical > 0)
-		g->back_wall = 1; // vertical
+		g->back_wall = 1;
 	else if (vertical == -1 && horizontal > 0)
-		g->back_wall = 0; // horizontal
+		g->back_wall = 0;
 	else if (horizontal > vertical)
 		g->back_wall = 1;
 	else
@@ -218,7 +224,7 @@ void	set_back_wall(t_game *g, float horizontal, float vertical)
 float	fisheye_correction(float pa, float ra)
 {
 	float	ca;
-	
+
 	ca = pa - ra;
 	if (ca < 0)
 		ca += PI_DOUBLE;
@@ -227,7 +233,7 @@ float	fisheye_correction(float pa, float ra)
 	return (cos(ca));
 }
 
-void draw_wall_assist(t_game *g, int x)
+void	draw_wall_assist(t_game *g, int x)
 {
 	float	d_to_wall;
 	float	p_w_height;
@@ -236,8 +242,8 @@ void draw_wall_assist(t_game *g, int x)
 	p_w_height = 0;
 	d_to_wall = shorter_distance(g, wall_dist_horiz(g, g->p_pos, g->alpha, 1), \
 	wall_dist_vertical(g, g->p_pos, g->alpha, 1), \
-	(fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH));
-	if (fabs(g->alpha - g->p_angle) < (float)1/SCREEN_WIDTH)
+	(fabs(g->alpha - g->p_angle) < (float)1 / SCREEN_WIDTH));
+	if (fabs(g->alpha - g->p_angle) < (float)1 / SCREEN_WIDTH)
 	{
 		g->p_b_angle = set_angle(g->p_angle - PI);
 		set_back_wall(g, wall_dist_horiz(g, g->p_pos, g->p_b_angle, 0), \
@@ -246,9 +252,9 @@ void draw_wall_assist(t_game *g, int x)
 	if (d_to_wall == -1)
 	{
 		ft_putstr_fd("Error calculating wall distance\n", 2);
-		return;
+		return ;
 	}
-	d_to_wall *= fisheye_correction(g->p_angle, g->alpha);// Not working perfectly
+	d_to_wall *= fisheye_correction(g->p_angle, g->alpha);
 	p_w_height = (CUB_SIDE / d_to_wall * g->d_proj_plane);
 	draw_column(g, x, (float)(SCREEN_HEIGHT / 2 + p_w_height / 2), p_w_height);
 }
@@ -256,7 +262,7 @@ void draw_wall_assist(t_game *g, int x)
 int	draw_wall(t_game *g)
 {
 	int		x;
-	
+
 	x = -1;
 	g->alpha = set_angle(g->p_angle + ((float)FOV / 2));
 	g->img = new_img(g);
@@ -265,10 +271,10 @@ int	draw_wall(t_game *g)
 	while (++x < SCREEN_WIDTH)
 	{
 		draw_wall_assist(g, x);
-		g->alpha = set_angle(g->alpha - (float)1/SCREEN_WIDTH);
+		g->alpha = set_angle(g->alpha - (float)1 / SCREEN_WIDTH);
 	}
 	draw_minimap(g);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
 	mlx_destroy_image(g->mlx, g->img.img);
-	return(0);
+	return (0);
 }

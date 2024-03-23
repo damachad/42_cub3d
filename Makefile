@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+         #
+#    By: arepsa <arepsa@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/03/22 21:58:33 by arepsa           ###   ########.fr        #
+#    Updated: 2024/03/23 16:12:49 by arepsa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,9 +46,9 @@ NAME 		= cub3D
 LIBFT		= libft/libft.a
 MLX			= mlx/libmlx.a
 FILES 		= main init clean draw_line textures raycasting \
-			utils movement debug_print minimap \
+			utils movement minimap \
 			parser/parser parser/parse_color parser/parse_texture parser/parse_map \
-			parser/check_map parser/parser_utils
+			parser/check_map parser/set_map_limits parser/parse_map_utils
 SRC 		= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
 OBJ 		= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
 

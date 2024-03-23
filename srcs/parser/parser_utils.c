@@ -12,29 +12,42 @@
 
 #include "../includes/cub3d.h"
 
+/* initialize limits to extreme values */
+void	map_limit_init(t_game *game)
+{
+	game->l_left = game->map_cols;
+    game->l_right = 0;
+    game->l_top = game->map_rows;
+    game->l_bottom = 0;
+}
+
 void	get_map_limits(t_game *game)
 {
-	size_t i;
-	size_t j;
+	 size_t i;
+	 size_t	j;
 
 	i = -1;
+	j = -1;
+	map_limit_init(game);
 	while (++i < (size_t)game->map_rows)
-	{
-		j = -1;
-		while (++j < (size_t)game->map_cols && game->map[i][j])
+    {
+        if (ft_strchr(game->map[i], '1'))
 		{
-			if (game->map[i][j] == '1')
-			{
-				if (j < game->l_left)
-					game->l_left = j;
-				if (j > game->l_right)
-					game->l_right = j;
-			}
-		}
-		if (ft_strchr(game->map[i], '1'))
-		{
-			if (i > game->l_bottom)
-				game->l_bottom = i;
-		}
-	}
+            if (i < game->l_top)
+                game->l_top = i;
+            if (i > game->l_bottom)
+                game->l_bottom = i;
+			j = -1;
+            while (++j < (size_t)game->map_cols)
+            {
+                if (game->map[i][j] == '1')
+				{
+                    if (j < game->l_left)
+                        game->l_left = j;
+                    if (j > game->l_right)
+                        game->l_right = j;
+                }
+            }
+        }
+    }
 }

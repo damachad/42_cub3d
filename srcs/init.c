@@ -104,6 +104,7 @@ void	start_game(char	*file)
 	parse_file(&game, file);
 	//print_input(game.input);
 	//print_map(&game);
+	printf("Top limit %zu\n", game.l_top);
 	printf("Left limit %zu\n", game.l_left);
 	printf("Right limit %zu\n", game.l_right);
 	printf("Bottom limit %zu\n", game.l_bottom);

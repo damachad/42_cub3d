@@ -112,7 +112,7 @@ void process_line (t_game *game, char *line, int *row, int *start_map)
         }
         return;
     }
-    if (line[0] == '1' || (line[0] == ' ' && ft_strchr(line, '1')))
+    if (line[0] == '1' || line[0] == ' ')
     {
         *start_map = 1;
         copy_row(game, line, *row);
@@ -162,5 +162,5 @@ void parse_map(t_game *game, char *file)
     game->map[game->map_rows] = NULL;
     fill_map(game, file);
     check_map(game);
-   
+    get_map_limits(game);
 }

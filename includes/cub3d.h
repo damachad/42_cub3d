@@ -139,6 +139,7 @@ typedef struct s_game
 	char			**map;
 	int				map_cols;
 	int				map_rows;
+	size_t			l_top;
 	size_t			l_bottom;
 	size_t			l_left;
 	size_t			l_right;

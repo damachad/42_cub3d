@@ -20,18 +20,16 @@ int	all_textures_and_colors_set(t_game *game)
 	return (0);
 }
 
+/* consider empty only if has newline or return carriage */
 bool	is_empty_line(char *line)
 {
-	int	i;
-
-	i = 0;
-	while (line[i] != '\0')
+	while (*line != '\0')
 	{
-		if (!is_space(line[i]))
-			return (false);
-		i++;
-	}
-	return (true);
+        if (*line != '\n' && *line != '\r')
+            return false;
+        line++;
+    }
+    return true;
 }
 
 void	parse_textures_and_colors(t_game *game, char *line, int fd)

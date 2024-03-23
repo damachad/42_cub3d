@@ -32,6 +32,10 @@ Graphics:
 - If a file does not exist (wrong path or filename), leads to **SEGFAULT**; - DONE
 - Adding a pdf as a .xpm texture file leads to **SEGFAULT**; - DONE
 - More than a '/' in texture file path does not cause an error; - and it shouldn't :) check bash
+- More than a ',' between color values does not cause an error; - DONE?
+- Extra spaces after map (to the right or below) get parsed into map matrix, causing problems to minimap;
+- Same thing for spaces before map (to the left);
+- Fix empty line exit in the map.
 
 ## Links:
 - [Raycasting and DDA](https://lodev.org/cgtutor/raycasting.html) (contains 2 files with implementations in c++)

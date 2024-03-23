@@ -112,7 +112,7 @@ void process_line (t_game *game, char *line, int *row, int *start_map)
         }
         return;
     }
-    if (line[0] == '1' || line[0] == ' ')
+    if (line[0] == '1' || (line[0] == ' ' && ft_strchr(line, '1')))
     {
         *start_map = 1;
         copy_row(game, line, *row);
@@ -123,8 +123,8 @@ void process_line (t_game *game, char *line, int *row, int *start_map)
 }
 
 /* 
-** assuming spaces before characters are only in map lines 
 ** assuming maps can contain spaces, not tabs 
+** and all spaces are considered par of the map
 */
 void fill_map(t_game *game, char *file)
 {

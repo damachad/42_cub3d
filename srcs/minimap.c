@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:16:23 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/18 18:48:14 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/22 16:43:33 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	set_scale_minimap(t_game *g, int rows, int cols)
 	g->minimap_scale = MINIMAP_SCALE / (float)bigger;
 }
 
-void	mini_backgroud(t_game *g, int offset)
+void	mini_background(t_game *g, int offset)
 {
 	int		i;
 	int		j;
@@ -73,7 +73,7 @@ void	draw_minimap(t_game *g)
 
 	offset = 5;
 	set_scale_minimap(g, g->map_rows, g->map_cols);
-	mini_backgroud(g, offset);
+	mini_background(g, offset);
 	draw_square(g, (int)(g->p_pos.x * g->minimap_scale) + offset - 2.5, \
 	(int)(g->p_pos.y * g->minimap_scale) + offset - 2.5, 5 / \
 	g->minimap_scale, RED);

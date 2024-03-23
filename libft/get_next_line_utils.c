@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arepsa <arepsa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 09:16:28 by damachad          #+#    #+#             */
-/*   Updated: 2024/02/17 10:26:04 by marvin           ###   ########.fr       */
+/*   Updated: 2024/03/23 16:13:40 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*ft_get_line(char *text)
 		i++;
 	}
 	if (text[i] == '\n')
-		line[i++] = '\n'; 
+		line[i++] = '\n';
 	line[i] = '\0';
 	return (line);
 }

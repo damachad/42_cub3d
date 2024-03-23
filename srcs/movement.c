@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: arepsa <arepsa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 10:10:59 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/20 14:39:53 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:50:22 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,11 @@ bool	is_empty_corner(t_game *g, float dir_x, float dir_y, float angle)
 	return (empty);
 }
 
-
 void	sideways_movement(t_game *g)
 {
 	t_point	perp_dir;
 	float	perp_angle;
-	
+
 	if (g->keys.a && g->keys.d)
 		return ;
 	if (g->keys.a)

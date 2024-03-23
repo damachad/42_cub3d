@@ -13,7 +13,7 @@
 #include "../../includes/cub3d.h"
 
 static void	check_edges_content(t_game *game, char cell)
-{	
+{
 	if ((cell == ' ') || (cell == '1'))
 		return ;
 	else
@@ -21,7 +21,7 @@ static void	check_edges_content(t_game *game, char cell)
 }
 
 /* check if coordinate is on the perimeter of the map */
-static bool is_edge(int row, int col, t_game *game)
+static bool	is_edge(int row, int col, t_game *game)
 {
 	if ((row == 0) || (col == 0)
 		|| (row == (game->map_rows - 1))
@@ -31,7 +31,7 @@ static bool is_edge(int row, int col, t_game *game)
 }
 
 /* check if coordinates are within map boundaries */
-static bool is_valid_point(int row, int col, t_game *game)
+static bool	is_valid_point(int row, int col, t_game *game)
 {
 	if (row < 0 || row > (game->map_rows - 1)
 		|| col < 0 || col > (game->map_cols - 1))
@@ -48,7 +48,7 @@ static void	check_neighbours(char **map, int row, int col, t_game *game)
 {
 	int		col_offset;
 	int		row_offset;
-	
+
 	row_offset = -1;
 	while (row_offset <= 1)
 	{

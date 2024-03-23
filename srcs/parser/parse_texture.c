@@ -12,6 +12,18 @@
 
 #include "../../includes/cub3d.h"
 
+void	set_player_direction(t_game *game, char *path, t_dir dir)
+{
+	if (dir == N)
+		game->input->no = path;
+	else if (dir == S)
+		game->input->so = path;
+	else if (dir == W)
+		game->input->we = path;
+	else if (dir == E)
+		game->input->ea = path;
+}
+
 bool	is_texture_duplicate(t_game *game, t_dir dir)
 {
 	if (dir == N && game->input->no)
@@ -23,12 +35,6 @@ bool	is_texture_duplicate(t_game *game, t_dir dir)
 	else if (dir == E && game->input->ea)
 		return (true);
 	return (false);
-}
-
-void	free_line_end_game(t_game *game, char *line, char *msg)
-{
-	free(line);
-	error_msg(game, msg);
 }
 
 void	check_file_extension(t_game *game, char *path)
@@ -61,18 +67,11 @@ void	parse_texture(t_game *game, char *line, t_dir dir)
 		i++;
 	path = ft_strdup(line + i);
 	if (!path)
-		free_line_end_game(game, line, "Could not allocate memory for texture path.\n");
+		free_line_end_game(game, line, "Memory fail for texture path.\n");
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		free_line_end_game(game, path, "Invalid texture file.\n");
 	close(fd);
 	check_file_extension(game, path);
-	if (dir == N)
-		game->input->no = path;
-	else if (dir == S)
-		game->input->so = path;
-	else if (dir == W)
-		game->input->we = path;
-	else if (dir == E)
-		game->input->ea = path;
+	set_player_direction(game, path, dir);
 }

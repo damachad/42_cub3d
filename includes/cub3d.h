@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -23,11 +22,11 @@
 # include <X11/keysym.h>
 # include <stdbool.h>
 
-// Macros
+/*--------------------Macros--------------------*/
 # define SCREEN_WIDTH 960
 # define SCREEN_HEIGHT 768
 # define CUB_SIDE 64
-# define FOV 1 // in radians
+# define FOV 1
 # define NB_SPRITES 4
 
 # define WHITE 0xFFFFFF
@@ -39,34 +38,34 @@
 # define BLUE_LIGHT 0x7BD3EA
 # define RED_BRICK 0xD04848
 
-# define START_ANGLE 1 // angle in radians
+# define START_ANGLE 1
 # define MINIMAP_SCALE 3.0
 # define SPEED 2
 # define ROT_SPEED 0.04
 # define WALL_BUFF 10
 # define SLIDE_BUFF 0.17
 
-// east is 0
-# define PI 3.1415926535 // west
+# define PI 3.1415926535
 # define PI_DOUBLE 6.2831853071
-# define PI_HALF 1.5707963267 // north
-# define PI_THREE_HALFS 4.7123889803 // south
+# define PI_HALF 1.5707963267
+# define PI_THREE_HALFS 4.7123889803
 
-// Structs
-
-typedef enum s_dir{
+/*--------------------Structs--------------------*/
+typedef enum s_dir
+{
 	N,
 	S,
 	E,
 	W
 }			t_dir;
 
-typedef enum s_color_type{
+typedef enum s_color_type
+{
 	FLOOR,
 	CEILING
 }			t_color_type;
 
-//line drawing algorithm variables
+/* line drawing algorithm variables */
 typedef struct s_bresenham
 {
 	int	x0;
@@ -90,6 +89,14 @@ typedef struct s_point_int
 	int	y;
 }					t_point_int;
 
+typedef struct	s_square
+{
+	int	x;
+	int	y;
+	int	size;
+	int	color;
+}				t_square;
+
 typedef struct s_keys
 {
 	bool	w;
@@ -100,7 +107,8 @@ typedef struct s_keys
 	bool	r_a;
 }			t_keys;
 
-typedef struct s_img {
+typedef struct s_img
+{
 	void	*img;
 	char	*addr;
 	int		width;
@@ -145,14 +153,14 @@ typedef struct s_game
 	size_t			l_right;
 	bool			player;
 	t_img			img;
-	t_img			*sprites; 
+	t_img			*sprites;
 	t_input			*input;
 	t_keys			keys;
 	t_calc			*calc;
 	int				wall_side;
 	int				back_wall;
 	float			d_proj_plane;
-	float			minimap_scale;
+	float			mini_scale;
 	float			alpha;
 	float			draw_offset_x;
 	float			draw_offset_y;
@@ -160,8 +168,10 @@ typedef struct s_game
 }					t_game;
 
 /*---------------------------init----------------------------*/
-void	init_graphics(t_game *game);
 void	start_game(char	*mapfile);
+void	init_input(t_input *input);
+void	init_player(t_game *g);
+void	init_graphics(t_game *game);
 void	load_sprites(t_game *game);
 t_img	new_img(t_game *game);
 
@@ -169,7 +179,6 @@ t_img	new_img(t_game *game);
 void	error_msg(t_game *game, char *msg);
 int		quit_prog(t_game *game);
 void	destroy_game(t_game *game);
-/* void	destroy_map(t_map *map); */
 
 /*--------------------------draw_line------------------------*/
 void	put_pixel(t_img *img, int x, int y, int color);
@@ -190,11 +199,16 @@ void	parse_texture(t_game *game, char *line, t_dir dir);
 void	parse_map(t_game *game, char *file);
 void	get_map_size(t_game *game, char *line);
 bool	is_empty_line(char *line);
+void	free_line_end_game(t_game *game, char *line, char *msg);
 void	check_map(t_game *game);
 void	get_map_limits(t_game *game);
+void	free_partial_map(t_game *game, int rows_allocated);
+bool	is_valid_char(t_game *game, char c);
+void	set_player(t_game *game, char c, int x, int y);
+void	get_map_size(t_game *game, char *line);
+void	*safe_malloc(int bytes);
 
 /*----------------------------utils--------------------------*/
-void	*safe_malloc(int bytes);
 bool	facing_up(float angle);
 bool	facing_down(float angle);
 bool	facing_left(float angle, float buffer);

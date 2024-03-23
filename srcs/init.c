@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+        */
+/*   By: arepsa <arepsa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/22 17:46:09 by arepsa           ###   ########.fr       */
+/*   Updated: 2024/03/23 15:23:17 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-//assuming that image size is the same as the window size
-// where does line_length come from? probably same place as endian...
+/* image size is the same as the window size */
 t_img	new_img(t_game *game)
 {
 	t_img	img;
@@ -78,7 +77,7 @@ void	init_player(t_game *g)
 }
 
 /* set colors to -1 as a flag that they haven't been parsed yet */
-void init_input(t_input *input)
+void	init_input(t_input *input)
 {
 	input->no = NULL;
 	input->so = NULL;
@@ -86,36 +85,4 @@ void init_input(t_input *input)
 	input->ea = NULL;
 	input->floor_color = -1;
 	input->ceiling_color = -1;
-}
-
-/* Initialize 't_game' struct, load and check map,
-   initialize graphics, load sprites,
-   and start game loop */
-void	start_game(char	*file)
-{
-	t_game	game;
-
-	ft_bzero(&game, sizeof(t_game));
-	game.input = safe_malloc(sizeof(t_input));
-	game.calc = ft_calloc(1, sizeof(t_calc));
-	if (!game.input || !game.calc)
-		error_msg(&game, "Could not allocate memory.\n");
-	init_input(game.input);
-	parse_file(&game, file);
-	//print_input(game.input);
-	//print_map(&game);
-	printf("Top limit %zu\n", game.l_top);
-	printf("Left limit %zu\n", game.l_left);
-	printf("Right limit %zu\n", game.l_right);
-	printf("Bottom limit %zu\n", game.l_bottom);
-	init_player(&game);
-	init_graphics(&game);
-	load_sprites(&game);
-	draw_background(&game);
-	draw_wall(&game);
-	mlx_hook(game.win, KeyPress, KeyPressMask, handle_keypress, &game);
-	mlx_hook(game.win, KeyRelease, KeyReleaseMask, handle_keyrelease, &game);
-	mlx_hook(game.win, DestroyNotify, KeyPressMask, quit_prog, &game);
-	mlx_loop_hook(game.mlx, render_movement, &game);
-	mlx_loop(game.mlx);
 }

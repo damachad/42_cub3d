@@ -3,57 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arepsa <arepsa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 15:23:21 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/23 15:49:58 by arepsa           ###   ########.fr       */
+/*   Updated: 2024/03/23 17:51:57 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-bool	is_wall(t_game *g, int x, int y)
-{
-	if (x < g->map_cols && y < g->map_rows && g->map[y][x] \
-	&& g->map[y][x] == '1')
-		return (true);
-	else
-		return (false);
-}
-
-/*
-** Calculates the distance between horizontal intersections in the grid,
-** applies a correction in sign depending on the angle
-*/
-float	get_xa(float alpha)
-{
-	float	xa;
-
-	xa = 0;
-	if (alpha == 0 || alpha == PI)
-		return (CUB_SIDE);
-	xa = CUB_SIDE / tan(alpha);
-	if (facing_down(alpha))
-		xa *= -1;
-	return (xa);
-}
-
-/*
-** Calculates the distance between vertical intersections in the grid,
-** applies a correction in sign depending on the angle
-*/
-float	get_ya(float alpha)
-{
-	float	ya;
-
-	ya = 0;
-	if (alpha == PI_HALF || alpha == PI_THREE_HALFS)
-		return (CUB_SIDE);
-	ya = CUB_SIDE * tan(alpha);
-	if (facing_right(alpha, 0))
-		ya *= -1;
-	return (ya);
-}
 
 float	find_collision_v(t_game *g, t_calc *calc, t_point p, float correct)
 {
@@ -150,131 +107,4 @@ float	wall_dist_vertical(t_game *g, t_point p, float alpha, bool set)
 	g->calc->offset.y = get_ya(alpha);
 	g->calc->set = set;
 	return (find_collision_v(g, g->calc, p, correct));
-}
-
-/* Sets if player is facing a N/S or W/E wall */
-void	set_wall_side(t_game *g, float horizontal, float vertical)
-{
-	if (horizontal == -1 && vertical > 0)
-		g->wall_side = 1;
-	else if (vertical == -1 && horizontal > 0)
-		g->wall_side = 0;
-	else if (horizontal > vertical)
-		g->wall_side = 1;
-	else
-		g->wall_side = 0;
-}
-
-void	set_texture(t_game *g, bool horiz)
-{
-	if (horiz)
-	{
-		g->draw_offset_y = -1;
-		if (facing_up(g->alpha))
-			g->right_texture = &g->sprites[N];
-		else
-			g->right_texture = &g->sprites[S];
-	}
-	else
-	{
-		g->draw_offset_x = -1;
-		if (facing_left(g->alpha, 0))
-			g->right_texture = &g->sprites[W];
-		else
-			g->right_texture = &g->sprites[E];
-	}
-}
-
-/*
-** Returns shorter distance, chooses bitmap offset for wall texture, 
-** and selects the right texture
-** If one method failed to find wall, return the distance obtained 
-** by the other
-*/
-float	shorter_distance(t_game *g, float horiz, float vertical, bool p_ray)
-{
-	float	shorter;
-
-	shorter = horiz;
-	if (horiz == -1 && vertical == -1)
-		return (-1);
-	if (p_ray)
-		set_wall_side(g, horiz, vertical);
-	if ((horiz == -1 && vertical > 0) || (horiz > vertical && vertical >= 0))
-		shorter = vertical;
-	set_texture(g, shorter == horiz);
-	return (shorter);
-}
-
-/* Sets if player's back is facing a N/S or W/E wall */
-void	set_back_wall(t_game *g, float horizontal, float vertical)
-{
-	if (horizontal == -1 && vertical == -1)
-		return ;
-	if (horizontal == -1 && vertical > 0)
-		g->back_wall = 1;
-	else if (vertical == -1 && horizontal > 0)
-		g->back_wall = 0;
-	else if (horizontal > vertical)
-		g->back_wall = 1;
-	else
-		g->back_wall = 0;
-}
-
-float	fisheye_correction(float pa, float ra)
-{
-	float	ca;
-
-	ca = pa - ra;
-	if (ca < 0)
-		ca += PI_DOUBLE;
-	else if (ca > PI_DOUBLE)
-		ca -= PI_DOUBLE;
-	return (cos(ca));
-}
-
-void	draw_wall_assist(t_game *g, int x)
-{
-	float	d_to_wall;
-	float	p_w_height;
-
-	d_to_wall = 0;
-	p_w_height = 0;
-	d_to_wall = shorter_distance(g, wall_dist_horiz(g, g->p_pos, g->alpha, 1), \
-	wall_dist_vertical(g, g->p_pos, g->alpha, 1), \
-	(fabs(g->alpha - g->p_angle) < (float)1 / SCREEN_WIDTH));
-	if (fabs(g->alpha - g->p_angle) < (float)1 / SCREEN_WIDTH)
-	{
-		g->p_b_angle = set_angle(g->p_angle - PI);
-		set_back_wall(g, wall_dist_horiz(g, g->p_pos, g->p_b_angle, 0), \
-		wall_dist_vertical(g, g->p_pos, g->p_b_angle, 0));
-	}
-	if (d_to_wall == -1)
-	{
-		ft_putstr_fd("Error calculating wall distance\n", 2);
-		return ;
-	}
-	d_to_wall *= fisheye_correction(g->p_angle, g->alpha);
-	p_w_height = (CUB_SIDE / d_to_wall * g->d_proj_plane);
-	draw_column(g, x, (float)(SCREEN_HEIGHT / 2 + p_w_height / 2), p_w_height);
-}
-
-int	draw_wall(t_game *g)
-{
-	int		x;
-
-	x = -1;
-	g->alpha = set_angle(g->p_angle + ((float)FOV / 2));
-	g->img = new_img(g);
-	draw_background(g);
-	draw_minimap(g);
-	while (++x < SCREEN_WIDTH)
-	{
-		draw_wall_assist(g, x);
-		g->alpha = set_angle(g->alpha - (float)1 / SCREEN_WIDTH);
-	}
-	draw_minimap(g);
-	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
-	mlx_destroy_image(g->mlx, g->img.img);
-	return (0);
 }

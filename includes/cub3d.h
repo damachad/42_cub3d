@@ -89,7 +89,7 @@ typedef struct s_point_int
 	int	y;
 }					t_point_int;
 
-typedef struct	s_square
+typedef struct s_square
 {
 	int	x;
 	int	y;
@@ -189,8 +189,18 @@ void	draw_background(t_game *game);
 void	draw_column(t_game *g, int x, float y_btm, float wall_h);
 
 /*--------------------------raycasting-----------------------*/
-int		draw_wall(t_game *game);
+float	wall_dist_horiz(t_game *g, t_point p, float alpha, bool set);
+float	wall_dist_vertical(t_game *g, t_point p, float alpha, bool set);
+
+/*--------------------------raycast_utils-----------------------*/
 bool	is_wall(t_game *g, int x, int y);
+float	get_xa(float alpha);
+float	get_ya(float alpha);
+void	set_texture(t_game *g, bool horiz);
+void	set_wall_side(t_game *g, float horizontal, float vertical);
+
+/*---------------------------draw_wall------------------------*/
+int		draw_wall(t_game *game);
 
 /*----------------------------parser-------------------------*/
 void	parse_file(t_game *game, char *file);
@@ -216,6 +226,12 @@ bool	facing_right(float angle, float buffer);
 float	set_angle(float angle);
 
 /*---------------------------movement------------------------*/
+void	rotate(t_game *g);
+void	sideways_movement(t_game *g);
+void	front_back_move(t_game *g);
+
+/*---------------------------move_utils------------------------*/
+bool	is_empty_corner(t_game *g, float dir_x, float dir_y, float angle);
 int		handle_keypress(int keysym, t_game *g);
 int		handle_keyrelease(int keysym, t_game *g);
 int		render_movement(t_game *g);

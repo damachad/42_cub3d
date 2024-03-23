@@ -160,6 +160,7 @@ typedef struct s_game
 	int				wall_side;
 	int				back_wall;
 	float			d_proj_plane;
+	float			mini_scale;
 	float			alpha;
 	float			draw_offset_x;
 	float			draw_offset_y;
@@ -234,6 +235,9 @@ bool	is_empty_corner(t_game *g, float dir_x, float dir_y, float angle);
 int		handle_keypress(int keysym, t_game *g);
 int		handle_keyrelease(int keysym, t_game *g);
 int		render_movement(t_game *g);
+
+/*---------------------------minimap------------------------*/
+void	draw_minimap(t_game *g);
 
 /* -----------------------debug print----------------------- */
 void	print_input(t_input *input);

@@ -6,11 +6,11 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 17:45:44 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/23 18:26:12 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:44:41 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 /*
 ** Returns shorter distance, chooses bitmap offset for wall texture, 
@@ -94,11 +94,13 @@ int	draw_wall(t_game *g)
 	g->alpha = set_angle(g->p_angle + ((float)FOV / 2));
 	g->img = new_img(g);
 	draw_background(g);
+	draw_minimap(g);
 	while (++x < SCREEN_WIDTH)
 	{
 		draw_wall_assist(g, x);
 		g->alpha = set_angle(g->alpha - (float)1 / SCREEN_WIDTH);
 	}
+	draw_minimap(g);
 	mlx_put_image_to_window(g->mlx, g->win, g->img.img, 0, 0);
 	mlx_destroy_image(g->mlx, g->img.img);
 	return (0);

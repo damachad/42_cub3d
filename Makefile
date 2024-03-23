@@ -6,7 +6,7 @@
 #    By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/03/23 17:58:45 by damachad         ###   ########.fr        #
+#    Updated: 2024/03/23 18:41:28 by damachad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,20 +37,25 @@ LFLAGS 	= -L ./libft -lft -L ./mlx -lmlx -lXext -lX11 -lm -lbsd
 
 INC			= includes
 SRC_DIR		= srcs
+SRC_BNS_DIR	= srcs_bonus
 OBJ_DIR		= objs
+OBJ_BNS_DIR	= objs_bonus
 MAP_DIR		= maps/valid/
 
 # /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ FILES _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ #
 
 NAME 		= cub3D
+NAME_BNS	= cub3D_bonus
 LIBFT		= libft/libft.a
 MLX			= mlx/libmlx.a
 FILES 		= main init clean draw_line textures raycasting \
-			utils movement minimap draw_wall raycast_utils move_utils\
+			utils movement draw_wall raycast_utils move_utils \
 			parser/parser parser/parse_color parser/parse_texture parser/parse_map \
 			parser/check_map parser/set_map_limits parser/parse_map_utils
+FILES_BNS	= $(FILES) minimap_bonus
 SRC 		= $(addprefix $(SRC_DIR)/, $(addsuffix .c, $(FILES)))
 OBJ 		= $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(FILES)))
+OBJ_BNS 	= $(addprefix $(OBJ_BNS_DIR)/, $(addsuffix .o, $(FILES_BNS)))
 
 # /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ ARGUMENTS _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ #
 
@@ -68,8 +73,16 @@ $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INC)
 
+$(OBJ_BNS_DIR)/%.o : $(SRC_BNS_DIR)/%.c 
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I $(INC)
+
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
+	@echo "[$(GREEN)objs directory created$(RESET)]"
+
+$(OBJ_BNS_DIR):
+	@mkdir -p $(OBJ_BNS_DIR)
 	@echo "[$(GREEN)objs directory created$(RESET)]"
 
 $(MLX):
@@ -81,7 +94,8 @@ $(LIBFT):
 	@make $(MK_FLAG) -C ./libft > /dev/null
 
 clean:
-	@$(RM) $(OBJ_DIR) $(OBJ_BNS_DIR)
+	@$(RM) $(OBJ_DIR)
+	@$(RM) $(OBJ_BNS_DIR)
 	@make $(MK_FLAG) -C ./libft clean > /dev/null
 	@make $(MK_FLAG) -C ./mlx clean > /dev/null
 	@echo "[$(RED)objs removed$(RESET)]"
@@ -92,8 +106,17 @@ fclean: clean
 
 re: fclean all
 
-test: $(NAME)
+bonus: $(NAME_BNS)
+
+$(NAME_BNS): $(OBJ_BNS_DIR) $(OBJ_BNS) $(LIBFT) $(MLX)
+	@$(CC) $(CFLAGS) $(OBJ_BNS) $(LFLAGS) -o $(NAME_BNS) -I $(INC)
+	@echo "[$(GREEN)$(SBLINK)$(NAME_BNS) created$(RESET)]"
+	
+test: $(NAME) $(OBJ)
 	@./$(NAME) "$(MAP_DIR)/$(MAP)"
+
+test_bonus: $(NAME_BNS) $(OBJ_BNS)
+	@./$(NAME_BNS) "$(MAP_DIR)/$(MAP)"
 
 gdb: $(NAME)
 	@gdb --args ./$(NAME) "$(MAP_DIR)/$(MAP)"
@@ -101,4 +124,4 @@ gdb: $(NAME)
 valgrind: $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) "$(MAP_DIR)/$(MAP)"
 
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re test bonus gdb valgrind test_bonus

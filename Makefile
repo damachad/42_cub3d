@@ -6,7 +6,7 @@
 #    By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/03/23 18:41:28 by damachad         ###   ########.fr        #
+#    Updated: 2024/03/25 14:13:54 by damachad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,4 +124,7 @@ gdb: $(NAME)
 valgrind: $(NAME)
 	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) "$(MAP_DIR)/$(MAP)"
 
-.PHONY: all clean fclean re test bonus gdb valgrind test_bonus
+valgrind_bonus: $(NAME_BNS)
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME_BNS) "$(MAP_DIR)/$(MAP)"
+
+.PHONY: all clean fclean re test bonus gdb valgrind test_bonus valgrind_bonus

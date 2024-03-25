@@ -21,6 +21,7 @@ Graphics:
 - Fisheye correction not working perfectly;
 
 ## To Solve:
+- If there is only one color value, program does not return error ("F 123");
 - If there is a space after the color value and before the ',' the program gives an error ("F 101  ,183,65");
 
 - More than a ',' between color values does not cause an error;

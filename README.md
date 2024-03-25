@@ -21,6 +21,8 @@ Graphics:
 - Fisheye correction not working perfectly;
 
 ## To Solve:
+- If there is a space after the color value and before the ',' the program gives an error ("F 101  ,183,65");
+
 - More than a ',' between color values does not cause an error;
 - Extra spaces after map (to the right or below) get parsed into map matrix, causing problems to minimap;
 - Same thing for spaces before map (to the left);

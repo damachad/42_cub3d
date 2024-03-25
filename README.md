@@ -23,6 +23,14 @@ Graphics:
 ## To Solve:
 - If there is only one color value, program does not return error ("F 123");
 - If there is a space after the color value and before the ',' the program gives an error ("F 101  ,183,65");
+- **Leaks** (still reachables) when:
+    - invalid texture;
+    - invalid character in map, or extra player;
+    - invalid element identifier;
+    - space between color value and ',' "C 123,211   ,";
+    - invalid color value;
+    - extra ',' or '.';
+    - extra content;
 
 - More than a ',' between color values does not cause an error;
 - Extra spaces after map (to the right or below) get parsed into map matrix, causing problems to minimap;

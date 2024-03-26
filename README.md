@@ -21,16 +21,12 @@ Graphics:
 - Fisheye correction not working perfectly;
 
 ## To Solve:
-- If there is only one color value, program does not return error ("F 123");
 - Repeated color input does not cause error (last one overwrites previous) if between F and C color input lines;
 - Missing information on map does not trigger the right error message;
-- If there is a space after the color value and before the ',' the program gives an error ("F 101  ,183,65");
-- Extra ',' after color values does not cause an error;
 - **Leaks** (still reachables) when:
     - invalid texture;
     - invalid character in map, or extra player;
     - invalid element identifier;
-    - space between color value and ',' "C 123,211   ,";
     - invalid color value;
     - extra ',' or '.';
     - extra content;

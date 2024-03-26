@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3d.h"
 
-int	all_textures_and_colors_set(t_game *game)
+static int	all_textures_and_colors_set(t_game *game)
 {
 	if (game->input->no && game->input->so && game->input->we && game->input->ea
 		&& game->input->floor_color != -1 && game->input->ceiling_color != -1)
@@ -32,7 +32,7 @@ bool	is_empty_line(char *line)
 	return (true);
 }
 
-void	parse_textures_and_colors(t_game *game, char *trim_line)
+static void	parse_textures_and_colors(t_game *game, char *trim_line)
 {
 	if (trim_line && trim_line[0] == 'N' && trim_line[1] == 'O')
 		parse_texture(game, trim_line, N);
@@ -48,7 +48,7 @@ void	parse_textures_and_colors(t_game *game, char *trim_line)
 		parse_color(game, trim_line, CEILING);
 }
 
-void	route_lines(t_game *game, char *line, int fd)
+static void	route_lines(t_game *game, char *line, int fd)
 {
 	char	*trim_line;
 

@@ -16,7 +16,7 @@
 ** copy map row to game->map 
 ** and set player coordinates and direction 
 */
-void	copy_row(t_game *game, char *line, int row)
+static void	copy_row(t_game *game, char *line, int row)
 {
 	int	i;
 
@@ -44,7 +44,7 @@ void	copy_row(t_game *game, char *line, int row)
 	}
 }
 
-void	process_line(t_game *game, char *line, int *row, int *start_map)
+static void	process_line(t_game *game, char *line, int *row, int *start_map)
 {
 	if (is_empty_line(line))
 	{
@@ -65,7 +65,7 @@ void	process_line(t_game *game, char *line, int *row, int *start_map)
 	}
 }
 
-void	fill_map(t_game *game, int fd, int *row, int *start_map)
+static void	fill_map(t_game *game, int fd, int *row, int *start_map)
 {
 	char	*line;
 	char	*tmp_line;
@@ -94,7 +94,7 @@ void	fill_map(t_game *game, int fd, int *row, int *start_map)
 ** assuming maps can contain spaces, not tabs 
 ** and all spaces are considered par of the map
 */
-void	fill_map_init(t_game *game, char *file)
+static void	fill_map_init(t_game *game, char *file)
 {
 	int		fd;
 	int		row;

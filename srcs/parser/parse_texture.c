@@ -12,7 +12,7 @@
 
 #include "../../includes/cub3d.h"
 
-void	set_player_direction(t_game *game, char *path, t_dir dir)
+static void	set_player_direction(t_game *game, char *path, t_dir dir)
 {
 	if (dir == N)
 		game->input->no = path;
@@ -24,7 +24,7 @@ void	set_player_direction(t_game *game, char *path, t_dir dir)
 		game->input->ea = path;
 }
 
-bool	is_texture_duplicate(t_game *game, t_dir dir)
+static bool	is_texture_duplicate(t_game *game, t_dir dir)
 {
 	if (dir == N && game->input->no)
 		return (true);
@@ -37,7 +37,7 @@ bool	is_texture_duplicate(t_game *game, t_dir dir)
 	return (false);
 }
 
-void	check_file_extension(t_game *game, char *path)
+static void	check_file_extension(t_game *game, char *path)
 {
 	int		len;
 	char	*filename;

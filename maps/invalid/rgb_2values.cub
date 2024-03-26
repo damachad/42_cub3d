@@ -3,7 +3,7 @@ SO textures/directions/S1.xpm
 WE textures/directions/W1.xpm
 EA textures/directions/E1.xpm
 
-F 101,183,65,20
+F 101,183,65   
 C 123,211
 
 1111111111

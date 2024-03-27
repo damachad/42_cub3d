@@ -10,16 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
 void	free_line_end_game(t_game *game, char *line, char *msg)
 {
-	free(line);
+	if (line && line != game->line)
+		free(line);
+	if (game->line)
+		free(game->line);
+	if (game->line_tmp)
+		free(game->line_tmp);
 	error_msg(game, msg);
 }
 
 /* initialize limits to extreme values */
-void	map_limit_init(t_game *game)
+static void	map_limit_init(t_game *game)
 {
 	game->l_left = game->map_cols;
 	game->l_right = 0;
@@ -27,7 +32,7 @@ void	map_limit_init(t_game *game)
 	game->l_bottom = 0;
 }
 
-void	set_vertical_limits(t_game *game, size_t i)
+static void	set_vertical_limits(t_game *game, size_t i)
 {
 	if (i < game->l_top)
 		game->l_top = i;
@@ -35,7 +40,7 @@ void	set_vertical_limits(t_game *game, size_t i)
 		game->l_bottom = i;
 }
 
-void	set_horizontal_limits(t_game *game, size_t j)
+static void	set_horizontal_limits(t_game *game, size_t j)
 {
 	if (j < game->l_left)
 		game->l_left = j;

@@ -23,14 +23,8 @@ Graphics:
 ## To Solve:
 - Repeated color input does not cause error (last one overwrites previous) if between F and C color input lines;
 - Missing information on map does not trigger the right error message;
-- **Leaks** (still reachables) when:
-    - invalid texture;
-    - invalid character in map, or extra player;
-    - invalid element identifier;
-    - invalid color value;
-    - extra ',' or '.';
-    - extra content;
-- Fix empty line exit in the map.
+- Fix empty line exit in the map (?).
+
 ## Done
 - More than a '.' in texture file extension leads to **SEGFAULT**. Ex: "EA textures/directions/E1..xpm"; - DONE
 - More characters on Identifier leads to **SEGFAULT**. Ex: "EAA textures/directions/E1.xpm"; - DONE

@@ -36,10 +36,10 @@ static void	validate_color_format(t_game *game, char *line, int *i, int j)
 	else if (j == 2)
 	{
 		if (line[*i] != '\0' && !is_space(line[*i]))
-			error_msg(game, "Invalid color format.\n");
+			free_line_end_game(game, line, "Invalid color format.\n");
 	}
 	else
-		error_msg(game, "Invalid color format.\n");
+		free_line_end_game(game, line, "Invalid color format.\n");
 }
 
 /* place rgb input into integer array */
@@ -53,21 +53,21 @@ static void	parse_color_components(t_game *game, char *line, int *i, int *color)
 		while (line[*i] != '\0' && is_space(line[*i]))
 			(*i)++;
 		if (!ft_isdigit(line[*i]))
-			error_msg(game, "Invalid color value.\n");
+			free_line_end_game(game, line, "Invalid color value.\n");
 		while (line[*i] != '\0' && line[*i] >= '0' && line[*i] <= '9')
 		{
 			color[j] = color[j] * 10 + (line[*i] - '0');
 			(*i)++;
 		}
 		if (color[j] > 255 || color[j] < 0)
-			error_msg(game, "Invalid color value.\n");
+			free_line_end_game(game, line, "Invalid color value.\n");
 		validate_color_format(game, line, i, j);
 		j++;
 		if (j == 3 && line[*i] != '\0')
-			error_msg(game, "Invalid color format.\n");
+			free_line_end_game(game, line, "Invalid color format.\n");
 	}
 	if (j != 3)
-		error_msg(game, "Invalid color format.\n");
+		free_line_end_game(game, line, "Invalid color format.\n");
 }
 
 void	parse_color(t_game *game, char *line, t_color_type color_type)

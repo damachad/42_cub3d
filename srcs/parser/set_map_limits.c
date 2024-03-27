@@ -14,7 +14,12 @@
 
 void	free_line_end_game(t_game *game, char *line, char *msg)
 {
-	free(line);
+	if (line && line != game->line)
+		free(line);
+	if (game->line)
+		free(game->line);
+	if (game->line_tmp)
+		free(game->line_tmp);
 	error_msg(game, msg);
 }
 

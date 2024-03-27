@@ -17,6 +17,31 @@ static int	get_color_hex(int r, int g, int b)
 	return ((r << 16) | (g << 8) | b);
 }
 
+/* 
+** only whitespace before first number
+** mandatory comma between first and second number
+** optional whitspace before and after comma
+** only whitespace or eof after third number
+*/
+static void	validate_color_format(t_game *game, char *line, int *i, int j)
+{
+	while (is_space(line[*i]))
+		(*i)++;
+	if (j < 2 && line[*i] == ',')
+	{
+		(*i)++;
+		while (is_space(line[*i]))
+			(*i)++;
+	}
+	else if (j == 2)
+	{
+		if (line[*i] != '\0' && !is_space(line[*i]))
+			free_line_end_game(game, line, "Invalid color format.\n");
+	}
+	else
+		free_line_end_game(game, line, "Invalid color format.\n");
+}
+
 /* place rgb input into integer array */
 static void	parse_color_components(t_game *game, char *line, int *i, int *color)
 {
@@ -28,22 +53,21 @@ static void	parse_color_components(t_game *game, char *line, int *i, int *color)
 		while (line[*i] != '\0' && is_space(line[*i]))
 			(*i)++;
 		if (!ft_isdigit(line[*i]))
-			error_msg(game, "Invalid color value.\n");
+			free_line_end_game(game, line, "Invalid color value.\n");
 		while (line[*i] != '\0' && line[*i] >= '0' && line[*i] <= '9')
 		{
 			color[j] = color[j] * 10 + (line[*i] - '0');
 			(*i)++;
 		}
 		if (color[j] > 255 || color[j] < 0)
-			error_msg(game, "Invalid color value.\n");
-		if (line[*i] == ',')
-			(*i)++;
-		while (line[*i] != '\0' && is_space(line[*i]))
-			(*i)++;
+			free_line_end_game(game, line, "Invalid color value.\n");
+		validate_color_format(game, line, i, j);
 		j++;
 		if (j == 3 && line[*i] != '\0')
-			error_msg(game, "Invalid color format.\n");
+			free_line_end_game(game, line, "Invalid color format.\n");
 	}
+	if (j != 3)
+		free_line_end_game(game, line, "Invalid color format.\n");
 }
 
 void	parse_color(t_game *game, char *line, t_color_type color_type)

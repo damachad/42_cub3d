@@ -145,6 +145,8 @@ typedef struct s_game
 	t_point			p_pos;
 	t_point			p_dir;
 	char			**map;
+	char			*line;
+	char			*line_tmp;
 	int				map_cols;
 	int				map_rows;
 	size_t			l_top;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: arepsa <arepsa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:29:40 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/23 18:48:01 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/27 18:26:31 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	draw_background(t_game *game)
 	{
 		y = -1;
 		while (++y < SCREEN_HEIGHT / 2)
-			put_pixel(&game->img, x, y, game->input->ceiling_color);
+			put_pixel(&game->img, x, y, game->input->c_color);
 		while (++y < SCREEN_HEIGHT)
-			put_pixel(&game->img, x, y, game->input->floor_color);
+			put_pixel(&game->img, x, y, game->input->f_color);
 	}
 }
 

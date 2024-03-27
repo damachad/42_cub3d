@@ -15,7 +15,7 @@
 static int	all_textures_and_colors_set(t_game *game)
 {
 	if (game->input->no && game->input->so && game->input->we && game->input->ea
-		&& game->input->floor_color != -1 && game->input->ceiling_color != -1)
+		&& game->input->f_color != -1 && game->input->c_color != -1)
 		return (1);
 	return (0);
 }
@@ -42,10 +42,14 @@ static void	parse_textures_and_colors(t_game *game, char *trim_line)
 		parse_texture(game, trim_line, W);
 	else if (trim_line && trim_line[0] == 'E' && trim_line[1] == 'A')
 		parse_texture(game, trim_line, E);
-	else if (trim_line && trim_line[0] == 'F')
+	else if (trim_line && trim_line[0] == 'F' && game->input->f_color == -1)
 		parse_color(game, trim_line, FLOOR);
-	else if (trim_line && trim_line[0] == 'C')
+	else if (trim_line && trim_line[0] == 'C' && game->input->c_color == -1)
 		parse_color(game, trim_line, CEILING);
+	else if (trim_line && trim_line[0] == 'F' && game->input->f_color != -1)
+		free_line_end_game(game, trim_line, "Duplicate color.\n");
+	else if (trim_line && trim_line[0] == 'C' && game->input->c_color != -1)
+		free_line_end_game(game, trim_line, "Duplicate color.\n");
 }
 
 static void	route_lines(t_game *game, char *line, int fd)

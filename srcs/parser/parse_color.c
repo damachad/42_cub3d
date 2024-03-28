@@ -80,14 +80,14 @@ void	parse_color(t_game *game, char *line, t_color_type color_type)
 	color[0] = 0;
 	color[1] = 0;
 	color[2] = 0;
-	if (game->input->ceiling_color != -1 && game->input->floor_color != -1)
+	if (game->input->c_color != -1 && game->input->f_color != -1)
 		error_msg(game, "Duplicate color.\n");
 	while (line[i] != '\0' && is_space(line[i]))
 		i++;
 	parse_color_components(game, line, &i, color);
 	color_hex = get_color_hex(color[0], color[1], color[2]);
 	if (color_type == FLOOR)
-		game->input->floor_color = color_hex;
+		game->input->f_color = color_hex;
 	else if (color_type == CEILING)
-		game->input->ceiling_color = color_hex;
+		game->input->c_color = color_hex;
 }

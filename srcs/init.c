@@ -6,7 +6,7 @@
 /*   By: arepsa <arepsa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:40:51 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/23 15:23:17 by arepsa           ###   ########.fr       */
+/*   Updated: 2024/03/27 18:26:31 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,6 @@ void	init_input(t_input *input)
 	input->so = NULL;
 	input->we = NULL;
 	input->ea = NULL;
-	input->floor_color = -1;
-	input->ceiling_color = -1;
+	input->f_color = -1;
+	input->c_color = -1;
 }

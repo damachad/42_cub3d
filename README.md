@@ -19,6 +19,7 @@ Building repo for cub3d
 
 Graphics:
 - Fisheye correction not working perfectly;
+- t_img * to background;
 
 ## To Solve:
 - Repeated color input does not cause error (last one overwrites previous) if between F and C color input lines;

@@ -124,8 +124,8 @@ typedef struct s_input
 	char	*so;
 	char	*we;
 	char	*ea;
-	int		floor_color;
-	int		ceiling_color;
+	int		f_color;
+	int		c_color;
 }				t_input;
 
 typedef struct s_calc

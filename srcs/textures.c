@@ -6,7 +6,7 @@
 /*   By: arepsa <arepsa@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:29:40 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/23 15:46:10 by arepsa           ###   ########.fr       */
+/*   Updated: 2024/03/27 18:54:59 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,14 @@
 void	draw_background(t_game *game)
 {
 	int	x;
-	int	y;
 
 	x = -1;
 	while (++x < SCREEN_WIDTH)
 	{
-		y = -1;
-		while (++y < SCREEN_HEIGHT / 2)
-			put_pixel(&game->img, x, y, game->input->ceiling_color);
-		while (++y < SCREEN_HEIGHT)
-			put_pixel(&game->img, x, y, game->input->floor_color);
+		draw_line(game, &(t_point_int){x, 0}, \
+				&(t_point_int){x, SCREEN_HEIGHT / 2}, game->input->c_color);
+		draw_line(game, &(t_point_int){x, SCREEN_HEIGHT / 2}, \
+				&(t_point_int){x, SCREEN_HEIGHT}, game->input->f_color);
 	}
 }
 

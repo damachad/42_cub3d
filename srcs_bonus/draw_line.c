@@ -50,7 +50,7 @@ static void	bresenham_def(t_bresenham *param, t_point_int *a, t_point_int *b)
 ** Check if we have reached the end point
 ** Increment or decrement x and y coordinates based on error parameter
 */
-void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color)
+void	draw_line(t_img *img, t_point_int *a, t_point_int *b, int color)
 {
 	t_bresenham	param;
 
@@ -59,7 +59,7 @@ void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color)
 	{
 		if (param.x0 < SCREEN_WIDTH && param.x0 > 0
 			&& param.y0 < SCREEN_HEIGHT && param.y0 > 0)
-			put_pixel(&game->img, param.x0, param.y0, color);
+			put_pixel(img, param.x0, param.y0, color);
 		if (param.x0 == b->x && param.y0 == b->y)
 			break ;
 		if (2 * param.err >= param.dy && param.x0 != b->x)

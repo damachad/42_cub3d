@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:16:23 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/27 16:12:10 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/28 09:53:57 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	draw_minimap(t_game *g)
 	point.y = (int)((g->p_pos.y - g->l_top * CUB_SIDE) * \
 	g->mini_scale) + offset - 2.5;
 	draw_square(g, point, 5 / g->mini_scale, RED);
-	draw_line(g, &(t_point_int){(int)(point.x + 2.5), (int)(point.y + 2.5)}, \
+	draw_line(&g->img, &(t_point_int){(int)(point.x + 2.5), (int)(point.y + 2.5)}, \
 	&(t_point_int){(int)(point.x - offset + 2.5 + g->p_dir.x * 5) + \
 	offset, (int)(point.y - offset + 2.5 + g->p_dir.y * 5) + offset}, \
 	RED);

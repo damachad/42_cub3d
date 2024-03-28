@@ -6,7 +6,7 @@
 /*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 17:56:46 by damachad          #+#    #+#             */
-/*   Updated: 2024/03/23 17:57:40 by damachad         ###   ########.fr       */
+/*   Updated: 2024/03/28 10:08:55 by damachad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ int	render_movement(t_game *g)
 		sideways_movement(g);
 	if (g->keys.l_a || g->keys.r_a)
 		rotate(g);
-	draw_wall(g);
+	if (g->keys.w || g->keys.s || g->keys.a || g->keys.d || g->keys.l_a \
+	|| g->keys.r_a)
+		draw_wall(g);
 	return (0);
 }
 

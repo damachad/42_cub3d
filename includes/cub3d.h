@@ -183,7 +183,7 @@ void	destroy_game(t_game *game);
 
 /*--------------------------draw_line------------------------*/
 void	put_pixel(t_img *img, int x, int y, int color);
-void	draw_line(t_game *game, t_point_int *a, t_point_int *b, int color);
+void	draw_line(t_img *img, t_point_int *a, t_point_int *b, int color);
 
 /*---------------------------textures------------------------*/
 void	draw_background(t_game *game);

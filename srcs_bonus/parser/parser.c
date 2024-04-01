@@ -50,6 +50,8 @@ static void	parse_textures_and_colors(t_game *game, char *trim_line)
 		free_line_end_game(game, trim_line, "Duplicate color.\n");
 	else if (trim_line && trim_line[0] == 'C' && game->input->c_color != -1)
 		free_line_end_game(game, trim_line, "Duplicate color.\n");
+	else if (trim_line)
+		free_line_end_game(game, trim_line, "Invalid input line.\n");
 }
 
 static void	route_lines(t_game *game, char *line, int fd)

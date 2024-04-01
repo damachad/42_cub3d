@@ -1,10 +1,10 @@
-NO textures/bricks.xpm
-SO textures/ice.xpm
-WE textures/lava.xpm
-EA textures/leaves.xpm
+NO textures/tech_1.xpm
+SO textures/tech_2.xpm
+WE textures/tech_3.xpm
+EA textures/tech_4.xpm
 
-F 101,183,65
-C 123,211,234
+F 95,95,95
+C 113,211,244
 
         1111111111111111111111111
         1000000000110000000000001

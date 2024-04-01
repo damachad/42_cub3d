@@ -17,14 +17,11 @@ Building repo for cub3d
     
 ## TODOs:
 
+- Remove tests (valgrinds, pdfs, etc.);
+
 Graphics:
 - Fisheye correction not working perfectly;
 - t_img * to background;
-
-## To Solve:
-- Repeated color input does not cause error (last one overwrites previous) if between F and C color input lines;
-- Missing information on map does not trigger the right error message;
-- Fix empty line exit in the map (?).
 
 ## Done
 - More than a '.' in texture file extension leads to **SEGFAULT**. Ex: "EA textures/directions/E1..xpm"; - DONE

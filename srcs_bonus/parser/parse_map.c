@@ -65,26 +65,26 @@ static void	process_line(t_game *game, char *line, int *row, int *start_map)
 	}
 }
 
-static void	fill_map(t_game *game, int fd, int *row, int *start_map)
+static void	fill_map(t_game *game, int *row, int *start_map)
 {
 	char	*line;
 	char	*tmp_line;
 
-	line = get_next_line(fd);
+	line = get_next_line(game->fd);
 	tmp_line = NULL;
 	while (line != NULL)
 	{
 		if (ft_strchr(line, '.') || ft_strchr(line, ','))
 		{
 			free(line);
-			line = get_next_line(fd);
+			line = get_next_line(game->fd);
 			continue ;
 		}
 		tmp_line = ft_strtrim(line, "\r\n");
 		free(line);
 		process_line(game, tmp_line, row, start_map);
 		free(tmp_line);
-		line = get_next_line(fd);
+		line = get_next_line(game->fd);
 	}
 	if (game->player == 0)
 		error_msg(game, "Player missing.\n");
@@ -96,17 +96,16 @@ static void	fill_map(t_game *game, int fd, int *row, int *start_map)
 */
 static void	fill_map_init(t_game *game, char *file)
 {
-	int		fd;
 	int		row;
 	int		start_map;
 
 	row = 0;
 	start_map = 0;
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
+	game->fd = open(file, O_RDONLY);
+	if (game->fd < 0)
 		error_msg(game, "Could not open input file.\n");
-	fill_map(game, fd, &row, &start_map);
-	close(fd);
+	fill_map(game, &row, &start_map);
+	close(game->fd);
 }
 
 void	parse_map(t_game *game, char *file)

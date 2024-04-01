@@ -40,8 +40,8 @@
 
 # define START_ANGLE 1
 # define MINIMAP_SCALE 3.0
-# define SPEED 1.8
-# define ROT_SPEED 0.02
+# define SPEED 2.2
+# define ROT_SPEED 0.04
 # define WALL_BUFF 10
 # define SLIDE_BUFF 0.17
 
@@ -149,6 +149,7 @@ typedef struct s_game
 	char			*line_tmp;
 	int				map_cols;
 	int				map_rows;
+	int				fd;
 	size_t			l_top;
 	size_t			l_bottom;
 	size_t			l_left;

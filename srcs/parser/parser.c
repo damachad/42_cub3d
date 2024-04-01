@@ -54,7 +54,7 @@ static void	parse_textures_and_colors(t_game *game, char *trim_line)
 		free_line_end_game(game, trim_line, "Invalid input line.\n");
 }
 
-static void	route_lines(t_game *game, char *line, int fd)
+static void	route_lines(t_game *game, char *line)
 {
 	game->line = NULL;
 	if (ft_strchr(line, '.') || ft_strchr(line, ','))
@@ -70,7 +70,7 @@ static void	route_lines(t_game *game, char *line, int fd)
 	else if (!is_empty_line(line))
 	{
 		free(line);
-		close(fd);
+		close(game->fd);
 		error_msg(game, "Invalid line in input file.\n");
 	}
 	free(line);
@@ -78,26 +78,25 @@ static void	route_lines(t_game *game, char *line, int fd)
 
 void	parse_file(t_game *game, char *file)
 {
-	int		fd;
 	char	*line;
 	char	*tmp_line;
 
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
+	game->fd = open(file, O_RDONLY);
+	if (game->fd < 0)
 		error_msg(game, "Could not open input file.\n");
-	line = get_next_line(fd);
+	line = get_next_line(game->fd);
 	while (line != NULL)
 	{
 		tmp_line = ft_strtrim(line, "\r\n");
 		free(line);
-		route_lines(game, tmp_line, fd);
-		line = get_next_line(fd);
+		route_lines(game, tmp_line);
+		line = get_next_line(game->fd);
 	}
 	if (!all_textures_and_colors_set(game))
 	{
-		close(fd);
+		close(game->fd);
 		error_msg(game, "Missing info in map file.\n");
 	}
-	close(fd);
+	close(game->fd);
 	parse_map(game, file);
 }

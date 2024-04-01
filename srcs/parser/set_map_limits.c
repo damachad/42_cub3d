@@ -20,6 +20,8 @@ void	free_line_end_game(t_game *game, char *line, char *msg)
 		free(game->line);
 	if (game->line_tmp)
 		free(game->line_tmp);
+	if (game->fd > 0)
+		close(game->fd);
 	error_msg(game, msg);
 }
 

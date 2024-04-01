@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arepsa <arepsa@student.42.fr>              +#+  +:+       +#+         #
+#    By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/03/27 18:23:53 by arepsa           ###   ########.fr        #
+#    Updated: 2024/04/01 17:32:40 by damachad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -122,9 +122,9 @@ gdb: $(NAME)
 	@gdb --args ./$(NAME) "$(MAP_DIR)/$(MAP)"
 
 valgrind: $(NAME)
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) "$(MAP_DIR)/$(MAP)"
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./$(NAME) "$(MAP_DIR)/$(MAP)"
 
 valgrind_bonus: $(NAME_BNS)
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME_BNS) "$(MAP_DIR)/$(MAP)"
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./$(NAME_BNS) "$(MAP_DIR)/$(MAP)"
 
 .PHONY: all clean fclean re test bonus gdb valgrind test_bonus valgrind_bonus

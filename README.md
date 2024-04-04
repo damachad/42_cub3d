@@ -25,7 +25,8 @@ Key components of Cub3d include:
 
 ## Usage 🚀
 
-- To compile Cub3d, simply run ```make``` or ```make bonus``` (if you want to try the bonus version);
+- First download [Minilibx](https://github.com/42Paris/minilibx-linux), rename its directory to 'mlx' and add it to the root directory of the cub3d project;
+- To compile Cub3d, run ```make``` or ```make bonus``` (if you want to try the bonus version);
 - Then run it as such ```./cub3d <maps/map.cub>``` or ```./cub3d_bonus <maps/map.cub>```. Replace `maps/map.cub` with the path to your custom map file. You can find sample map files in the `maps` directory;
 
 ### Controls 🕹️
@@ -42,4 +43,31 @@ Key components of Cub3d include:
 
 - Personal page for [notes](https://spicy-dirigible-2b6.notion.site/Cub3D-cc92684cfbf64eb8ae13841b32ea4603?pvs=4);
 
+## Mapfile example
+```
+NO textures/tech_1.xpm
+SO textures/tech_2.xpm
+WE textures/tech_3.xpm
+EA textures/tech_4.xpm
 
+F 95,95,95
+C 113,211,244
+
+        1111111111111111111111111
+        1000000000110000000000001
+        1011000001110000000000001
+        1001000000000000000000001
+111111111011000001110000000000001
+100000000011000001110111100111111
+11110111111111011100000010001
+11110111111111011101010010001
+11000000110101011100000010001
+10000000000000001100000010001
+10000000000000001101010010001
+11000001110101011111011110N0111
+11110111 1110101 101111010001
+11111111 1111111 111111111111
+```
+
+## Demo
+[Screencast from 04-04-2024 02:35:06 PM.webm](https://github.com/damachad/42_cub3d/assets/128734978/c91cfff9-46d6-47e9-9778-e741205c6f31)

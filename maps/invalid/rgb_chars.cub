@@ -1,7 +1,7 @@
-O textures/directions/N1.xpm
-SO textures/directions/S1.xpm
-WE textures/directions/W1.xpm
-EA textures/directions/E1.xpm
+O textures/ice.xpm
+SO textures/lava.xpm
+WE textures/bricks.xpm
+EA textures/leaves.xpm
 
 F 101,a,65
 C b,211,234

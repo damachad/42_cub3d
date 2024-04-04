@@ -1,8 +1,8 @@
-NO textures/directions/N1.xpm
-WE textures/directions/W1.xpm
-SO textures/directions/S1.xpm
-SO textures/directions/S1.xpm
-EA textures/directions/E1.xpm
+NO textures/ice.xpm
+WE textures/bricks.xpm
+SO textures/lava.xpm
+SO textures/lava.xpm
+EA textures/leaves.xpm
 
 F 20,20,20
 C 200,200,200

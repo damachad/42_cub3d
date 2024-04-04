@@ -31,19 +31,12 @@ Key components of Cub3d include:
 
 ### Controls 🕹️
 
-- The left and right arrow keys of the keyboard allow you to look left and right in the maze;
-- The W and S keys allow you to move forward or backward in a straight line;
-- The A and D keys allow you to move left or right in a straight line;
-- The Esc key allows you to exit the game cleanly (so does clicking on the red cross on the window’s frame);
+- The left ⬅️ and right ➡️ arrow keys of the keyboard allow you to look left and right in the maze;
+- The **W** and **S** keys allow you to move forward or backward in a straight line;
+- The **A** and **D** keys allow you to move left or right in a straight line;
+- The **Esc** key allows you to exit the game cleanly (so does clicking on the red cross on the window’s frame);
 
-## Useful links 🔗
-- [Raycasting and DDA](https://lodev.org/cgtutor/raycasting.html);
-- [Raycasting tutorial](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/);
-- [Creating a raycaster](https://www.youtube.com/watch?v=gYRrGTC7GtA);
-
-- Personal page for [notes](https://spicy-dirigible-2b6.notion.site/Cub3D-cc92684cfbf64eb8ae13841b32ea4603?pvs=4);
-
-## Mapfile example
+## Mapfile example 📜
 ```
 NO textures/tech_1.xpm
 SO textures/tech_2.xpm
@@ -69,5 +62,12 @@ C 113,211,244
 11111111 1111111 111111111111
 ```
 
-## Demo
+## Demo 💿
 [Screencast from 04-04-2024 02:35:06 PM.webm](https://github.com/damachad/42_cub3d/assets/128734978/c91cfff9-46d6-47e9-9778-e741205c6f31)
+
+## Useful links 🔗
+- [Raycasting and DDA](https://lodev.org/cgtutor/raycasting.html);
+- [Raycasting tutorial](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/);
+- [Creating a raycaster](https://www.youtube.com/watch?v=gYRrGTC7GtA);
+
+- Personal page for [notes](https://spicy-dirigible-2b6.notion.site/Cub3D-cc92684cfbf64eb8ae13841b32ea4603?pvs=4);

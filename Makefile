@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+         #
+#    By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 15:25:24 by damachad          #+#    #+#              #
-#    Updated: 2024/04/01 17:32:40 by damachad         ###   ########.fr        #
+#    Updated: 2024/06/30 19:22:36 by arepsa           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ RM = rm -rf
 
 # /\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_ FLAGS _/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ #
 
-CFLAGS 	= -Wall -Werror -Wextra -g # -fsanitize=address
+CFLAGS 	= -Wall -Werror -Wextra -g -fsanitize=address
 MK_FLAG = --no-print-directory
 LFLAGS 	= -L ./libft -lft -L ./mlx -lmlx -lXext -lX11 -lm -lbsd
 

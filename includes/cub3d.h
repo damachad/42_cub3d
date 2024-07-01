@@ -218,7 +218,7 @@ void	free_partial_map(t_game *game, int rows_allocated);
 bool	is_valid_char(t_game *game, char c);
 void	set_player(t_game *game, char c, int x, int y);
 void	get_map_size(t_game *game, char *line);
-void	*safe_malloc(int bytes);
+void	*safe_malloc(t_game *game, int bytes);
 
 /*----------------------------utils--------------------------*/
 bool	facing_up(float angle);

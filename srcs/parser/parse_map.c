@@ -21,7 +21,7 @@ static void	copy_row(t_game *game, char *line, int row)
 	int	i;
 
 	i = 0;
-	game->map[row] = safe_malloc(sizeof(char) * (game->map_cols + 1));
+	game->map[row] = safe_malloc(game, sizeof(char *) * (game->map_cols + 1));
 	game->map[row][game->map_cols] = '\0';
 	while (line[i])
 	{
@@ -110,7 +110,7 @@ static void	fill_map_init(t_game *game, char *file)
 
 void	parse_map(t_game *game, char *file)
 {
-	game->map = safe_malloc(sizeof(char *) * (game->map_rows + 1));
+	game->map = safe_malloc(game, sizeof(char *) * (game->map_rows + 1));
 	game->map[game->map_rows] = NULL;
 	fill_map_init(game, file);
 	check_map(game);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arepsa <arepsa@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 14:32:01 by arepsa            #+#    #+#             */
-/*   Updated: 2024/03/23 15:32:05 by arepsa           ###   ########.fr       */
+/*   Updated: 2024/06/30 19:16:10 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,16 @@ void	get_map_size(t_game *game, char *line)
 	game->map_rows++;
 }
 
-void	*safe_malloc(int bytes)
+void	*safe_malloc(t_game *game, int bytes)
 {
 	void	*result;
 
 	result = malloc(bytes);
 	if (!result)
 	{
-		return (NULL);
+		destroy_game(game);
+		error_msg(game, "Could not allocate memory.\n");
+		exit(EXIT_FAILURE);
 	}
 	return (result);
 }

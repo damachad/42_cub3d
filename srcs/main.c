@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: damachad <damachad@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: arepsa <arepsa@student.42porto.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:22:00 by damachad          #+#    #+#             */
-/*   Updated: 2024/04/01 17:14:40 by damachad         ###   ########.fr       */
+/*   Updated: 2024/06/30 19:19:55 by arepsa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	start_game(char	*file)
 	t_game	game;
 
 	ft_bzero(&game, sizeof(t_game));
-	game.input = safe_malloc(sizeof(t_input));
+	game.input = ft_calloc(1, sizeof(t_input));
 	game.calc = ft_calloc(1, sizeof(t_calc));
 	if (!game.input || !game.calc)
 		error_msg(&game, "Could not allocate memory.\n");
